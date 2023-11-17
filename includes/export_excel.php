@@ -8,6 +8,9 @@ function exportToExcel($sql, $filename)
 
     $result = $conn->query($sql);
 
+    // Close the database connection
+    $conn->close();
+
     if ($result->num_rows > 0) {
         // Create a new Excel file
         $spreadsheet = new PhpOffice\PhpSpreadsheet\Spreadsheet();
@@ -19,14 +22,10 @@ function exportToExcel($sql, $filename)
             'DateStarted', 'DateEnded', 'StatusISDN', 'SalerCode', 'SalerName', 'SalerPhone', 'SalerEmail'
         );
 
-        $column = 'A';
         $row = 1;
 
         // Set the title in the Excel file
-        foreach ($header as $item) {
-            $sheet->setCellValue($column . $row, $item);
-            $column++;
-        }
+        $sheet->fromArray([$header], NULL, 'A' . $row);
 
         // Data from the database
         $row = 2;
@@ -50,7 +49,4 @@ function exportToExcel($sql, $filename)
     } else {
         echo "There is no data to export for this query.";
     }
-
-    // Close the database connection
-    $conn->close();
 }

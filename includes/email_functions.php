@@ -7,7 +7,7 @@ use PHPMailer\PHPMailer\Exception;
 require 'vendor/autoload.php';
 require_once 'config.php';
 
-function sendEmailNotification($attachmentPath, $subject, $body, $recipients)
+function sendEmailNotification($attachmentPath, $subject, $body, $recipientString)
 {
     $mail = new PHPMailer();
 
@@ -24,8 +24,12 @@ function sendEmailNotification($attachmentPath, $subject, $body, $recipients)
 
         $mail->setFrom(SENDER_EMAIL);
 
+        // Split the recipient string into an array
+        $recipients = explode(',', $recipientString);
+
+        // Add each recipient to the email
         foreach ($recipients as $recipient) {
-            $mail->addAddress($recipient);
+            $mail->addAddress(trim($recipient)); // Trim to remove any leading/trailing whitespaces
         }
 
         $mail->isHTML(true);
