@@ -7,7 +7,7 @@ function sendEmailForDays($query, $attachment, $subject, $recipients)
 {
     try {
         exportToExcel($query, $attachment);
-        sendEmailNotification("/root/{$attachment}", $subject, "Excel Files for {$subject}");
+        sendEmailNotification("/root/{$attachment}", $subject, "Excel Files for {$subject}", $recipients);
     } catch (Exception $e) {
         echo 'Error: ' . $e->getMessage();
     }

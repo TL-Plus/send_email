@@ -7,7 +7,7 @@ use PHPMailer\PHPMailer\Exception;
 require 'vendor/autoload.php';
 require_once 'config.php';
 
-function sendEmailNotification($attachmentPath, $subject, $body)
+function sendEmailNotification($attachmentPath, $subject, $body, $recipients)
 {
     $mail = new PHPMailer();
 
