@@ -24,12 +24,10 @@ function sendEmailNotification($attachmentPath, $subject, $body, $recipients)
 
         $mail->setFrom(SENDER_EMAIL);
 
-        // Split the recipient string into an array
-        $recipients = explode(',', RECIPIENTS);
-
         // Add each recipient to the email
+        $recipients = explode(',', RECIPIENTS);
         foreach ($recipients as $recipient) {
-            $mail->addAddress(trim($recipient)); // Trim to remove any leading/trailing whitespaces
+            $mail->addAddress(trim($recipient));
         }
 
         $mail->isHTML(true);
