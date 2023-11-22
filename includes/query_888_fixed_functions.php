@@ -17,7 +17,7 @@ LEFT JOIN Salers ON Salers.Code = Customers.SalerCode";
 
 // Lấy danh sách số đủ yêu cầu từ truy vấn ban đầu (termination on the 19th day)
 $query_888_fixed_19_day_part1 = "SELECT DISTINCT ContractDetails.ContractCode, ContractDetails.Number, ContractDetails.DateStarted, ContractDetails.DateEnded, ContractDetails.StatusISDN, ContractDetails.CustomerCode
-FROM `ContractDetails` WHERE UNIX_TIMESTAMP(NOW()) - UNIX_TIMESTAMP(ContractDetails.DateEnded) >= 19 * 24 * 60 * 60 AND ContractDetails.StatusISDN='3'";
+FROM `ContractDetails` WHERE UNIX_TIMESTAMP(NOW()) - UNIX_TIMESTAMP(ContractDetails.DateEnded) >= 19 * 24 * 60 * 60 AND ContractDetails.StatusISDN='2'";
 
 // Lấy thông tin chi tiết và danh sách hợp đồng từ các số đã lấy được
 $query_888_fixed_19_day_part2 = "SELECT DISTINCT Customers.Name AS CustomerName, Customers.ContactPhone AS CustomerPhone, Customers.Email AS CustomerEmail, 
