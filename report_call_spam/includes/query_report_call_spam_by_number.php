@@ -7,5 +7,4 @@ AND Day = DATE_FORMAT( CURDATE() , '%d')
 AND CustomerName != '' 
 AND ContractCode LIKE '00488%' 
 AND Callee NOT LIKE '842%' 
-GROUP BY Callee 
 ORDER BY SL DESC";
