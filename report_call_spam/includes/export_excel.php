@@ -15,7 +15,7 @@ function exportToExcel($sql, $filename)
         $sheet = $spreadsheet->getActiveSheet();
 
         // Table title
-        $header = ['CustomerName', 'ContractCode', 'Number'];
+        $header = ['CustomerName', 'ContractCode', 'Number', 'CallCount'];
 
         // Set the title in the Excel file
         $sheet->fromArray([$header], NULL, 'A1');
