@@ -1,7 +1,7 @@
 <?php
-require 'includes/config.php';
-require 'includes/database_connection.php';
-require 'includes/email_notifications.php';
+require 'send_email/includes/config.php';
+require 'send_email/includes/database_connection.php';
+require 'send_email/includes/email_notifications.php';
 require 'includes/query_dvgtgt_functions.php';
 require 'includes/query_888_fixed_functions.php';
 require 'includes/query_execute.php';

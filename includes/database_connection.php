@@ -1,9 +1,10 @@
 <?php
 require_once 'config.php';
 
-function connectDatabase()
+// Function to establish a database connection
+function connectDatabase($hostname, $username, $password, $database)
 {
-    $conn = new mysqli(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+    $conn = new mysqli($hostname, $username, $password, $database);
     $conn->set_charset("utf8");
 
     if ($conn->connect_error) {
@@ -11,4 +12,26 @@ function connectDatabase()
     }
 
     return $conn;
+}
+
+// Function to connect to the database, execute a query, and return the result
+function connectAndQueryDatabase($sql, $hostname, $username, $password, $database)
+{
+    try {
+        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
+        // Connect to the database
+        $conn = connectDatabase($hostname, $username, $password, $database);
+
+        // Execute the SQL query
+        $result = $conn->query($sql);
+
+        // Close the database connection
+        $conn->close();
+
+        return $result;
+    } catch (Exception $e) {
+        echo "Error: " . $e->getMessage();
+        return false;
+    }
 }

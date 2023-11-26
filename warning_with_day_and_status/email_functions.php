@@ -1,7 +1,7 @@
 <?php
 require 'includes/export_excel.php';
 require_once 'includes/query_execute.php';
-require_once 'includes/config.php';
+require_once 'send_email/includes/config.php';
 
 // Function to send email notification
 function sendEmailForDays($query, $attachment, $subject, $recipients)

@@ -1,10 +1,10 @@
 <?php
-require_once 'config.php';
+require_once 'send_email/includes/config.php';
 
 // Function to execute a SQL query
 function executeQuery($sql)
 {
-    $conn = connectDatabase();
+    $conn = connectDatabase(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 
     $result = $conn->query($sql);
 

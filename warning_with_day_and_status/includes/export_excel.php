@@ -1,15 +1,10 @@
 <?php
 require 'vendor/autoload.php';
-require_once 'config.php';
+require_once 'send_email/includes/config.php';
 
 function exportToExcel($sql, $filename)
 {
-    $conn = connectDatabase();
-
-    $result = $conn->query($sql);
-
-    // Close the database connection
-    $conn->close();
+    $result = connectAndQueryDatabase($sql, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 
     if ($result->num_rows > 0) {
         // Create a new Excel file
