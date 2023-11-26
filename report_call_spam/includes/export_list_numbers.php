@@ -4,13 +4,7 @@ require_once 'send_email/includes/database_connection.php';
 require 'query_report_call_spam_by_number.php';
 
 
-// Connect to the database
-$conn = connectDatabase(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
-
-$result = $conn->query($query_report_call_spam_by_number);
-
-// Close the database connection
-$conn->close();
+$result = connectAndQueryDatabase($query_report_call_spam_by_number, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 
 // Check if the query was successful
 if ($result) {

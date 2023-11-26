@@ -1,6 +1,7 @@
 <?php
 
-$query_report_call_spam_by_number = "SELECT DISTINCT Caller
+$query_report_call_spam_by_number = "SELECT DISTINCT
+Caller, Callee, SL
 FROM ReportCallSpamByNumber 
 WHERE SL >= 5 
 AND Day = DATE_FORMAT( CURDATE() , '%d') 
