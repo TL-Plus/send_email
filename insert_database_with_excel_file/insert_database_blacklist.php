@@ -1,7 +1,5 @@
 <?php
 
-require 'send_email/includes/config.php';
-require 'send_email/includes/database_connection.php';
 require 'vendor/autoload.php';
 
 use PhpOffice\PhpSpreadsheet\IOFactory;
