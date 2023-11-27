@@ -12,7 +12,8 @@ function exportToExcelDiginext($sql, $filename)
         $sheet = $spreadsheet->getActiveSheet();
 
         // Table title
-        $header = ['CustomerName', 'ContractCode', 'Number'];
+        $header = ['TimeAction', 'Day', 'CustomerName', 'ContractCode', 'Caller', 'Callee', 'SL'];
+
 
         // Set the title in the Excel file
         $sheet->fromArray([$header], NULL, 'A1');
