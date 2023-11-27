@@ -54,7 +54,6 @@ function exportToExcel($sql1, $sql2, $filename)
         // Save the Excel file
         $writer = new PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
         $writer->save($filename);
-
         echo "File $filename exported successfully.";
     } else {
         // Handle query error

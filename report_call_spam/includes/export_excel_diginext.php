@@ -2,16 +2,13 @@
 require 'vendor/autoload.php';
 require_once 'send_email/includes/config.php';
 
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-
 function exportToExcelDiginext($sql, $filename)
 {
     $result = connectAndQueryDatabase($sql, DB_HOSTNAME_DIGINEXT, DB_USERNAME_DIGINEXT, DB_PASSWORD_DIGINEXT, DB_DATABASE_DIGINEXT);
 
     if ($result && $result->num_rows > 0) {
         // Create or reuse a spreadsheet object
-        $spreadsheet = new Spreadsheet();
+        $spreadsheet = new PhpOffice\PhpSpreadsheet\Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
         // Table title
@@ -32,7 +29,7 @@ function exportToExcelDiginext($sql, $filename)
         }
 
         // Save the Excel file
-        $writer = new Xlsx($spreadsheet);
+        $writer = new PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
         $writer->save($filename);
         echo "File $filename exported successfully.";
     } else {
