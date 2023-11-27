@@ -24,6 +24,9 @@ function insertDataFromExcel($inputFileName)
     if ($stmt = $conn->prepare($sql)) {
         $stmt->bind_param("ssssssss", $msisdn, $telco, $shortcode, $info, $mo_time, $cmd_code, $error_code, $error_desc);
 
+        // Array to store unique msisdn values
+        $uniqueMsisdns = [];
+
         // Loop through each row in the Excel file
         foreach ($spreadsheet->getActiveSheet()->getRowIterator() as $row) {
             // Skip the header row
@@ -40,9 +43,19 @@ function insertDataFromExcel($inputFileName)
             // Assign values to variables
             list($msisdn, $telco, $shortcode, $info, $mo_time, $cmd_code, $error_code, $error_desc) = $data;
 
-            // Execute the prepared statement
-            if (!$stmt->execute()) {
-                echo "Error: " . $stmt->error . "<br>";
+            // Check if msisdn is unique before inserting
+            if (!in_array($msisdn, $uniqueMsisdns)) {
+                $uniqueMsisdns[] = $msisdn;
+
+                // Ensure telco is a two-digit number
+                $telco = str_pad($telco, 2, '0', STR_PAD_LEFT);
+
+                // Execute the prepared statement
+                if (!$stmt->execute()) {
+                    echo "Error: " . $stmt->error . "<br>";
+                }
+            } else {
+                echo "Duplicate msisdn found: $msisdn. Skipping insertion.<br>";
             }
         }
 
