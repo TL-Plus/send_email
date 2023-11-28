@@ -12,4 +12,7 @@ define('RECIPIENTS', 'RECIPIENTS_EMAIL');
 define('DB_HOSTNAME', 'DB_HOSTNAME');
 define('DB_USERNAME', 'DB_USERNAME');
 define('DB_PASSWORD', 'DB_PASSWORD');
-define('DB_DATABASE', 'DB_DATABASE');
+define('DB_DATABASE', 'DB_DATABASE'); 
+
+// Use db VoiceReport default
+// Use db Report check Report Call Spam
