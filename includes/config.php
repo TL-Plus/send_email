@@ -16,4 +16,3 @@ define('DB_DATABASE', 'DB_DATABASE');
 
 // Use db VoiceReport default
 // Use db Report check Report Call Spam
-// Use db Blacklist insert excel files
