@@ -1,11 +1,10 @@
 <?php
+require 'vendor/autoload.php';
+require_once 'config.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
-
-require 'vendor/autoload.php';
-require_once 'config.php';
 
 function sendEmailNotification($attachmentPath, $subject, $body, $recipients)
 {

@@ -1,12 +1,18 @@
 <?php
 require 'send_email/includes/config.php';
 require 'send_email/includes/database_connection.php';
-require 'send_email/includes/email_notifications.php';
-require 'includes/query_report_call_spam_diginext.php';
 require 'includes/query_report_call_spam_by_number_contract_next.php';
-require 'email_functions.php';
+require 'send_email/includes/send_email_for_days.php';
 
+// Define Excel header
+$header = [
+    'TimeAction', 'Day', 'CustomerName', 'ContractCode', 'Caller', 'Callee', 'SL'
+];
+
+// Prepare email details
 $today = date('Y_m_d');
+$attachment = "Report_call_spam_DIGINEXT_$today.xlsx";
+$subject = "Report Call Spam DIGINEXT ($today)";
 
 // Call function to send email notification warning payment
-sendEmailForDaysDiginext($query_report_call_spam_by_number_contract_next, "Report_call_spam_DIGINEXT_$today.xlsx", "Report Call Spam DIGINEXT ($today)", RECIPIENTS);
+sendEmailForDays($query_report_call_spam_by_number_contract_next, $header, $attachment, $subject, RECIPIENTS);

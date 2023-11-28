@@ -1,19 +1,15 @@
 <?php
 require 'vendor/autoload.php';
-require_once 'send_email/includes/config.php';
+require_once 'config.php';
 
-function exportToExcelDiginext($sql, $filename)
+function exportToExcel($sql, $header, $filename)
 {
-    $result = connectAndQueryDatabase($sql, DB_HOSTNAME_DIGINEXT, DB_USERNAME_DIGINEXT, DB_PASSWORD_DIGINEXT, DB_DATABASE_DIGINEXT);
+    $result = connectAndQueryDatabase($sql, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 
     if ($result && $result->num_rows > 0) {
         // Create or reuse a spreadsheet object
         $spreadsheet = new PhpOffice\PhpSpreadsheet\Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
-
-        // Table title
-        $header = ['TimeAction', 'Day', 'CustomerName', 'ContractCode', 'Caller', 'Callee', 'SL'];
-
 
         // Set the title in the Excel file
         $sheet->fromArray([$header], NULL, 'A1');
@@ -22,7 +18,11 @@ function exportToExcelDiginext($sql, $filename)
         $row = 2;
         while ($row_data = $result->fetch_assoc()) {
             $column = 'A';
-            foreach ($row_data as $value) {
+            foreach ($row_data as $key => $value) {
+                if ($key === 'DateStarted' || $key === 'DateEnded') {
+                    // Handle time formats
+                    $value = date('Y-m-d H:i:s', strtotime($value));
+                }
                 $sheet->setCellValue($column . $row, $value);
                 $column++;
             }
