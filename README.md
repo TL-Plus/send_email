@@ -1,4 +1,4 @@
-# send email
+# send email or telegram message
 
 Export excel file from server phpmyadmin and send email to recipients
 
