@@ -1,6 +1,9 @@
 # send email
 
-export excel file from server phpmyadmin and send email to recipients
+Export excel file from server phpmyadmin and send email to recipients
+
+Update:
+You can choose to send the excel file via email or telegram
 
 ## insert database with excel file
 
