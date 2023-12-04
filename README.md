@@ -28,3 +28,15 @@ The server being used is 198 billing server with VoiceReport database.
 Perform data queries and export liability contract data to excel files
 
 The server being used is 198 billing server with VoiceReport database.
+
+# Setup install package
+```
+composer require phpoffice/phpspreadsheet
+composer require phpmailer/phpmailer
+composer require asimlqt/php-google-spreadsheet-client
+composer require google/apiclient
+composer require phpseclib/phpseclib
+composer require google/auth
+composer require hybridauth/hybridauth
+composer require telegram-bot/api
+```
