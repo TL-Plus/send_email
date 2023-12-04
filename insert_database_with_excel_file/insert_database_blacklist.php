@@ -1,21 +1,15 @@
 <?php
+
 require 'vendor/autoload.php';
 
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 function insertDataFromExcel($inputFileName)
 {
-    // Create a new PhpSpreadsheet object
-    try {
-        $spreadsheet = IOFactory::load($inputFileName);
-    } catch (Exception $e) {
-        die('Error loading Excel file: ' . $e->getMessage());
-    }
-
     // Establish a database connection
-    $conn = connectDatabase(DB_HOSTNAME_DIGINEXT, DB_USERNAME_DIGINEXT, DB_PASSWORD_DIGINEXT, DB_DATABASE_DIGINEXT);
+    $conn = connectDatabase(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 
-    // Prepare the SQL statement
+    // Prepare the SQL statement for data insertion
     $sql = "INSERT INTO `BlackList` (`msisdn`, `telco`, `shortcode`, `info`, `mo_time`, `cmd_code`, `error_code`, `error_desc`, `updated_at`, `created_at`) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
 
@@ -25,6 +19,13 @@ function insertDataFromExcel($inputFileName)
 
         // Array to store unique msisdn values
         $uniqueMsisdns = [];
+
+        // Create a new PhpSpreadsheet object
+        try {
+            $spreadsheet = IOFactory::load($inputFileName);
+        } catch (Exception $e) {
+            die('Error loading Excel file: ' . $e->getMessage());
+        }
 
         // Loop through each row in the Excel file
         foreach ($spreadsheet->getActiveSheet()->getRowIterator() as $row) {
@@ -49,9 +50,22 @@ function insertDataFromExcel($inputFileName)
                 // Ensure telco is a two-digit number
                 $telco = str_pad($telco, 2, '0', STR_PAD_LEFT);
 
-                // Execute the prepared statement
-                if (!$stmt->execute()) {
-                    echo "Error: " . $stmt->error . "<br>";
+                // Check if msisdn already exists in the database
+                $checkIfExistsQuery = "SELECT COUNT(*) FROM `BlackListBK` WHERE `msisdn` = ?";
+                $checkIfExistsStmt = $conn->prepare($checkIfExistsQuery);
+                $checkIfExistsStmt->bind_param("s", $msisdn);
+                $checkIfExistsStmt->execute();
+                $checkIfExistsStmt->bind_result($count);
+                $checkIfExistsStmt->fetch();
+                $checkIfExistsStmt->close();
+
+                if ($count == 0) {
+                    // Execute the prepared statement for insertion
+                    if (!$stmt->execute()) {
+                        echo "Error: " . $stmt->error . "<br>";
+                    }
+                } else {
+                    echo "Duplicate msisdn found in the database: $msisdn. Skipping insertion.<br>";
                 }
             } else {
                 echo "Duplicate msisdn found: $msisdn. Skipping insertion.<br>";
