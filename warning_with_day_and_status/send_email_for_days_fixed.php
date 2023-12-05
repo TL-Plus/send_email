@@ -1,5 +1,5 @@
 <?php
-require_once 'send_email/includes/config.php';
+require_once 'send_email/config.php';
 require_once 'send_email/includes/export_excel.php';
 require_once 'send_email/includes/email_notifications.php';
 
@@ -8,7 +8,7 @@ function sendEmailForDaysFixed($sql1, $sql2, $header, $attachment, $subject, $re
 {
     try {
         $numbers = array();
-        $result = connectAndQueryDatabase($sql1, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+        $result = connectAndQueryDatabase($sql1, $_ENV['DB_HOSTNAME'], $_ENV['DB_USERNAME'], $_ENV['DB_PASSWORD'], $_ENV['DB_DATABASE']);
 
         // Check if $result is an object before proceeding
         if (is_object($result)) {

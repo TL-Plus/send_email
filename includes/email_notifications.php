@@ -1,6 +1,6 @@
 <?php
 require 'vendor/autoload.php';
-require_once 'config.php';
+require_once 'send_email/config.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -14,17 +14,17 @@ function sendEmailNotification($attachmentPath, $subject, $body, $recipients)
         // Server settings
         $mail->IsSMTP();
         $mail->CharSet = 'UTF-8';
-        $mail->Host = SMTP_HOST;
+        $mail->Host = $_ENV['SMTP_HOST'];
         $mail->SMTPDebug = 0;
         $mail->SMTPAuth = true;
-        $mail->Port = SMTP_PORT;
-        $mail->Username = SMTP_USERNAME;
-        $mail->Password = SMTP_PASSWORD;
+        $mail->Port = $_ENV['SMTP_PORT'];
+        $mail->Username = $_ENV['SMTP_USERNAME'];
+        $mail->Password = $_ENV['SMTP_PASSWORD'];
 
-        $mail->setFrom(SENDER_EMAIL);
+        $mail->setFrom($_ENV['SENDER_EMAIL']);
 
         // Add each recipient to the email
-        $recipients = explode(',', RECIPIENTS);
+        $recipients = explode(',', $_ENV['RECIPIENTS']);
         foreach ($recipients as $recipient) {
             $mail->addAddress(trim($recipient));
         }

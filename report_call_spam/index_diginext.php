@@ -1,5 +1,5 @@
 <?php
-require 'send_email/includes/config.php';
+require 'send_email/config.php';
 require 'send_email/includes/database_connection.php';
 require 'includes/query_report_call_spam_by_number_contract_next.php';
 require 'send_email/includes/send_email_for_days.php';
@@ -16,7 +16,7 @@ $attachment = "Report_Call_Spam_By_Number_Contract_DIGINEXT_$today.xlsx";
 $subject = "Report Call Spam By Number Contract DIGINEXT ($today)";
 
 // Call the function to send a message via Telegram
-sendTelegramMessage($query_report_call_spam_by_number_contract_next, $header, $attachment, $subject, TELEGRAM_CHAT_ID);
+sendTelegramMessage($query_report_call_spam_by_number_contract_next, $header, $attachment, $subject, $_ENV['TELEGRAM_CHAT_ID']);
 
 // if you want to use email instead of telegram
 // Call function to send email notification warning payment yesterday

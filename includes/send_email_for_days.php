@@ -1,5 +1,5 @@
 <?php
-require_once 'config.php';
+require_once 'send_email/config.php';
 require 'export_excel.php';
 require 'email_notifications.php';
 

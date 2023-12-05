@@ -1,7 +1,6 @@
 <?php
-
 require_once 'vendor/autoload.php';
-require_once 'config.php';
+require_once 'send_email/config.php';
 require_once 'export_excel.php';
 
 use TelegramBot\Api\BotApi;
@@ -17,7 +16,7 @@ function sendTelegramMessage($sql, $header, $filename, $textMessage, $chatId)
         $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
 
         // Initialize the Telegram API object with your bot token
-        $telegram = new BotApi(TELEGRAM_BOT_TOKEN);
+        $telegram = new BotApi($_ENV['TELEGRAM_BOT_TOKEN']);
 
         // Prepare the document for sending
         $document = new \CURLFile($filename);

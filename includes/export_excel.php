@@ -1,13 +1,13 @@
 <?php
 require 'vendor/autoload.php';
-require_once 'config.php';
+require_once 'send_email/config.php';
 
 use PhpOffice\PhpSpreadsheet\Worksheet\Table;
 use PhpOffice\PhpSpreadsheet\Worksheet\Table\TableStyle;
 
 function exportToExcel($sql, $header, $filename)
 {
-    $result = connectAndQueryDatabase($sql, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+    $result = connectAndQueryDatabase($sql, $_ENV['DB_HOSTNAME'], $_ENV['DB_USERNAME'], $_ENV['DB_PASSWORD'], $_ENV['DB_DATABASE']);
 
     if ($result && $result->num_rows > 0) {
         // Create or reuse a spreadsheet object
