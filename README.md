@@ -38,7 +38,12 @@ Perform data queries and export liability contract data to excel files
 
 The server being used is digitel billing server with VoiceReport database.
 
-# Setup install package file root
+## Setup install package file root
+
+### install composer
+`sudo yum install composer`
+
+### install package
 ```
 composer require phpoffice/phpspreadsheet
 composer require phpmailer/phpmailer
