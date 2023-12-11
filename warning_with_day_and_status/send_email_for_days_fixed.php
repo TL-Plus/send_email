@@ -8,7 +8,7 @@ function sendEmailForDaysFixed($sql1, $sql2, $dbName, $header, $attachment, $sub
 {
     try {
         $numbers = array();
-        $result = connectAndQueryDatabase($sql1, $_ENV['DB_HOSTNAME'], $_ENV['DB_USERNAME'], $_ENV['DB_PASSWORD'], $dbName);
+        $result = connectAndQueryDatabase($sql1, $_ENV['DB_HOSTNAME_DIGITEL'], $_ENV['DB_USERNAME_DIGITEL'], $_ENV['DB_PASSWORD_DIGITEL'], $dbName);
 
         // Check if $result is an object before proceeding
         if (is_object($result)) {
