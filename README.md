@@ -62,7 +62,7 @@ composer require vlucas/phpdotenv
 ### if you want to change the database connection you need to change the $result variable in import_excel.php file with the corresponding database connection
 #### Database connection server billing DIGINEXT default
 ```
-$result = connectAndQueryDatabase($sql, $_ENV['DB_HOSTNAME_DIGINEXT'], $_ENV['DB_USERNAME_DIGINEXT'], $_ENV['DB_PASSWORD_DIGINEXT'], $_ENV['DB_DATABASE_DIGINEXT']);
+$result = connectAndQueryDatabase($sql, $_ENV['DB_HOSTNAME_DIGINEXT'], $_ENV['DB_USERNAME_DIGINEXT'], $_ENV['DB_PASSWORD_DIGINEXT'], $dbName);
 
 DB_HOSTNAME_DIGINEXT=
 DB_USERNAME_DIGINEXT=
@@ -72,7 +72,7 @@ DB_DATABASE_DIGINEXT=
 
 #### Database connection server billing DIGITEL
 ```
-$result = connectAndQueryDatabase($sql, $_ENV['DB_HOSTNAME_DIGITEL'], $_ENV['DB_USERNAME_DIGITEL'], $_ENV['DB_PASSWORD_DIGITEL'], $_ENV['DB_DATABASE_DIGITEL']);
+$result = connectAndQueryDatabase($sql, $_ENV['DB_HOSTNAME_DIGITEL'], $_ENV['DB_USERNAME_DIGITEL'], $_ENV['DB_PASSWORD_DIGITEL'], $dbName);
 
 DB_HOSTNAME_DIGITEL=
 DB_USERNAME_DIGITEL=
