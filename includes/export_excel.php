@@ -5,9 +5,9 @@ require_once 'send_email/config.php';
 use PhpOffice\PhpSpreadsheet\Worksheet\Table;
 use PhpOffice\PhpSpreadsheet\Worksheet\Table\TableStyle;
 
-function exportToExcel($sql, $header, $filename)
+function exportToExcel($sql, $dbName, $header, $filename)
 {
-    $result = connectAndQueryDatabase($sql, $_ENV['DB_HOSTNAME'], $_ENV['DB_USERNAME'], $_ENV['DB_PASSWORD'], $_ENV['DB_DATABASE']);
+    $result = connectAndQueryDatabase($sql, $_ENV['DB_HOSTNAME_DIGINEXT'], $_ENV['DB_USERNAME_DIGINEXT'], $_ENV['DB_PASSWORD_DIGINEXT'], $dbName);
 
     if ($result && $result->num_rows > 0) {
         // Create or reuse a spreadsheet object

@@ -13,10 +13,14 @@ $header = [
     'Years', 'Month', 'CustomerName', 'ContractCode', 'Number', 'StatusISDN', 'DateStarted', 'DateEnd'
 ];
 
+// Define $dbName, $recipients
+$dbName = $_ENV['DB_DATABASE_DIGITEL'];
+$recipients = $_ENV['RECIPIENTS'];
+
 // Prepare email details
 $month_liabilities = date('Y_m', strtotime('-2 months'));
 $attachment = "Report_warning_liabilities_$month_liabilities.xlsx";
 $subject = "Report Warning Liabilities ($month_liabilities)";
 
 // Call function to send email notification for warning liabilities
-sendEmailForDays($query_warning_liabilities, $header, $attachment, $subject,  $_ENV['RECIPIENTS']);
+sendEmailForDays($query_warning_liabilities, $dbName, $header, $attachment, $subject,  $recipients);

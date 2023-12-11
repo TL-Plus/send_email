@@ -43,7 +43,7 @@ The server being used is digitel billing server with VoiceReport database.
 ### install composer
 `sudo yum install composer`
 
-### install package
+### install package in root file
 ```
 composer require phpoffice/phpspreadsheet
 composer require phpmailer/phpmailer
@@ -60,16 +60,7 @@ composer require vlucas/phpdotenv
 `cp .env.example .env`
 
 ### if you want to change the database connection you need to change the $result variable in import_excel.php file with the corresponding database connection
-#### Database connection server billing default
-```
-$result = connectAndQueryDatabase($sql, $_ENV['DB_HOSTNAME'], $_ENV['DB_USERNAME'], $_ENV['DB_PASSWORD'], $_ENV['DB_DATABASE']);
-DB_HOSTNAME=
-DB_USERNAME=
-DB_PASSWORD=
-DB_DATABASE=
-```
-
-#### Database connection server billing DIGINEXT
+#### Database connection server billing DIGINEXT default
 ```
 $result = connectAndQueryDatabase($sql, $_ENV['DB_HOSTNAME_DIGINEXT'], $_ENV['DB_USERNAME_DIGINEXT'], $_ENV['DB_PASSWORD_DIGINEXT'], $_ENV['DB_DATABASE_DIGINEXT']);
 DB_HOSTNAME_DIGINEXT=

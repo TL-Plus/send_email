@@ -6,10 +6,10 @@ require_once 'export_excel.php';
 use TelegramBot\Api\BotApi;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
-function sendTelegramMessage($sql, $header, $filename, $textMessage, $chatId)
+function sendTelegramMessage($sql, $dbName, $header, $filename, $textMessage, $chatId)
 {
     try {
-        exportToExcel($sql, $header, $filename);
+        exportToExcel($sql, $dbName, $header, $filename);
 
         // Read content from the Excel file
         $spreadsheet = IOFactory::load($filename);

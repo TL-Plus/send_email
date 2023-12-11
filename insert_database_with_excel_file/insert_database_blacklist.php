@@ -7,7 +7,7 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 function insertDataFromExcel($inputFileName)
 {
     // Establish a database connection
-    $conn = connectDatabase($_ENV['DB_HOSTNAME'], $_ENV['DB_USERNAME'], $_ENV['DB_PASSWORD'], $_ENV['DB_DATABASE']);
+    $conn = connectDatabase($_ENV['DB_HOSTNAME_DIGINEXT'], $_ENV['DB_USERNAME_DIGINEXT'], $_ENV['DB_PASSWORD_DIGINEXT'], $_ENV['DB_DATABASE_BLACKLIST']);
 
     // Prepare the SQL statement for data insertion
     $sql = "INSERT INTO `BlackList` (`msisdn`, `telco`, `shortcode`, `info`, `mo_time`, `cmd_code`, `error_code`, `error_desc`, `updated_at`, `created_at`) 
