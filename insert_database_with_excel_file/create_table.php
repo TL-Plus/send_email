@@ -3,7 +3,7 @@
 function createTable($conn)
 {
     // Prepare the SQL statement for table creation
-    $sql = "CREATE TABLE IF NOT EXISTS `BlackListBK` (
+    $sql = "CREATE TABLE IF NOT EXISTS `BlackList` (
         `id` int(11) NOT NULL AUTO_INCREMENT,
         `msisdn` varchar(50) NOT NULL,
         `telco` varchar(50) DEFAULT NULL,

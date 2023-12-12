@@ -11,10 +11,10 @@ function insertDataFromCSV($inputFileName)
     $conn = connectDatabase($_ENV['DB_HOSTNAME_DIGINEXT'], $_ENV['DB_USERNAME_DIGINEXT'], $_ENV['DB_PASSWORD_DIGINEXT'], $_ENV['DB_DATABASE_BLACKLIST']);
 
     // Create the table if it doesn't exist
-    createTable($conn);
+    // createTable($conn);
 
     // Prepare the SQL statement for data insertion
-    $sql = "INSERT INTO `BlackListBK` (`msisdn`, `telco`, `shortcode`, `info`, `mo_time`, `cmd_code`, `error_code`, `error_desc`, `updated_at`, `created_at`) 
+    $sql = "INSERT INTO `BlackList` (`msisdn`, `telco`, `shortcode`, `info`, `mo_time`, `cmd_code`, `error_code`, `error_desc`, `updated_at`, `created_at`) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
 
     // Prepare the SQL statement once outside the loop for better performance
@@ -50,7 +50,7 @@ function insertDataFromCSV($inputFileName)
                 $telco = str_pad($telco, 2, '0', STR_PAD_LEFT);
 
                 // Check if msisdn already exists in the database
-                $checkIfExistsQuery = "SELECT COUNT(*) FROM `BlackListBK` WHERE `msisdn` = ?";
+                $checkIfExistsQuery = "SELECT COUNT(*) FROM `BlackList` WHERE `msisdn` = ?";
                 $checkIfExistsStmt = $conn->prepare($checkIfExistsQuery);
                 $checkIfExistsStmt->bind_param("s", $msisdn);
                 $checkIfExistsStmt->execute();
