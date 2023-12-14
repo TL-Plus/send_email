@@ -1,6 +1,7 @@
 <?php
 require_once 'send_email/config.php';
 
+
 // Function to establish a database connection
 function connectDatabase($hostname, $username, $password, $database)
 {

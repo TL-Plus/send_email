@@ -6,6 +6,7 @@ require 'includes/query_888_fixed_functions.php';
 require 'send_email/includes/send_email_for_days.php';
 require 'send_email_for_days_fixed.php';
 
+
 // Define Excel header
 $header = [
     'CustomerName', 'CustomerPhone', 'CustomerEmail', 'CustomerCode', 'ContractCode', 'Number',

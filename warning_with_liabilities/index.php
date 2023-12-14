@@ -5,6 +5,7 @@ require 'send_email/includes/send_email_for_days.php';
 require 'includes/query_warning_liabilities.php';
 
 
+
 // Generate the SQL query for warning liabilities
 $query_warning_liabilities = generateWarningLiabilitiesQuery($_ENV['TIME_BEGIN'], $_ENV['TIME_END']);
 

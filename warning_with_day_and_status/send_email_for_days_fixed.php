@@ -3,12 +3,19 @@ require_once 'send_email/config.php';
 require_once 'send_email/includes/export_excel.php';
 require_once 'send_email/includes/email_notifications.php';
 
+
 // Function to send email notification
 function sendEmailForDaysFixed($sql1, $sql2, $dbName, $header, $attachment, $subject, $recipients)
 {
     try {
         $numbers = array();
-        $result = connectAndQueryDatabase($sql1, $_ENV['DB_HOSTNAME_DIGITEL'], $_ENV['DB_USERNAME_DIGITEL'], $_ENV['DB_PASSWORD_DIGITEL'], $dbName);
+        $result = connectAndQueryDatabase(
+            $sql1,
+            $_ENV['DB_HOSTNAME_DIGITEL'],
+            $_ENV['DB_USERNAME_DIGITEL'],
+            $_ENV['DB_PASSWORD_DIGITEL'],
+            $dbName
+        );
 
         // Check if $result is an object before proceeding
         if (is_object($result)) {

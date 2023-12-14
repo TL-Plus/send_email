@@ -3,6 +3,7 @@ require_once 'send_email/config.php';
 require 'export_excel.php';
 require 'email_notifications.php';
 
+
 // Function to send email notification
 function sendEmailForDays($sql, $dbName, $header, $attachment, $subject, $recipients)
 {

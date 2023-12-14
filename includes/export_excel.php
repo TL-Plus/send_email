@@ -2,16 +2,26 @@
 require 'vendor/autoload.php';
 require_once 'send_email/config.php';
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Worksheet\Table;
 use PhpOffice\PhpSpreadsheet\Worksheet\Table\TableStyle;
 
+
 function exportToExcel($sql, $dbName, $header, $filename)
 {
-    $result = connectAndQueryDatabase($sql, $_ENV['DB_HOSTNAME_DIGINEXT'], $_ENV['DB_USERNAME_DIGINEXT'], $_ENV['DB_PASSWORD_DIGINEXT'], $dbName);
+    $result = connectAndQueryDatabase(
+        $sql,
+        $_ENV['DB_HOSTNAME_DIGINEXT'],
+        $_ENV['DB_USERNAME_DIGINEXT'],
+        $_ENV['DB_PASSWORD_DIGINEXT'],
+        $dbName
+    );
 
     if ($result && $result->num_rows > 0) {
         // Create or reuse a spreadsheet object
-        $spreadsheet = new PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
         // Set the title in the Excel file
@@ -42,7 +52,7 @@ function exportToExcel($sql, $dbName, $header, $filename)
                 }
 
                 // Set cell value explicitly to handle different data types
-                $sheet->setCellValueExplicit($column . $row, $value, PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+                $sheet->setCellValueExplicit($column . $row, $value, DataType::TYPE_STRING);
 
                 // Calculate column width based on the length of the longest string
                 $columnWidths[$column] = max(strlen($value) + 2, isset($columnWidths[$column]) ? $columnWidths[$column] : 0);
@@ -79,7 +89,7 @@ function exportToExcel($sql, $dbName, $header, $filename)
         $sheet->addTable($table);
 
         // Save the Excel file
-        $writer = new PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $writer = new Xlsx($spreadsheet);
         $writer->save($filename);
         echo "File $filename exported successfully.";
     } else {

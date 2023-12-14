@@ -4,6 +4,7 @@ require 'send_email/config.php';
 require 'send_email/includes/database_connection.php';
 require 'csv_insert_database_blacklist.php';
 
+
 // List of CSV files to process
 $csvFiles = [
     'List_DNC_1.csv',

@@ -3,8 +3,8 @@ require 'vendor/autoload.php';
 require_once 'send_email/config.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
+
 
 function sendEmailNotification($attachmentPath, $subject, $body, $recipients)
 {

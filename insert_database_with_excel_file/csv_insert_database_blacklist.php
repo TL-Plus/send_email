@@ -3,15 +3,19 @@
 require 'vendor/autoload.php';
 require 'create_table.php';
 
-use PhpOffice\PhpSpreadsheet\IOFactory;
 
 function insertDataFromCSV($inputFileName)
 {
     // Establish a database connection
-    $conn = connectDatabase($_ENV['DB_HOSTNAME_DIGINEXT'], $_ENV['DB_USERNAME_DIGINEXT'], $_ENV['DB_PASSWORD_DIGINEXT'], $_ENV['DB_DATABASE_BLACKLIST']);
+    $conn = connectDatabase(
+        $_ENV['DB_HOSTNAME_DIGINEXT'],
+        $_ENV['DB_USERNAME_DIGINEXT'],
+        $_ENV['DB_PASSWORD_DIGINEXT'],
+        $_ENV['DB_DATABASE_BLACKLIST']
+    );
 
     // Create the table if it doesn't exist
-    // createTable($conn);
+    createTable($conn);
 
     // Prepare the SQL statement for data insertion
     $sql = "INSERT INTO `BlackList` (`msisdn`, `telco`, `shortcode`, `info`, `mo_time`, `cmd_code`, `error_code`, `error_desc`, `updated_at`, `created_at`) 

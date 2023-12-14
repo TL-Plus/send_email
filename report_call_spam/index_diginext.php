@@ -5,6 +5,7 @@ require 'includes/query_report_call_spam_by_number_contract_next.php';
 require 'send_email/includes/send_email_for_days.php';
 require 'send_email/includes/send_telegram_message.php';
 
+
 // Define Excel header
 $header = [
     'Day', 'CustomerName', 'ContractCode', 'Caller', 'Callee', 'SL'
