@@ -1,10 +1,13 @@
 <?php
-require_once 'send_email/config.php';
-require_once 'send_email/includes/database_connection.php';
-require_once 'includes/query_dvgtgt_functions.php';
-require_once 'includes/query_888_fixed_functions.php';
-require 'send_email_for_days_and_update_status_email.php';
+require 'send_email/config.php';
+require 'send_email/includes/database_connection.php';
+require 'send_email/includes/send_email_for_days.php';
+require 'includes/update_status_email.php';
 
+
+// Define Constants
+define('WARNING_THRESHOLD', 5);
+define('TERMINATION_THRESHOLD', 7);
 
 // Define Excel header
 $header = [
@@ -16,14 +19,31 @@ $header = [
 $dbName = $_ENV['DB_DATABASE_BILLING_DIGINEXT'];
 $recipients = $_ENV['RECIPIENTS'];
 
-// // Call function to send email notification for 5-day warning (DVGTGT)
-sendEmailForDaysAndUpdateStatusEmail($query_dvgtgt_5_day, $dbName, $header, 'Report_warning_5_days_dvgtgt.xlsx', 'Report 5-Day Warning (DVGTGT)', $recipients);
+function processEmails($threshold, $dbName, $header, $fileNamePrefix, $title, $recipients, $orderNumberCondition)
+{
+    $query = "SELECT `customer_name`, `customer_code`, 
+            `customer_address`, `customer_email`, `customer_phone`, `user_name`, 
+            `user_code`, `order_number`, `order_time`, `status`
+        FROM `order_numbers`
+        WHERE DATEDIFF(NOW(), order_time) >= $threshold
+        AND status = 'holding'
+        AND status_email = 0
+        $orderNumberCondition";
 
-// Call function to send email notification for termination on the 7th day (DVGTGT)
-sendEmailForDaysAndUpdateStatusEmail($query_dvgtgt_7_day, $dbName, $header, 'Report_termination_7_days_dvgtgt.xlsx', 'Report Termination on 7th Day (DVGTGT)', $recipients);
+    // Call function to send email notification for warning
+    sendEmailForDays($query, $dbName, $header, "{$fileNamePrefix}{$threshold}_days.xlsx", "$title ($threshold-Days)", $recipients);
+    // Call function to update status email
+    updateStatusEmail($query);
+}
 
-// Call function to send email notification for 5-day warning (888 Fixed)
-sendEmailForDaysAndUpdateStatusEmail($query_888_fixed_5_day, $dbName, $header, 'Report_warning_5_days_888_fixed.xlsx', 'Report 5-Day Warning (888 Fixed)', $recipients);
+// Process DVGTGT emails
+$orderNumberConditionDVGTGT = "AND (order_number LIKE '1900%' OR order_number LIKE '1800%')";
+processEmails(WARNING_THRESHOLD, $dbName, $header, 'Report_warning_dvgtgt_', 'Report Warning DVGTGT', $recipients, $orderNumberConditionDVGTGT);
 
-// Call function to send email notification for termination on the 7th day (888 Fixed)
-sendEmailForDaysAndUpdateStatusEmail($query_888_fixed_7_day, $dbName, $header, 'Report_termination_7_days_888_fixed.xlsx', 'Report Termination on 7th Day (888 Fixed)', $recipients);
+processEmails(TERMINATION_THRESHOLD, $dbName, $header, 'Report_termination_dvgtgt_', 'Report Termination DVGTGT', $recipients, $orderNumberConditionDVGTGT);
+
+// Process 888 Fixed emails
+$orderNumberCondition888Fixed = "AND order_number LIKE '2%' AND order_number LIKE '%888%'";
+processEmails(WARNING_THRESHOLD, $dbName, $header, 'Report_warning_888_fixed_', 'Report Warning 888 Fixed', $recipients, $orderNumberCondition888Fixed);
+
+processEmails(TERMINATION_THRESHOLD, $dbName, $header, 'Report_termination_888_fixed_', 'Report Termination 888 Fixed', $recipients, $orderNumberCondition888Fixed);

@@ -1,10 +1,19 @@
 <?php
 require 'send_email/config.php';
 require 'send_email/includes/database_connection.php';
-require 'includes/query_report_call_spam_by_number_contract_next.php';
 require 'send_email/includes/send_email_for_days.php';
 require 'send_email/includes/send_telegram_message.php';
 
+
+// query_report_call_spam_by_number_contract_next
+$query_report_call_spam_by_number_contract_next = "SELECT 
+Day, CustomerName, ContractCode, Caller, Callee, SL 
+FROM `ReportCallSpamByNumberContractNext`
+WHERE SL > 10
+AND Day = DATE_FORMAT(CURDATE(), '%d')
+AND CustomerName != '' 
+AND Callee NOT LIKE '842%' 
+ORDER BY SL DESC";
 
 // Define Excel header
 $header = [

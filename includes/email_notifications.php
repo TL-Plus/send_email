@@ -38,7 +38,7 @@ function sendEmailNotification($attachmentPath, $subject, $body, $recipients)
             throw new Exception('Mailer Error: ' . $mail->ErrorInfo);
         }
 
-        echo 'The email message was sent.';
+        echo "The email message was sent.\n";
     } catch (Exception $e) {
         echo 'Error: ' . $e->getMessage();
     }
