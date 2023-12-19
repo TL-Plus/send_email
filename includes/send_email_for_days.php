@@ -8,8 +8,12 @@ require 'email_notifications.php';
 function sendEmailForDays($sql, $dbName, $header, $attachment, $subject, $recipients)
 {
     try {
-        exportToExcel($sql, $dbName, $header, $attachment);
-        sendEmailNotification("/root/{$attachment}", $subject, "Excel Files for {$subject}", $recipients);
+        $exportSuccessful = exportToExcel($sql, $dbName, $header, $attachment);
+
+        // Check if export was successful before sending email
+        if ($exportSuccessful) {
+            sendEmailNotification("/root/{$attachment}", $subject, "Excel Files for {$subject}", $recipients);
+        }
     } catch (Exception $e) {
         echo 'Error: ' . $e->getMessage();
     }

@@ -91,8 +91,11 @@ function exportToExcel($sql, $dbName, $header, $filename)
         // Save the Excel file
         $writer = new Xlsx($spreadsheet);
         $writer->save($filename);
+
         echo "File $filename exported successfully.";
+        return true;
     } else {
         echo "There is no data to export for this query.";
+        return false;
     }
 }
