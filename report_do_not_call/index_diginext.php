@@ -24,7 +24,7 @@ $chatId = $_ENV['TELEGRAM_CHAT_ID'];
 
 // yesterday
 $yesterday = date('Y_m_d', strtotime('-1 days'));
-$attachment = "Report_DNC_DIGINEXT_$yesterday.xlsx";
+$attachment = "Report_DNC_$yesterday.xlsx";
 $subject = "Report DNC DIGINEXT ($yesterday)";
 
 // Call the function to send a message via Telegram
