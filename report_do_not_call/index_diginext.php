@@ -23,12 +23,12 @@ $dbName = $_ENV['DB_DATABASE_BLACKLIST'];
 $chatId = $_ENV['TELEGRAM_CHAT_ID'];
 
 // yesterday
-$yesterday = date('Y_m_d', strtotime('-1 days'));
+$yesterday = date('Y_m_d', strtotime('-1 day'));
 $attachment = "Report_DNC_$yesterday.xlsx";
 $subject = "Report DNC DIGINEXT ($yesterday)";
 
 // Call the function to send a message via Telegram
-sendTelegramMessage($query_report_do_not_call_blacklist, $dbName, $header, $attachment, $subject, $chatId);
+sendTelegramMessageWithSql($query_report_do_not_call_blacklist, $dbName, $header, $attachment, $subject, $chatId);
 
 // if you want to use email instead of telegram
 // Call function to send email notification warning payment yesterday
