@@ -23,7 +23,7 @@ $dbName = $_ENV['DB_DATABASE_BLACKLIST'];
 $chatId = $_ENV['TELEGRAM_CHAT_ID'];
 
 // yesterday
-$yesterday = date('Y_m_d', strtotime('-1 day'));
+$yesterday = date('Y_m_d');
 $attachment = "Report_DNC_$yesterday.xlsx";
 $subject = "Report DNC DIGINEXT ($yesterday)";
 

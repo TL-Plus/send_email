@@ -8,6 +8,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Worksheet\Table;
 use PhpOffice\PhpSpreadsheet\Worksheet\Table\TableStyle;
 
+
 function exportToExcelLargeFiles($sql, $dbName, $header, $baseFilename)
 {
     // Set the maximum number of rows to fetch in each iteration
