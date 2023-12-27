@@ -23,6 +23,7 @@ $header = [
 // Define $dbName, $chatId
 $dbName = $_ENV['DB_DATABASE_REPORT'];
 $chatId = $_ENV['TELEGRAM_CHAT_ID'];
+$recipients = $_ENV['RECIPIENTS'];
 
 // today
 $today = date('Y_m_d');
@@ -33,5 +34,5 @@ $subject = "Report Call Spam By Number Contract DIGINEXT ($today)";
 sendTelegramMessageWithSql($query_report_call_spam_by_number_contract_next, $dbName, $header, $attachment, $subject, $chatId);
 
 // if you want to use email instead of telegram
-// Call function to send email notification warning payment yesterday
-// sendEmailForDays($query_report_call_spam_by_number_contract_next_bk, $dbName, $header, $attachment, $subject, RECIPIENTS);
+// Call function to send email notification
+// sendEmailForDays($query_report_call_spam_by_number_contract_next, $dbName, $header, $attachment, $subject, $recipients);

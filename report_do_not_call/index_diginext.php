@@ -27,21 +27,22 @@ ORDER BY
 
 // Define Excel header
 $header = [
-    'msisdn', 'day_cmd_code', 'telco', 'shortcode', 'info', 'mo_time', 'cmd_code', 'error_code', 'error_desc', 'updated_at', 'created_at'
+  'msisdn', 'day_cmd_code', 'telco', 'shortcode', 'info', 'mo_time', 'cmd_code', 'error_code', 'error_desc', 'updated_at', 'created_at'
 ];
 
 // Define $dbName, $chatId
 $dbName = $_ENV['DB_DATABASE_BLACKLIST'];
 $chatId = $_ENV['TELEGRAM_CHAT_ID'];
+$recipients = $_ENV['RECIPIENTS'];
 
-// yesterday
-$yesterday = date('Y_m_d', strtotime('-1 days'));
-$attachment = "Report_DNC_$yesterday.xlsx";
-$subject = "Report DNC DIGINEXT ($yesterday)";
+// today
+$today = date('Y_m_d');
+$attachment = "Report_DNC_$today.xlsx";
+$subject = "Report DNC DIGINEXT ($today)";
 
 // Call the function to send a message via Telegram
 sendTelegramMessageWithSql($query_report_do_not_call_blacklist, $dbName, $header, $attachment, $subject, $chatId);
 
 // if you want to use email instead of telegram
-// Call function to send email notification warning payment yesterday
-// sendEmailForDays($query_report_call_spam_by_number_contract_next_bk, $dbName, $header, $attachment, $subject, RECIPIENTS);
+// Call function to send email notification
+// sendEmailForDays($query_report_do_not_call_blacklist, $dbName, $header, $attachment, $subject, $recipients);
