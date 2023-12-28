@@ -25,6 +25,7 @@ $header = [
 
 // Define $dbName, $chatId
 $dbName = $_ENV['DB_DATABASE_BLACKLIST'];
+$botToken = $_ENV['TELEGRAM_BOT_TOKEN'];
 $chatId = $_ENV['TELEGRAM_CHAT_ID'];
 
 // Define the base filename for the exported files
@@ -42,7 +43,7 @@ if ($exportedFiles !== false) {
     // Send each exported file to Telegram
     foreach ($exportedFiles as $exportedFile) {
         // Call the function to send a message via Telegram
-        sendTelegramMessages($exportedFile, $subject, $chatId);
+        sendTelegramMessages($exportedFile, $subject, $botToken, $chatId);
     }
 } else {
     echo "Export failed or no data to export.\n";

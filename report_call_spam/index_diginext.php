@@ -20,8 +20,9 @@ $header = [
     'Day', 'CustomerName', 'ContractCode', 'Caller', 'Callee', 'SL'
 ];
 
-// Define $dbName, $chatId
+// Define $dbName, $botToken, $chatId, $recipients
 $dbName = $_ENV['DB_DATABASE_REPORT'];
+$botToken = $_ENV['TELEGRAM_BOT_TOKEN'];
 $chatId = $_ENV['TELEGRAM_CHAT_ID'];
 $recipients = $_ENV['RECIPIENTS'];
 
@@ -31,7 +32,7 @@ $attachment = "Report_Call_Spam_By_Number_Contract_DIGINEXT_$today.xlsx";
 $subject = "Report Call Spam By Number Contract DIGINEXT ($today)";
 
 // Call the function to send a message via Telegram
-sendTelegramMessageWithSql($query_report_call_spam_by_number_contract_next, $dbName, $header, $attachment, $subject, $chatId);
+sendTelegramMessageWithSql($query_report_call_spam_by_number_contract_next, $dbName, $header, $attachment, $subject, $botToken, $chatId);
 
 // if you want to use email instead of telegram
 // Call function to send email notification

@@ -7,7 +7,7 @@ use TelegramBot\Api\BotApi;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 
-function sendTelegramMessageWithSql($sql, $dbName, $header, $filename, $textMessage, $chatId)
+function sendTelegramMessageWithSql($sql, $dbName, $header, $filename, $textMessage, $botToken, $chatId)
 {
     try {
         $exportSuccessful = exportToExcel($sql, $dbName, $header, $filename);
@@ -19,7 +19,7 @@ function sendTelegramMessageWithSql($sql, $dbName, $header, $filename, $textMess
             $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
 
             // Initialize the Telegram API object with your bot token
-            $telegram = new BotApi($_ENV['TELEGRAM_BOT_TOKEN']);
+            $telegram = new BotApi($botToken);
 
             // Prepare the document for sending
             $document = new \CURLFile($filename);
@@ -34,7 +34,7 @@ function sendTelegramMessageWithSql($sql, $dbName, $header, $filename, $textMess
     }
 }
 
-function sendTelegramMessages($filename, $textMessage, $chatId)
+function sendTelegramMessages($filename, $textMessage, $botToken, $chatId)
 {
     try {
         // Read content from the Excel file
@@ -42,7 +42,7 @@ function sendTelegramMessages($filename, $textMessage, $chatId)
         $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
 
         // Initialize the Telegram API object with your bot token
-        $telegram = new BotApi($_ENV['TELEGRAM_BOT_TOKEN']);
+        $telegram = new BotApi($botToken);
 
         // Prepare the document for sending
         $document = new \CURLFile($filename);

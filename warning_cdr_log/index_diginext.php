@@ -18,9 +18,10 @@ $header = [
     'ID', 'Server', 'TimeUpdate', 'TimeBegin', 'TimeEnd', 'Count', 'Condition'
 ];
 
-// Define $dbName, $chatId
+// Define $dbName, $botToken, $chatId, $recipients
 $dbName = $_ENV['DB_DATABASE_VOICEREPORT'];
-$chatId = $_ENV['TELEGRAM_CHAT_ID'];
+$botToken = $_ENV['TELEGRAM_BOT_TOKEN_DIGINEXT'];
+$chatId = $_ENV['TELEGRAM_CHAT_ID_DIGINEXT'];
 $recipients = $_ENV['RECIPIENTS'];
 
 // today
@@ -29,8 +30,8 @@ $attachment = "Report_Warning_CDRLog_DIGINEXT_$today.xlsx";
 $subject = "Report Warning CDRLog DIGINEXT ($today)";
 
 // Call the function to send a message via Telegram
-// sendTelegramMessageWithSql($query_report_warning_cdr_log, $dbName, $header, $attachment, $subject, $chatId);
+sendTelegramMessageWithSql($query_report_warning_cdr_log, $dbName, $header, $attachment, $subject, $botToken, $chatId);
 
 // if you want to use email instead of telegram
 // Call function to send email notification
-sendEmailForDays($query_report_warning_cdr_log, $dbName, $header, $attachment, $subject, $recipients);
+// sendEmailForDays($query_report_warning_cdr_log, $dbName, $header, $attachment, $subject, $recipients);
