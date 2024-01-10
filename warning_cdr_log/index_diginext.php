@@ -8,7 +8,6 @@ require 'send_email/includes/send_telegram_message.php';
 // query_report_call_spam_by_number_contract_next
 $query_report_warning_cdr_log = "SELECT * FROM `CDRLog`
 WHERE DATE(`TimeBegin`) = CURDATE() 
-AND `Count` > 0 
 AND `Conditon` = 1
 AND TIMESTAMPDIFF(HOUR, `TimeBegin`, NOW()) >= 1
 ORDER BY `CDRLog`.`TimeBegin` DESC";
