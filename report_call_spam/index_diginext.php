@@ -32,9 +32,9 @@ $attachment = "Report_Call_Spam_By_Number_Contract_DIGINEXT_$today.xlsx";
 $subject = "Report Call Spam By Number Contract DIGINEXT ($today)";
 
 // Call the function to send a message via Telegram
-if (file_exists($attachment)) {
-    sendTelegramMessageWithSql($query_report_call_spam_by_number_contract_next, $dbName, $header, $attachment, $subject, $botToken, $chatId);
-} else {
+sendTelegramMessageWithSql($query_report_call_spam_by_number_contract_next, $dbName, $header, $attachment, $subject, $botToken, $chatId);
+
+if (!file_exists($attachment)) {
     $day = date('d-m-Y');
     $error_message = "Today $day No Report Call Spam By Number Contract DIGINEXT.";
     sendTelegramMessage($error_message, $botToken, $chatId);
