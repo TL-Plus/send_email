@@ -1,0 +1,56 @@
+<?php
+require_once '/var/www/html/vendor/autoload.php';
+require_once '/var/www/html/send_email/config.php';
+require_once '/var/www/html/send_email/includes/export_excel.php';
+require_once '/var/www/html/send_email/includes/database_connection.php';
+require_once '/var/www/html/send_email/includes/send_telegram_message.php';
+
+$query_report_ctc = "SELECT 
+dcn202401.customer_name AS CustomerName,
+dcn202401.user_name AS SalerName,
+SUM(dcn202401.TotalCost) AS TotalCost,
+NULL AS TotalCurrentCall,
+(
+    SELECT COUNT(ext_number) 
+    FROM Billing_Diginext.report_number_block rnb
+    WHERE rnb.contract_code = dcn202401.contract_code
+      AND DATE(rnb.time_update) = CURDATE()
+) AS BlockViettel,
+(
+    SELECT COUNT(ext_number) 
+    FROM Billing_Diginext.report_number_blockMobi rnbMobi
+    WHERE rnbMobi.contract_code = dcn202401.contract_code
+      AND DATE(rnbMobi.time_update) = CURDATE()
+) AS BlockMobifone
+FROM
+dcn202401
+WHERE            
+DATE(dcn202401.TimeUpdate) = CURDATE()
+GROUP BY
+dcn202401.customer_name
+ORDER BY 
+TotalCost DESC 
+LIMIT 30;";
+
+$header = [
+  'CustomerName', 'SalerName', 'TotalCost', 'TotalCurrentCall', 'BlockViettel', 'BlockMobifone'
+];
+
+$dbName = $_ENV['DB_DATABASE_VOICEREPORT'];
+$botToken = $_ENV['TELEGRAM_BOT_TOKEN'];
+$chatId = $_ENV['TELEGRAM_CHAT_ID'];
+
+date_default_timezone_set("Asia/Ho_Chi_Minh");
+$today = date('Y_m_d');
+$excelFilePath = "/var/www/html/Report_CTC_$today.xlsx";
+$currentTime = date('d-m-Y H:i');
+$textMessage = "Dữ liệu Báo Cáo Cuộc Gọi Hệ Thống VOS DIGINEXT ngày: $currentTime đã được cập nhật xong!" . PHP_EOL
+  . "Kính mời đội ngũ vận hành vào website: http://103.112.209.152/send_email/report_ctc/ để xem và cập nhật thêm dữ liệu!";
+
+$exportSuccessful = exportToExcel($query_report_ctc, $dbName, $header, $excelFilePath);
+
+if ($exportSuccessful) {
+  sendTelegramMessage($textMessage, $botToken, $chatId);
+} else {
+  echo "Error exporting data to Excel.\n";
+}

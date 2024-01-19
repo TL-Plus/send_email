@@ -1,5 +1,5 @@
 <?php
-require_once 'send_email/config.php';
+require_once '/var/www/html/send_email/config.php';
 
 
 // Function to establish a database connection

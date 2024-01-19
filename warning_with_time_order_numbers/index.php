@@ -18,8 +18,10 @@ $header = [
 // Define $dbName, $recipients
 $dbName = $_ENV['DB_DATABASE_BILLING_DIGINEXT'];
 $recipients = $_ENV['RECIPIENTS'];
+$botToken = $_ENV['TELEGRAM_BOT_TOKEN'];
+$chatId = $_ENV['TELEGRAM_CHAT_ID'];
 
-function processEmails($threshold, $dbName, $header, $fileNamePrefix, $title, $recipients, $orderNumberCondition)
+function processEmailsAndTelegrams($threshold, $dbName, $header, $fileNamePrefix, $title, $recipients, $botToken, $chatId, $orderNumberCondition)
 {
     $query = "SELECT `customer_name`, `customer_code`, 
             `customer_address`, `customer_email`, `customer_phone`, `user_name`, 
@@ -32,18 +34,22 @@ function processEmails($threshold, $dbName, $header, $fileNamePrefix, $title, $r
 
     // Call function to send email notification for warning
     sendEmailForDays($query, $dbName, $header, "{$fileNamePrefix}{$threshold}_days.xlsx", "$title ($threshold-Days)", $recipients);
+
+    // Call function to send telegram message notification for warning
+    sendTelegramMessageWithSql($query, $dbName, $header, "{$fileNamePrefix}{$threshold}_days.xlsx", "$title ($threshold-Days)", $botToken, $chatId);
+
     // Call function to update status email
     updateStatusEmail($query);
 }
 
 // Process DVGTGT emails
 $orderNumberConditionDVGTGT = "AND (order_number LIKE '1900%' OR order_number LIKE '1800%')";
-processEmails(WARNING_THRESHOLD, $dbName, $header, 'Report_warning_dvgtgt_', 'Report Warning DVGTGT', $recipients, $orderNumberConditionDVGTGT);
+processEmailsAndTelegrams(WARNING_THRESHOLD, $dbName, $header, 'Report_warning_dvgtgt_', 'Report Warning DVGTGT', $recipients, $botToken, $chatId, $orderNumberConditionDVGTGT);
 
-processEmails(TERMINATION_THRESHOLD, $dbName, $header, 'Report_termination_dvgtgt_', 'Report Termination DVGTGT', $recipients, $orderNumberConditionDVGTGT);
+processEmailsAndTelegrams(TERMINATION_THRESHOLD, $dbName, $header, 'Report_termination_dvgtgt_', 'Report Termination DVGTGT', $recipients, $botToken, $chatId, $orderNumberConditionDVGTGT);
 
 // Process 888 Fixed emails
 $orderNumberCondition888Fixed = "AND order_number LIKE '2%' AND order_number LIKE '%888%'";
-processEmails(WARNING_THRESHOLD, $dbName, $header, 'Report_warning_888_fixed_', 'Report Warning 888 Fixed', $recipients, $orderNumberCondition888Fixed);
+processEmailsAndTelegrams(WARNING_THRESHOLD, $dbName, $header, 'Report_warning_888_fixed_', 'Report Warning 888 Fixed', $recipients, $botToken, $chatId, $orderNumberCondition888Fixed);
 
-processEmails(TERMINATION_THRESHOLD, $dbName, $header, 'Report_termination_888_fixed_', 'Report Termination 888 Fixed', $recipients, $orderNumberCondition888Fixed);
+processEmailsAndTelegrams(TERMINATION_THRESHOLD, $dbName, $header, 'Report_termination_888_fixed_', 'Report Termination 888 Fixed', $recipients, $botToken, $chatId, $orderNumberCondition888Fixed);

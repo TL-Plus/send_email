@@ -1,6 +1,6 @@
 <?php
-require_once 'vendor/autoload.php';
-require_once 'send_email/config.php';
+require_once '/var/www/html/vendor/autoload.php';
+require_once '/var/www/html/send_email/config.php';
 require_once 'export_excel.php';
 
 use TelegramBot\Api\BotApi;
@@ -34,7 +34,7 @@ function sendTelegramMessageWithSql($sql, $dbName, $header, $filename, $textMess
     }
 }
 
-// Send telegram message with file
+// Send telegram message with file excel
 function sendTelegramMessages($filename, $textMessage, $botToken, $chatId)
 {
     try {
@@ -52,6 +52,49 @@ function sendTelegramMessages($filename, $textMessage, $botToken, $chatId)
         $telegram->sendDocument($chatId, $document, $textMessage);
 
         echo "Telegram message successfully sent file $filename \n";
+    } catch (Exception $e) {
+        echo 'Error: ' . $e->getMessage();
+    }
+}
+
+// Send telegram message with sql and file pdf
+function sendTelegramMessagesWithSqlAndFileExcel($sql, $dbName, $header, $excelFilePath, $textMessage, $botToken, $chatId)
+{
+    try {
+        $exportSuccessful = exportToExcel($sql, $dbName, $header, $excelFilePath);
+
+        // Check if export was successful before sending telegram message
+        if ($exportSuccessful) {
+            // Initialize the Telegram API object with your bot token
+            $telegram = new BotApi($botToken);
+
+            // Prepare the document for sending
+            $document = new \CURLFile($excelFilePath);
+
+            // Send the text message along with the document
+            $telegram->sendDocument($chatId, $document, $textMessage);
+
+            echo "Telegram message successfully sent file $excelFilePath \n";
+        }
+    } catch (Exception $e) {
+        echo 'Error: ' . $e->getMessage();
+    }
+}
+
+// Send telegram message with file pdf
+function sendTelegramMessagesWithFilePDF($pdfFilePath, $textMessage, $botToken, $chatId)
+{
+    try {
+        // Initialize the Telegram API object with your bot token
+        $telegram = new BotApi($botToken);
+
+        // Prepare the document for sending
+        $document = new \CURLFile(realpath($pdfFilePath), 'application/pdf');
+
+        // Send the text message along with the document
+        $telegram->sendDocument($chatId, $document, $textMessage);
+
+        echo "Telegram message successfully sent with file $pdfFilePath\n";
     } catch (Exception $e) {
         echo 'Error: ' . $e->getMessage();
     }
