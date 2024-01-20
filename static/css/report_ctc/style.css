@@ -1,0 +1,156 @@
+body {
+    background-color: #f8f9fa;
+    font-style: italic;
+    /* font-family: 'Poppins', sans-serif; */
+}
+
+input {
+    font-style: italic;
+    border-radius: 5%;
+    border: inset;
+}
+
+.login-input{
+    font-style: italic;
+    border-radius: 5%;
+    border: inset;
+}
+
+button {
+    font-style: italic;
+}
+
+.container {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 50px;
+}
+
+.logo-container img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.user-name{
+    margin-top: 0.5rem;
+}
+
+h3 {
+    color: #007bff;
+}
+
+table {
+    margin-top: 20px;
+    width: 100%;
+}
+
+th,
+td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #dee2e6;
+}
+
+th {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.time-info {
+    color: #6c757d;
+}
+
+.custom-col {
+    width: 20%;
+}
+
+.custom-col-1 {
+    width: 10%;
+}
+
+.custom-td {
+    width: 10%; 
+    font-size: 20px;
+}
+
+.custom-col-input{
+    width: 100%;
+    min-width: 111px; 
+}
+
+@media (max-width: 768px) {
+    .center-on-mobile {
+        text-align: center;
+    }
+}
+
+@media (min-width: 768px) {
+    .center-on-mobile {
+        text-align: right;
+    }
+    .title-table{
+        margin-right: 9rem !important;
+    }
+}
+
+@media (max-width: 1024px) {
+    .user-name {
+        margin-top: 1rem !important;
+        width: 10rem;
+    }
+    .label-user-name{
+        margin-top: 0.5rem;
+    }
+}
+
+@media (max-width: 768px) and (min-width: 500px) {
+    .user-name {
+        margin-top: 1rem !important;
+        width: 10rem;
+    }
+    .label-user-name {
+        margin-left: 2rem;
+        margin-top: 0.5rem;
+        width: 15rem;
+    }
+}
+
+.label-user-name{
+    border-radius: 5%;
+    border: inset;
+    font-size: 20px;
+}
+
+#error-message {
+    color: red;
+    margin-top: 10px;
+}
+
+#form-report {
+    display: none;
+}
+
+.login-container {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+@media (min-width: 500px) {
+    .login-container {
+        width: 500px;
+    }
+}
+
+.login-input {
+    margin-bottom: 10px;
+}
+
+.login-button {
+    width: 100%;
+}

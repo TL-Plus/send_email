@@ -34,8 +34,7 @@ class CustomTCPDF extends TCPDF
 
             // Display additional header information
             $this->SetFont('dejavusans', 'I', 12);
-            $this->SetTextColor(0, 0, 0); // Reset to black color
-
+            $this->SetTextColor(0, 0, 0);
             $this->Cell(0, 0, $this->headerInfo, 0, 0, 'C');
 
             // Set flag to false after the header is displayed

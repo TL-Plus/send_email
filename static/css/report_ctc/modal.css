@@ -1,0 +1,36 @@
+.modal-dialog {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+    background-color: #007bff;
+    color: #fff;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.close {
+    color: #fff;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-footer {
+    border-top: 1px solid #dee2e6;
+}
+
+.btn-secondary {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.btn-secondary:hover {
+    background-color: #0056b3;
+}

@@ -12,7 +12,8 @@ function convertExcelToPDF($excelFilePath, $pdfFileName, $userName, $ccuValues, 
     try {
         // Load Excel file
         $spreadsheet = IOFactory::load($excelFilePath);
-        $currentTime = date('H:i d-m-Y');
+        date_default_timezone_set("Asia/Ho_Chi_Minh");
+        $currentTime = date('H:i d/m/Y');
 
         // Create PDF object
         $headerInfo = "Thời gian kiểm tra: " . $currentTime . " - Nhân viên: " . $userName;
@@ -92,6 +93,8 @@ function convertExcelToPDF($excelFilePath, $pdfFileName, $userName, $ccuValues, 
             }
             $pdf->Ln();
 
+            $pdf->SetFont('dejavusans', 'I', 10);
+
             $totalCost = 0;
             $totalCCU = 0;
             $totalBlockViettel = 0;
@@ -151,6 +154,9 @@ function convertExcelToPDF($excelFilePath, $pdfFileName, $userName, $ccuValues, 
                 $pdf->Ln();
             }
 
+            // Assuming both $ccuTotals and $totalCCU are supposed to be integers
+            $ccuTotals = (int)$ccuTotals;
+            $totalCCU = (int)$totalCCU;
 
             $pdf->SetFont('dejavusans', 'I', 11);
             // Add three additional rows at the end
