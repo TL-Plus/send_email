@@ -54,6 +54,8 @@ composer require google/auth
 composer require hybridauth/hybridauth
 composer require telegram-bot/api
 composer require vlucas/phpdotenv
+composer require tecnickcom/tcpdf
+composer require irazasyed/telegram-bot-sdk
 ```
 
 ## Copy the .env.example file locally
