@@ -1,3 +1,15 @@
+<?php
+session_start();
+
+// Kiểm tra nếu người dùng đã đăng nhập, chuyển hướng đến trang index
+if (!isset($_SESSION['user'])) {
+    header('Location: login.php');
+    exit();
+}
+
+$user = $_SESSION['user'];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

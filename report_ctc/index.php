@@ -1,3 +1,15 @@
+<?php
+session_start();
+
+// Kiểm tra nếu người dùng đã đăng nhập, chuyển hướng đến trang index
+if (!isset($_SESSION['user'])) {
+    header('Location: login.php');
+    exit();
+}
+
+$user = $_SESSION['user'];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,43 +44,6 @@
         <?php include 'templates/footer.php'; ?>
 
         <?php include 'templates/modal.php'; ?>
-
-    </div>
-
-    <div id="form-login" class="container">
-        <div class="row">
-            <div class="col-md-2 logo-container mt-3">
-                <img src="/static/images/logo-diginext.png" alt="Diginext Logo" class="img-fluid" width="300px"
-                    height="300px">
-            </div>
-            <div class="col-md-10 text-center mt-5">
-                <h3 class="title-table mb-4 mx-auto">CÔNG TY CỔ PHẦN CÔNG NGHỆ SỐ DIGINEXT</h3>
-            </div>
-        </div>
-        <div class="container login-container">
-            <div class="row">
-                <div class="col-md-6 offset-md-3 mt-5">
-                    <h3 class="mb-4">Đăng Nhập</h3>
-                    <form id="loginForm" action="post">
-                        <div>
-                            <label class="font-weight-bold" for="username">Tên người dùng</label>
-                            <input type="text" id="username" class="form-control login-input" required>
-                        </div>
-                        <div class="mt-3">
-                            <label class="font-weight-bold" for="password">Mật khẩu</label>
-                            <input type="password" id="password" class="form-control login-input" required>
-                        </div>
-                        <div class="mt-4 mb-5">
-                            <button type="button" class="btn btn-primary btn-lg login-button" onclick="login()">Đăng
-                                nhập</button>
-                        </div>
-                        <p id="error-message" class="mt-3 text-danger"></p>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <?php include 'templates/footer.php'; ?>
 
     </div>
 

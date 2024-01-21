@@ -1,7 +1,5 @@
 <?php
 
-session_start();
-
 require_once '/var/www/html/vendor/autoload.php';
 require_once '/var/www/html/send_email/config.php';
 require_once '/var/www/html/send_email/includes/database_connection.php';

@@ -13,13 +13,13 @@ NULL AS TotalCurrentCall,
 (
     SELECT COUNT(ext_number) 
     FROM Billing_Diginext.report_number_block rnb
-    WHERE rnb.contract_code = dcn202401.contract_code
+    WHERE rnb.customer_name = dcn202401.customer_name
       AND DATE(rnb.time_update) = CURDATE()
 ) AS BlockViettel,
 (
     SELECT COUNT(ext_number) 
     FROM Billing_Diginext.report_number_blockMobi rnbMobi
-    WHERE rnbMobi.contract_code = dcn202401.contract_code
+    WHERE rnbMobi.customer_name = dcn202401.customer_name
       AND DATE(rnbMobi.time_update) = CURDATE()
 ) AS BlockMobifone
 FROM
@@ -37,8 +37,8 @@ $header = [
 ];
 
 $dbName = $_ENV['DB_DATABASE_VOICEREPORT'];
-$botToken = $_ENV['TELEGRAM_BOT_TOKEN_DIGINEXT'];
-$chatId = $_ENV['TELEGRAM_CHAT_ID_REPORT_CCU'];
+$botToken = $_ENV['TELEGRAM_BOT_TOKEN'];
+$chatId = $_ENV['TELEGRAM_CHAT_ID'];
 $userName = $_ENV['USERNAME'];
 $password = $_ENV['PASSWORD'];
 

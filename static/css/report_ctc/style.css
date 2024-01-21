@@ -125,13 +125,9 @@ th {
     font-size: 20px;
 }
 
-#error-message {
+.error-message {
     color: red;
     margin-top: 10px;
-}
-
-#form-report {
-    display: none;
 }
 
 .login-container {

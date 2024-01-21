@@ -18,8 +18,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $ccuTotals = isset($_POST['ccuTotals']) ? $_POST['ccuTotals'] : '';
 
     $dbName = $_ENV['DB_DATABASE_VOICEREPORT'];
-    $botToken = $_ENV['TELEGRAM_BOT_TOKEN_DIGINEXT'];
-    $chatId = $_ENV['TELEGRAM_CHAT_ID_REPORT_CCU'];
+    $botToken = $_ENV['TELEGRAM_BOT_TOKEN'];
+    $chatId = $_ENV['TELEGRAM_CHAT_ID'];
 
     // Specify the path to your Excel file
     date_default_timezone_set("Asia/Ho_Chi_Minh");
