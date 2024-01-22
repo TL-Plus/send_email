@@ -23,10 +23,13 @@ $botToken = $_ENV['TELEGRAM_BOT_TOKEN_DIGINEXT'];
 $chatId = $_ENV['TELEGRAM_CHAT_ID_DIGINEXT'];
 $recipients = $_ENV['RECIPIENTS'];
 
+date_default_timezone_set("Asia/Ho_Chi_Minh");
+
 // today
 $today = date('Y_m_d');
-$attachment = "Report_Warning_CDRLog_DIGINEXT_$today.xlsx";
-$subject = "Report Warning CDRLog DIGINEXT ($today)";
+$currentTime = date('H:i d-m-Y');
+$attachment = "Report_Warning_CDRLog_$today.xlsx";
+$subject = "Report Warning CDRLog DIGINEXT ($currentTime)";
 
 // Call the function to send a message via Telegram
 sendTelegramMessageWithSql($query_report_warning_cdr_log, $dbName, $header, $attachment, $subject, $botToken, $chatId);

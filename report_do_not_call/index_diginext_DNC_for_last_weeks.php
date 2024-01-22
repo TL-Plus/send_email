@@ -34,10 +34,12 @@ $dbName = $_ENV['DB_DATABASE_BLACKLIST'];
 $botToken = $_ENV['TELEGRAM_BOT_TOKEN'];
 $chatId = $_ENV['TELEGRAM_CHAT_ID'];
 
+date_default_timezone_set("Asia/Ho_Chi_Minh");
+
 // Get the period for the report (start and end dates)
 $report_period = date('Y_m_d', strtotime('last Monday', strtotime('now'))) . '_' . date('Y_m_d', strtotime('previous Sunday', strtotime('now')));
-$attachment = "Report_DNC_Week_$report_period.xlsx";
-$subject = "Report DNC DIGINEXT (Week $report_period)";
+$attachment = "Report_quantity_DNC_Week_$report_period.xlsx";
+$subject = "Báo cáo số lượng DNC trong tuần (Tuần $report_period)";
 
 // Call the function to send a message via Telegram
 sendTelegramMessageWithSql($query_report_do_not_call_blacklist_for_last_weeks, $dbName, $header, $attachment, $subject, $botToken, $chatId);

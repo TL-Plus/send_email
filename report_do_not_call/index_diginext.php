@@ -36,16 +36,18 @@ $botToken = $_ENV['TELEGRAM_BOT_TOKEN'];
 $chatId = $_ENV['TELEGRAM_CHAT_ID'];
 $recipients = $_ENV['RECIPIENTS'];
 
-// today
-$today = date('Y_m_d');
-$attachment = "Report_DNC_$today.xlsx";
-$subject = "Report DNC DIGINEXT ($today)";
+date_default_timezone_set("Asia/Ho_Chi_Minh");
+
+// yesterday
+$yesterday = date('Y_m_d', strtotime('-1 days'));
+$attachment = "Report_DNC_$yesterday.xlsx";
+$subject = "Report DNC DIGINEXT ($yesterday)";
 
 // Call the function to send a message via Telegram
 sendTelegramMessageWithSql($query_report_do_not_call_blacklist, $dbName, $header, $attachment, $subject, $botToken, $chatId);
 
 if (!file_exists($attachment)) {
-  $day = date('d-m-Y');
+  $day = date('d-m-Y', strtotime('-1 days'));
   $error_message = "Yesterday $day No Report DNC DIGINEXT.";
   sendTelegramMessage($error_message, $botToken, $chatId);
 }
