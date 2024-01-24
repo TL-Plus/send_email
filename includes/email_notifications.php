@@ -24,7 +24,7 @@ function sendEmailNotification($attachmentPath, $subject, $body, $recipients)
         $mail->setFrom($_ENV['SENDER_EMAIL']);
 
         // Add each recipient to the email
-        $recipients = explode(',', $_ENV['RECIPIENTS']);
+        $recipients = explode(',', $recipients);
         foreach ($recipients as $recipient) {
             $mail->addAddress(trim($recipient));
         }
