@@ -109,7 +109,7 @@ function processEmailsAndTelegrams($threshold, $dbName, $header, $fileNamePrefix
         }
 
         // Call function to update status email
-        updateStatusEmail($query);
+        updateStatusEmail($query_order_number_by_customer);
     }
 }
 
