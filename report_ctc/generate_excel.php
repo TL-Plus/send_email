@@ -37,8 +37,8 @@ $header = [
 ];
 
 $dbName = $_ENV['DB_DATABASE_VOICEREPORT'];
-$botToken = $_ENV['TELEGRAM_BOT_TOKEN'];
-$chatId = $_ENV['TELEGRAM_CHAT_ID'];
+$botToken = $_ENV['TELEGRAM_BOT_TOKEN_DIGINEXT'];
+$chatId = $_ENV['TELEGRAM_CHAT_ID_REPORT_CCU'];
 $userName = $_ENV['USERNAME'];
 $password = $_ENV['PASSWORD'];
 

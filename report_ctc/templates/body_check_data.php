@@ -35,10 +35,10 @@ $_SESSION['ccuTotals'] = isset($_POST['ccuTotals']) ? $_POST['ccuTotals'] : '';
 
 <form id="generatePdfForm" action="generate_pdf.php" method="post">
     <div class="row mt-3">
-        <div class="col-md-6">
+        <div class="col-md-6 header-current-time">
             <h5 id="currentTime" class="mt-4">Thời gian kiểm tra: <?php echo $currentTime; ?></h5>
         </div>
-        <div class="col-md-6 mt-4 text-right">
+        <div class="col-md-6 mt-4 header-user-name">
             <h5>Nhân Viên: <?php echo $userName ?></h5>
         </div>
     </div>
@@ -238,8 +238,8 @@ $_SESSION['ccuTotals'] = isset($_POST['ccuTotals']) ? $_POST['ccuTotals'] : '';
     </div>
 
     <div class="row mt-3">
-        <div class="col-md-6">
-            <a href="/send_email/report_ctc/" class="btn btn-primary btn-lg mt-3" onclick="showReport()">
+        <div class="col-md-6 center-on-mobile-back">
+            <a href="/report_ctc/" class="btn btn-primary btn-lg mt-3" onclick="showReport()">
                 Quay lại trang chỉnh sửa
             </a>
         </div>
