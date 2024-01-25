@@ -83,13 +83,28 @@ th {
 }
 
 @media (max-width: 768px) {
+    .center-on-mobile-back {
+        text-align: center;
+    }
     .center-on-mobile {
+        text-align: center;
+    }
+    .header-current-time{
+        text-align: center;
+    }
+    .header-user-name{
         text-align: center;
     }
 }
 
 @media (min-width: 768px) {
+    .center-on-mobile-back {
+        text-align: left;
+    }
     .center-on-mobile {
+        text-align: right;
+    }
+    .header-user-name{
         text-align: right;
     }
     .title-table{
