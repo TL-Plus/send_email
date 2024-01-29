@@ -25,6 +25,7 @@ function getTelegramRecipientsFromDatabase($dbName, $threshold, $orderNumberCond
 
     // Execute your SQL query to fetch data from the database
     $query_api_full_code = "SELECT api.token AS BotToken, api.api AS UserId,
+                        order_numbers.user_name AS UserName,
                         api.full_code AS UserCode,
                         local_users.email AS UserEmail
                         FROM `order_numbers`
@@ -52,6 +53,7 @@ function getTelegramRecipientsFromDatabase($dbName, $threshold, $orderNumberCond
             $telegramRecipients[] = [
                 'botToken' => $row['BotToken'],
                 'chatId' => $row['UserId'],
+                'userName' => $row['UserName'],
                 'userCode' => $row['UserCode'],
                 'userEmail' => $row['UserEmail'],
             ];
@@ -59,6 +61,33 @@ function getTelegramRecipientsFromDatabase($dbName, $threshold, $orderNumberCond
     }
 
     return $telegramRecipients;
+}
+
+function fetchOrderData($query, $dbName)
+{
+    $orderNumberDatas = [];
+
+    $conn = connectDatabase(
+        $_ENV['DB_HOSTNAME_DIGINEXT'],
+        $_ENV['DB_USERNAME_DIGINEXT'],
+        $_ENV['DB_PASSWORD_DIGINEXT'],
+        $dbName
+    );
+
+    $result = $conn->query($query);
+
+    $conn->close();
+
+    if ($result && $result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $orderNumberDatas[] = [
+                'orderNumber' => $row['order_number'],
+                'orderTime' => $row['order_time'],
+            ];
+        }
+    }
+
+    return $orderNumberDatas;
 }
 
 function processEmailsAndTelegrams($threshold, $dbName, $header, $fileNamePrefix, $title, $orderNumberCondition)
@@ -80,20 +109,32 @@ function processEmailsAndTelegrams($threshold, $dbName, $header, $fileNamePrefix
                 AND status = 'holding'
                 AND status_email = 0
                 $orderNumberCondition
-                AND customer_code = '$userCode'";
+                AND customer_code = '$userCode'
+                ORDER BY order_time DESC";
 
         // Check if the customer code has been processed already
         if (!in_array($userCode, $processedUserCodes)) {
             // Mark the customer code as processed
             $processedUserCodes[] = $userCode;
 
+            // Fetch order data for the customer
+            $orderNumberDatas = fetchOrderData($query_order_number_by_customer, $dbName);
+
+            // Create $FormValues array with necessary data
+            $FormValues = [
+                'userName' => $telegramRecipient['userName'],
+                'userEmail' => $telegramRecipient['userEmail'],
+                'orderNumberDatas' => $orderNumberDatas,
+            ];
+
             sendEmailForDays(
                 $query_order_number_by_customer,
                 $dbName,
                 $header,
                 "{$fileNamePrefix}{$threshold}_days.xlsx",
-                "$title ($threshold-Days)",
-                $telegramRecipient['userEmail']
+                "$title ($threshold NGÀY)",
+                bodyEmailOrderNumber($FormValues),
+                $FormValues['userEmail'],
             );
 
             // Call function to send telegram message notification for warning
@@ -102,7 +143,7 @@ function processEmailsAndTelegrams($threshold, $dbName, $header, $fileNamePrefix
                 $dbName,
                 $header,
                 "{$fileNamePrefix}{$threshold}_days.xlsx",
-                "$title ($threshold-Days)",
+                "$title ($threshold NGÀY)",
                 $telegramRecipient['botToken'],
                 $telegramRecipient['chatId']
             );
@@ -120,7 +161,7 @@ processEmailsAndTelegrams(
     $dbName,
     $header,
     'Report_warning_dvgtgt_',
-    'Report Warning DVGTGT',
+    '[DIGINEXT] - BÁO CÁO CẢNH BÁO ĐẶT SỐ DVGTGT SẮP HẾT HẠN',
     $orderNumberConditionDVGTGT
 );
 
@@ -129,7 +170,7 @@ processEmailsAndTelegrams(
     $dbName,
     $header,
     'Report_termination_dvgtgt_',
-    'Report Termination DVGTGT',
+    '[DIGINEXT] - BÁO CÁO CẢNH BÁO ĐẶT SỐ DVGTGT HẾT HẠN',
     $orderNumberConditionDVGTGT
 );
 
@@ -140,7 +181,7 @@ processEmailsAndTelegrams(
     $dbName,
     $header,
     'Report_warning_888_fixed_',
-    'Report Warning 888 Fixed',
+    '[DIGINEXT] - BÁO CÁO CẢNH BÁO ĐẶT SỐ CỐ ĐỊNH 888 SẮP HẾT HẠN',
     $orderNumberCondition888Fixed
 );
 
@@ -149,6 +190,6 @@ processEmailsAndTelegrams(
     $dbName,
     $header,
     'Report_termination_888_fixed_',
-    'Report Termination 888 Fixed',
+    '[DIGINEXT] - BÁO CÁO CẢNH BÁO ĐẶT SỐ CỐ ĐỊNH 888 HẾT HẠN',
     $orderNumberCondition888Fixed
 );
