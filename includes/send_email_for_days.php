@@ -79,15 +79,16 @@ function bodyEmailOrderNumber($FormValues)
         <div style='margin-bottom:10px; margin-top:20px;color:#222;'><span><i>Trân trọng cảm ơn Quý khách hàng đã sử dụng dịch vụ của Diginext</i></span></div>
         <table style='color:#222;'>
             <tr>
-                <td style='width:160px; border-right:2px solid #f2f2f2;'>
+                <td style='width:160px; border-right:2px solid #cfcfcf;'>
                     <img width='160' src='https://billing.diginext.com.vn/backend/images/logo-small.png' alt='Diginext'/>
                 </td>
-                <td>
+                
+                <td style='text-align:top;padding-left:10px'>
                     <div style='color:#ffffff;font-size:1px'>CÔNG TY CỔ PHẦN CÔNG NGHỆ SỐ DIGINEXT</div></br>
                     <p style='font-weight:bold;'><a href='https://billing.diginext.com.vn/'>CÔNG TY CỔ PHẦN CÔNG NGHỆ SỐ DIGINEXT</a><br /><br /></p>
                     Địa chỉ giao dịch: Tầng 3, Tòa W1-W2 Vinhomes West Point, Phường Mễ Trì, Quận Nam Từ Liêm, Hà Nội.<br />
-                    Tel: 19005055 <br/>
-                    Email: cskh@diginext.com.vn
+                    Tel: (024-028) 5555 1111 | 19005055 | <a href='http://diginext.com.vn'>http://diginext.com.vn</a><br>
+                    Email: admin@diginext.com.vn
                 </td>
             </tr>
         </table>";
