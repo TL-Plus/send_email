@@ -88,7 +88,7 @@ function bodyEmailOrderNumber($FormValues)
                     <p style='font-weight:bold;'><a href='https://billing.diginext.com.vn/'>CÔNG TY CỔ PHẦN CÔNG NGHỆ SỐ DIGINEXT</a><br /><br /></p>
                     Địa chỉ giao dịch: Tầng 3, Tòa W1-W2 Vinhomes West Point, Phường Mễ Trì, Quận Nam Từ Liêm, Hà Nội.<br />
                     Tel: (024-028) 5555 1111 | 19005055 | <a href='http://diginext.com.vn'>http://diginext.com.vn</a><br>
-                    Email: admin@diginext.com.vn
+                    Email: cskh@diginext.com.vn
                 </td>
             </tr>
         </table>";
