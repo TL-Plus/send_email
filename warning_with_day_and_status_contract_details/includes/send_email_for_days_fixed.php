@@ -5,7 +5,7 @@ require_once 'send_email/includes/email_notifications.php';
 
 
 // Function to send email notification
-function sendEmailForDaysFixed($sql1, $sql2, $dbName, $header, $attachment, $subject, $recipients)
+function sendEmailForDayFixed($sql1, $sql2, $dbName, $header, $attachment, $subject, $recipients)
 {
     try {
         $numbers = array();

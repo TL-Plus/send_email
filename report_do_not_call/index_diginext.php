@@ -52,6 +52,4 @@ if (!file_exists($attachment)) {
   sendTelegramMessage($error_message, $botToken, $chatId);
 }
 
-// if you want to use email instead of telegram
-// Call function to send email notification
-// sendEmailForDays($query_report_do_not_call_blacklist, $dbName, $header, $attachment, $subject, $recipients);
+// if you want to use email instead of telegram. Call function sendEmailForDay()

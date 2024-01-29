@@ -44,10 +44,10 @@ AND ContractDetailsDVGTGT.StatusISDN='3'
 AND ContractDetailsDVGTGT.ContractCode='00069/2023/1900/DIGITEL'";
 
 // Call function to send email notification for 17-day warning
-sendEmailForDays($query_dvgtgt_17_day, $dbName, $header, 'Report_contracts_warning_dvgtgt_17_days.xlsx', 'Report Contracts Warning DVGTGT (17 Days)',  $recipients);
+sendEmailForDay($query_dvgtgt_17_day, $dbName, $header, 'Report_contracts_warning_dvgtgt_17_days.xlsx', 'Report Contracts Warning DVGTGT (17 Days)',  $recipients);
 
 // Call function to send email notification for termination on the 19th day
-sendEmailForDays($query_dvgtgt_19_day, $dbName, $header, 'Report_on_contracts_termination_dvgtgt_19_days.xlsx', 'Report on Contracts Termination DVGTGT (19 Days)',  $recipients);
+sendEmailForDay($query_dvgtgt_19_day, $dbName, $header, 'Report_on_contracts_termination_dvgtgt_19_days.xlsx', 'Report on Contracts Termination DVGTGT (19 Days)',  $recipients);
 
 // Get a list of numbers that meet the requirements from the initial query (17-day warning)
 $query_888_fixed_17_day_part1 = "SELECT DISTINCT 
@@ -89,7 +89,7 @@ LEFT JOIN ContractManagement ON ContractManagement.CustomerCode = Customers.Code
 LEFT JOIN Salers ON Salers.Code = Customers.SalerCode";
 
 // Call function to send email notification for 17-day warning
-sendEmailForDaysFixed($query_888_fixed_17_day_part1, $query_888_fixed_17_day_part2, $dbName, $header, 'Report_contracts_warning_888_fixed_17_days.xlsx', 'Report Contracts Warning 888 Fixed (17-Days)',  $recipients);
+sendEmailForDayFixed($query_888_fixed_17_day_part1, $query_888_fixed_17_day_part2, $dbName, $header, 'Report_contracts_warning_888_fixed_17_days.xlsx', 'Report Contracts Warning 888 Fixed (17-Days)',  $recipients);
 
 // Call function to send email notification for 19-day warning
-sendEmailForDaysFixed($query_888_fixed_19_day_part1, $query_888_fixed_19_day_part2, $dbName, $header, 'Report_on_contracts_termination_888_fixed_19_days.xlsx', 'Report on Contracts Termination 888 Fixed (19 Days)',  $recipients);
+sendEmailForDayFixed($query_888_fixed_19_day_part1, $query_888_fixed_19_day_part2, $dbName, $header, 'Report_on_contracts_termination_888_fixed_19_days.xlsx', 'Report on Contracts Termination 888 Fixed (19 Days)',  $recipients);

@@ -44,5 +44,4 @@ $subject = "Báo cáo số lượng DNC trong tuần (Tuần $report_period)";
 // Call the function to send a message via Telegram
 sendTelegramMessageWithSql($query_report_do_not_call_blacklist_for_last_weeks, $dbName, $header, $attachment, $subject, $botToken, $chatId);
 
-// If you want to use email instead of Telegram, uncomment the line below
-// sendEmailForDays($query_report_do_not_call_blacklist, $dbName, $header, $attachment, $subject, RECIPIENTS);
+// if you want to use email instead of telegram. Call function sendEmailForDay()

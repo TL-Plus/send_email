@@ -62,4 +62,4 @@ $attachment = "Report_warning_liabilities_$month_liabilities.xlsx";
 $subject = "Report Warning Liabilities ($month_liabilities)";
 
 // Call function to send email notification for warning liabilities
-sendEmailForDays($query_warning_liabilities, $dbName, $header, $attachment, $subject,  $recipients);
+sendEmailForDay($query_warning_liabilities, $dbName, $header, $attachment, $subject,  $recipients);

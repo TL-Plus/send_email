@@ -39,6 +39,4 @@ $subject = "Report Warning CDRLog DIGINEXT ($currentTime)";
 // Call the function to send a message via Telegram
 sendTelegramMessageWithSql($query_report_warning_cdr_log, $dbName, $header, $attachment, $subject, $botToken, $chatId);
 
-// if you want to use email instead of telegram
-// Call function to send email notification
-// sendEmailForDays($query_report_warning_cdr_log, $dbName, $header, $attachment, $subject, $recipients);
+// if you want to use email instead of telegram. Call function sendEmailForDay()
