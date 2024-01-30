@@ -11,7 +11,7 @@ function sendEmailForDay($sql, $dbName, $header, $attachment, $subject, $recipie
 
         // Check if export was successful before sending email
         if ($exportSuccessful) {
-            sendEmailNotification("/root/{$attachment}", $subject, "Excel Files for {$subject}", $recipients);
+            sendEmailNotification($attachment, $subject, "Excel Files for {$subject}", $recipients);
         }
     } catch (Exception $e) {
         echo 'Error: ' . $e->getMessage();
@@ -26,7 +26,7 @@ function sendEmailForDays($sql, $dbName, $header, $attachment, $subject, $bodyCo
 
         // Check if export was successful before sending email
         if ($exportSuccessful) {
-            sendEmailNotification("/root/{$attachment}", $subject, $bodyContent, $recipients);
+            sendEmailNotification($attachment, $subject, $bodyContent, $recipients);
         }
     } catch (Exception $e) {
         echo 'Error: ' . $e->getMessage();
@@ -55,11 +55,11 @@ function bodyEmailOrderNumber($FormValues)
     </div>';
 
     // Table 2
-    $body .= '<table style="border-collapse: collapse;background-color:#e6ffff;  width:50%; color:#222;" cellpadding="10" border-spacing: 35px; >';
+    $body .= '<table style="border-collapse: collapse;background-color:#e6ffff;  width:60%; color:#222;" cellpadding="10" border-spacing: 35px; >';
     $body .= '<tr>
                 <td style="text-align:center;border-bottom:1px solid #cfcfcf;border-right:1px solid #cfcfcf;font-weight:bold;width:5%;vertical-align:middle" bgcolor="#00BFFF" colspan="1">STT</td>
-                <td style="text-align:center;border-bottom:1px solid #cfcfcf;border-right:1px solid #cfcfcf;font-weight:bold;width:20%;vertical-align:middle" bgcolor="#00BFFF" colspan="1">OrderNumber</td>
-                <td style="text-align:center;border-bottom:1px solid #cfcfcf;border-right:1px solid #cfcfcf;font-weight:bold;width:20%;vertical-align:middle" bgcolor="#00BFFF" colspan="1">OrderTime</td>
+                <td style="text-align:center;border-bottom:1px solid #cfcfcf;border-right:1px solid #cfcfcf;font-weight:bold;width:30%;vertical-align:middle" bgcolor="#00BFFF" colspan="1">OrderNumber</td>
+                <td style="text-align:center;border-bottom:1px solid #cfcfcf;border-right:1px solid #cfcfcf;font-weight:bold;width:30%;min-width:200px;vertical-align:middle" bgcolor="#00BFFF" colspan="1">OrderTime</td>
             </tr>';
 
     // Order Data Rows

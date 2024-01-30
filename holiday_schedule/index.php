@@ -12,9 +12,10 @@ function getInfoCustomersFromDatabase()
 {
     $infoCustomers = [];
 
-    $query_customers = "SELECT customer_name, email, status, image_path
-                        FROM customers
-                        WHERE status = 'actived'";
+    $query_customers = "SELECT 
+        customer_name, email, status
+        FROM customers
+        WHERE status = 'actived'";
 
     $conn = connectDatabase(
         $_ENV['DB_HOSTNAME_DIGINEXT'],
