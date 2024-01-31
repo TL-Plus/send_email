@@ -1,42 +1,75 @@
 <?php
-require 'send_email/config.php';
+
+require_once 'send_email/config.php';
 require 'send_email/includes/database_connection.php';
-require 'send_email/includes/send_email_for_days.php';
 require 'send_email/includes/send_telegram_message.php';
 
 
-// query_report_call_spam_by_number_contract_next
-$query_report_warning_cdr_log = "SELECT *
-FROM `CDRLog`
-WHERE DATE(`TimeBegin`) = CURDATE()
-    AND TIMESTAMPDIFF(HOUR, `TimeBegin`, NOW()) >= 1
-    AND (
-        (`Condition` = 1)
-        OR
-        (`Condition` = 0 AND `Count` > 0)
-    )
-ORDER BY `CDRLog`.`TimeBegin` DESC";
+function processCDRLogs($dbName, $botToken, $chatId)
+{
+    $processedCDRLogs = [];
 
-// Define Excel header
-$header = [
-    'ID', 'Server', 'TimeUpdate', 'TimeBegin', 'TimeEnd', 'Count', 'Condition'
-];
+    $query_report_warning_cdr_log = "SELECT *
+        FROM `CDRLog`
+        WHERE DATE(`TimeBegin`) = CURDATE()
+            AND TIMESTAMPDIFF(HOUR, `TimeBegin`, NOW()) >= 1
+            AND (
+                (`Conditon` = 1)
+                OR
+                (`Conditon` = 0 AND `Count` > 0)
+            )
+        ORDER BY `CDRLog`.`TimeBegin` DESC";
 
-// Define $dbName, $botToken, $chatId, $recipients
+    $conn = connectDatabase(
+        $_ENV['DB_HOSTNAME_DIGINEXT'],
+        $_ENV['DB_USERNAME_DIGINEXT'],
+        $_ENV['DB_PASSWORD_DIGINEXT'],
+        $dbName,
+    );
+
+    $result = $conn->query($query_report_warning_cdr_log);
+
+    $conn->close();
+
+    if ($result && $result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $logID = $row['ID'];
+
+            // Check if the CDR log has been processed already
+            if (!in_array($logID, $processedCDRLogs)) {
+                // Mark the CDR log as processed
+                $processedCDRLogs[] = $logID;
+
+                $server = $row['Server'];
+                $timeUpdate = $row['TimeUpdate'];
+                $timeBegin = $row['TimeBegin'];
+                $timeEnd = $row['TimeEnd'];
+                $count = $row['Count'];
+                $condition = $row['Conditon'];
+
+                date_default_timezone_set("Asia/Ho_Chi_Minh");
+                $currentTime = date('Y-m-d H:i:s');
+
+                // Create $FormValues array with necessary data
+                $textMessage = "Time Check: $currentTime\n"
+                    . "SERVER: $server\n"
+                    . "TimeUpdate: $timeUpdate\n"
+                    . "TimeBegin: $timeBegin\n"
+                    . "TimeEnd: $timeEnd\n"
+                    . "Count: $count\n"
+                    . "Condition: $condition";
+
+                // Send the text message
+                sendTelegramMessage($textMessage, $botToken, $chatId);
+            }
+        }
+    }
+}
+
+// Define $dbName, $botToken, $chatId
 $dbName = $_ENV['DB_DATABASE_VOICEREPORT'];
-$botToken = $_ENV['TELEGRAM_BOT_TOKEN_DIGINEXT'];
-$chatId = $_ENV['TELEGRAM_CHAT_ID_DIGINEXT'];
-$recipients = $_ENV['RECIPIENTS'];
+$botToken = $_ENV['TELEGRAM_BOT_TOKEN_CDR_LOG_DIGINEXT'];
+$chatId = $_ENV['TELEGRAM_CHAT_ID_CDR_LOG_DIGINEXT'];
 
-date_default_timezone_set("Asia/Ho_Chi_Minh");
-
-// today
-$today = date('Y_m_d');
-$currentTime = date('H:i d-m-Y');
-$attachment = "Report_Warning_CDRLog_$today.xlsx";
-$subject = "Report Warning CDRLog DIGINEXT ($currentTime)";
-
-// Call the function to send a message via Telegram
-sendTelegramMessageWithSql($query_report_warning_cdr_log, $dbName, $header, $attachment, $subject, $botToken, $chatId);
-
-// if you want to use email instead of telegram. Call function sendEmailForDay()
+// Process CDR Logs
+processCDRLogs($dbName, $botToken, $chatId);

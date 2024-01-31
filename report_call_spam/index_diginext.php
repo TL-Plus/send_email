@@ -22,9 +22,11 @@ $header = [
 
 // Define $dbName, $botToken, $chatId, $recipients
 $dbName = $_ENV['DB_DATABASE_REPORT'];
-$botToken = $_ENV['TELEGRAM_BOT_TOKEN'];
-$chatId = $_ENV['TELEGRAM_CHAT_ID'];
+$botToken = $_ENV['TELEGRAM_BOT_TOKEN_RETURN_OTP'];
+$chatId = $_ENV['TELEGRAM_CHAT_ID_RETURN_OTP'];
 $recipients = $_ENV['RECIPIENTS'];
+
+date_default_timezone_set("Asia/Ho_Chi_Minh");
 
 // today
 $today = date('Y_m_d');
