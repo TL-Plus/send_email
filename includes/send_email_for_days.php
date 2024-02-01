@@ -1,7 +1,7 @@
 <?php
-require_once 'send_email/config.php';
-require_once 'export_excel.php';
-require_once 'email_notifications.php';
+require_once '/var/www/html/send_email/config.php';
+require_once '/var/www/html/send_email/includes/export_excel.php';
+require_once '/var/www/html/send_email/includes/email_notifications.php';
 
 
 function sendEmailForDay($sql, $dbName, $header, $attachment, $subject, $recipients)

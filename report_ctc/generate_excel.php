@@ -6,28 +6,28 @@ require_once '/var/www/html/send_email/includes/database_connection.php';
 require_once '/var/www/html/send_email/includes/send_telegram_message.php';
 
 $query_report_ctc = "SELECT 
-dcn202401.customer_name AS CustomerName,
-dcn202401.user_name AS SalerName,
-SUM(dcn202401.TotalCost) AS TotalCost,
+dcn202402.customer_name AS CustomerName,
+dcn202402.user_name AS SalerName,
+SUM(dcn202402.TotalCost) AS TotalCost,
 NULL AS TotalCurrentCall,
 (
     SELECT COUNT(ext_number) 
     FROM Billing_Diginext.report_number_block rnb
-    WHERE rnb.customer_name = dcn202401.customer_name
+    WHERE rnb.customer_name = dcn202402.customer_name
       AND DATE(rnb.time_update) = CURDATE()
 ) AS BlockViettel,
 (
     SELECT COUNT(ext_number) 
     FROM Billing_Diginext.report_number_blockMobi rnbMobi
-    WHERE rnbMobi.customer_name = dcn202401.customer_name
+    WHERE rnbMobi.customer_name = dcn202402.customer_name
       AND DATE(rnbMobi.time_update) = CURDATE()
 ) AS BlockMobifone
 FROM
-dcn202401
+dcn202402
 WHERE            
-DATE(dcn202401.TimeUpdate) = CURDATE()
+DATE(dcn202402.TimeUpdate) = CURDATE()
 GROUP BY
-dcn202401.customer_name
+dcn202402.customer_name
 ORDER BY 
 TotalCost DESC 
 LIMIT 30;";

@@ -1,8 +1,8 @@
 <?php
-require_once 'send_email/config.php';
-require_once 'send_email/includes/database_connection.php';
-require_once 'send_email/includes/send_telegram_message.php';
-require_once 'send_email/includes/export_excel_large_files.php';
+require_once '/var/www/html/send_email/config.php';
+require_once '/var/www/html/send_email/includes/database_connection.php';
+require_once '/var/www/html/send_email/includes/send_telegram_message.php';
+require_once '/var/www/html/send_email/includes/export_excel_large_files.php';
 
 
 // Query for fetching data

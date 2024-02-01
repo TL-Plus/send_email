@@ -1,7 +1,7 @@
 <?php
-require 'send_email/config.php';
-require 'send_email/includes/database_connection.php';
-require 'send_email/includes/send_telegram_message.php';
+require '/var/www/html/send_email/config.php';
+require '/var/www/html/send_email/includes/database_connection.php';
+require '/var/www/html/send_email/includes/send_telegram_message.php';
 
 function processCDRLogs($dbName, $botToken, $chatId)
 {

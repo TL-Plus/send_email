@@ -1,8 +1,8 @@
 <?php
 
-require_once 'send_email/config.php';
-require 'send_email/includes/database_connection.php';
-require 'send_email/includes/send_email_for_days.php';
+require_once '/var/www/html/send_email/config.php';
+require_once '/var/www/html/send_email/includes/database_connection.php';
+require_once '/var/www/html/send_email/includes/send_email_for_days.php';
 
 
 // Define $imagePath

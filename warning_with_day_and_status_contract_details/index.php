@@ -1,8 +1,8 @@
 <?php
-require 'send_email/config.php';
-require 'send_email/includes/database_connection.php';
-require 'send_email/includes/send_email_for_days.php';
-require 'includes/send_email_for_days_fixed.php';
+require_once '/var/www/html/send_email/config.php';
+require_once '/var/www/html/send_email/includes/database_connection.php';
+require_once '/var/www/html/send_email/includes/send_email_for_days.php';
+require '/var/www/html/send_email/warning_with_day_and_status_contract_details/includes/send_email_for_days_fixed.php';
 
 
 // Define Excel header

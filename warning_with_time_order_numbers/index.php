@@ -1,9 +1,9 @@
 <?php
-require 'send_email/config.php';
-require 'send_email/includes/database_connection.php';
-require 'send_email/includes/send_email_for_days.php';
-require 'send_email/includes/send_telegram_message.php';
-require 'includes/update_status_email.php';
+require_once '/var/www/html/send_email/config.php';
+require_once '/var/www/html/send_email/includes/database_connection.php';
+require_once '/var/www/html/send_email/includes/send_email_for_days.php';
+require_once '/var/www/html/send_email/includes/send_telegram_message.php';
+require '/var/www/html/send_email/warning_with_time_order_numbers/includes/update_status_email.php';
 
 
 // Define Constants

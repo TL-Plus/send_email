@@ -3,14 +3,18 @@
 Export excel file from server phpmyadmin and send email to recipients
 
 ## Update
+
 You can choose to send the excel file via email or telegram
 
 ### Function Send Email and Telegram Message
+
 #### Call the following function to send email
+
 `function sendEmailForDays($sql, $header, $attachment, $subject, $recipients)
 `
 
 #### Call the following function to send a telegram message
+
 `function sendTelegramMessage($sql, $header, $filename, $textMessage, $chatId)
 `
 
@@ -41,9 +45,11 @@ The server being used is digitel billing server with VoiceReport database.
 ## Setup install package file root
 
 ### install composer
+
 `sudo yum install composer`
 
-### install package in root file
+### install package
+
 ```
 composer require phpoffice/phpspreadsheet
 composer require phpmailer/phpmailer
@@ -59,10 +65,13 @@ composer require irazasyed/telegram-bot-sdk
 ```
 
 ## Copy the .env.example file locally
+
 `cp .env.example .env`
 
 ### if you want to change the database connection you need to change the $result variable in import_excel.php file with the corresponding database connection
+
 #### Database connection server billing DIGINEXT default
+
 ```
 $result = connectAndQueryDatabase($sql, $_ENV['DB_HOSTNAME_DIGINEXT'], $_ENV['DB_USERNAME_DIGINEXT'], $_ENV['DB_PASSWORD_DIGINEXT'], $dbName);
 
@@ -73,6 +82,7 @@ DB_DATABASE_DIGINEXT=
 ```
 
 #### Database connection server billing DIGITEL
+
 ```
 $result = connectAndQueryDatabase($sql, $_ENV['DB_HOSTNAME_DIGITEL'], $_ENV['DB_USERNAME_DIGITEL'], $_ENV['DB_PASSWORD_DIGITEL'], $dbName);
 
