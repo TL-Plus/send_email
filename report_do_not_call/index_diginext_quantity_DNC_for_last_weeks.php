@@ -32,7 +32,7 @@ function processCDRLogs($dbName, $botToken, $chatId)
 
         // Get the period for the report (start and end dates)
         $report_period_start = date('Y-m-d', strtotime('last Monday', strtotime('now')));
-        $report_period_end = date('Y-m-d', strtotime('previous Sunday', strtotime($report_period_start)));
+        $report_period_end = date('Y-m-d', strtotime('previous Sunday', strtotime('now')));
         $report_period = "$report_period_start/$report_period_end";
 
         $textMessage = "Báo cáo số lượng DNC trong tuần trước ($report_period)\n"

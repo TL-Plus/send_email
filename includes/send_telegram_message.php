@@ -51,9 +51,9 @@ function sendTelegramMessages($filename, $textMessage, $botToken, $chatId)
         // Send the text message along with the document
         $telegram->sendDocument($chatId, $document, $textMessage);
 
-        echo "Telegram message successfully sent file $filename \n";
+        return "Telegram message successfully sent file $filename \n";
     } catch (Exception $e) {
-        echo 'Error: ' . $e->getMessage();
+        return 'Error: ' . $e->getMessage();
     }
 }
 

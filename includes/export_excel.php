@@ -92,10 +92,8 @@ function exportToExcel($sql, $dbName, $header, $filename)
         $writer = new Xlsx($spreadsheet);
         $writer->save($filename);
 
-        echo "File $filename exported successfully.\n";
-        return true;
+        return "File $filename exported successfully.\n";
     } else {
-        echo "There is no data to export for this query.\n";
-        return false;
+        return "There is no data to export for this query.\n";
     }
 }
