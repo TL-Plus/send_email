@@ -5,29 +5,37 @@ require_once '/var/www/html/send_email/includes/export_excel.php';
 require_once '/var/www/html/send_email/includes/database_connection.php';
 require_once '/var/www/html/send_email/includes/send_telegram_message.php';
 
+date_default_timezone_set("Asia/Ho_Chi_Minh");
+
+$now_day = date('Y-m-d H:i:s');
+$year = date('Y', strtotime($now_day));
+$month = date('m', strtotime($now_day));
+
+$table_name = "dcn" . $year . $month;
+
 $query_report_ctc = "SELECT 
-dcn202402.customer_name AS CustomerName,
-dcn202402.user_name AS SalerName,
-SUM(dcn202402.TotalCost) AS TotalCost,
+$table_name.customer_name AS CustomerName,
+$table_name.user_name AS SalerName,
+SUM($table_name.TotalCost) AS TotalCost,
 NULL AS TotalCurrentCall,
 (
     SELECT COUNT(ext_number) 
     FROM Billing_Diginext.report_number_block rnb
-    WHERE rnb.customer_name = dcn202402.customer_name
+    WHERE rnb.customer_name = $table_name.customer_name
       AND DATE(rnb.time_update) = CURDATE()
 ) AS BlockViettel,
 (
     SELECT COUNT(ext_number) 
     FROM Billing_Diginext.report_number_blockMobi rnbMobi
-    WHERE rnbMobi.customer_name = dcn202402.customer_name
+    WHERE rnbMobi.customer_name = $table_name.customer_name
       AND DATE(rnbMobi.time_update) = CURDATE()
 ) AS BlockMobifone
 FROM
-dcn202402
+$table_name
 WHERE            
-DATE(dcn202402.TimeUpdate) = CURDATE()
+DATE($table_name.TimeUpdate) = CURDATE()
 GROUP BY
-dcn202402.customer_name
+$table_name.customer_name
 ORDER BY 
 TotalCost DESC 
 LIMIT 30;";
@@ -42,7 +50,6 @@ $chatId = $_ENV['TELEGRAM_CHAT_ID_REPORT_CCU'];
 $userName = $_ENV['USERNAME'];
 $password = $_ENV['PASSWORD'];
 
-date_default_timezone_set("Asia/Ho_Chi_Minh");
 $today = date('Y_m_d');
 $excelFilePath = "/var/www/html/Report_CTC_$today.xlsx";
 $currentTime = date('d-m-Y H:i');
