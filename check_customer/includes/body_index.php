@@ -4,7 +4,7 @@ session_start(); // Start the session
 require '/var/www/html/send_email/config.php';
 require '/var/www/html/send_email/includes/database_connection.php';
 require '/var/www/html/send_email/includes/send_telegram_message.php';
-require '/var/www/html/send_email/check_customer/includes/export_list_numbers.php';
+require '/var/www/html/check_customer/includes/export_list_numbers.php';
 
 function handleConvert()
 {
@@ -40,12 +40,17 @@ function handleExport()
     // Retrieve the result from the session
     $result_list_numbers = $_SESSION['result_list_numbers'];
 
+    $now_day = date('Y-m-d H:i:s');
+    $year = date('Y', strtotime($now_day));
+    $month = date('m', strtotime($now_day));
+
     $sql_query = "SELECT customer_name AS CustomerName, user_name AS SalerName, contract_code AS ContracCode, ext_number AS Number 
-        FROM `dcn202402`
-        WHERE ext_number IN $result_list_numbers GROUP BY ext_number";
+        FROM dcn" . $year . $month . "
+        WHERE ext_number IN $result_list_numbers 
+        GROUP BY ext_number";
 
     $header = [
-        'CustomerName', 'ContractCode', 'Number', 'SalerName'
+        'CustomerName', 'SalerName', 'ContractCode', 'Number',
     ];
 
     $dbName = $_ENV['DB_DATABASE_VOICEREPORT'];
