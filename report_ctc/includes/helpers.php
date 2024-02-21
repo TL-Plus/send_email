@@ -14,6 +14,8 @@ function modifyValue($column, $value)
 {
     // Remove unwanted words from the column values
     $unwantedWords = [
+        'DỊCH VỤ VÀ GIẢI PHÁP XỬ LÝ DỮ LIỆU ',
+        'THƯƠNG MẠI VÀ DỊCH VỤ VIỄN THÔNG ',
         'SẢN XUẤT - THƯƠNG MẠI - DỊCH VỤ ',
         'GIÁO DỤC TƯ DUY VÀ SÁNG TẠO ',
         'TƯ VẤN DỊCH VỤ VÀ GIẢI PHÁP ',
@@ -23,12 +25,15 @@ function modifyValue($column, $value)
         'THƯƠNG MẠI VÀ GIÁO DỤC ',
         'THƯƠNG MẠI VÀ DỊCH VỤ ',
         'ĐẦU TƯ VÀ PHÁT TRIỂN ',
+        'DỊCH VỤ VÀ GIẢI PHÁP ',
         'CÔNG NGHỆ VIỄN THÔNG ',
         'THƯƠNG MẠI - DỊCH VỤ ',
+        'GIẢI PHÁP CÔNG NGHỆ ',
         'THƯƠNG MẠI DỊCH VỤ ',
         'TRUYỀN HÌNH CÁP ',
         'MỘT THÀNH VIÊN ',
         'HỘ KINH DOANH ',
+        'XỬ LÝ DỮ LIỆU ',
         'TƯ VẤN ĐẦU TƯ ',
         'CÔNG NGHỆ SỐ ',
         'DƯỢC MỸ PHẨM ',
@@ -42,8 +47,11 @@ function modifyValue($column, $value)
         'CỔ PHẦN ',
         'DỊCH VỤ ',
         'MỸ PHẨM ',
+        'TẠP HÓA ',
         'ĐẦU TƯ ',
         'TNHH ',
+        'TM ',
+        'CP ',
     ];
     $value = str_replace($unwantedWords, '', $value);
 
