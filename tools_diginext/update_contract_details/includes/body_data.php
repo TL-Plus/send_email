@@ -3,10 +3,10 @@ session_start(); // Start the session
 
 require '/var/www/html/send_email/config.php';
 require '/var/www/html/send_email/includes/database_connection.php';
-require '/var/www/html/release_number/includes/export_list_numbers.php';
+require '/var/www/html/tools_diginext/includes/export_list_numbers.php';
 
 // Function to connect to the database and fetch data based on input values
-function fetchDataFromDB($numberSequence)
+function fetchDataFromDB($numberSequence, $contractCode, $numberStatus)
 {
     $conn = connectDatabase(
         $_ENV['DB_HOSTNAME_DIGINEXT_TEST'],
@@ -17,26 +17,28 @@ function fetchDataFromDB($numberSequence)
 
     $resultListNumbers = convertNumberSequence($numberSequence);
 
-    $query = "SELECT customer_name, order_number, order_time, status, user_updated, updated_at 
-              FROM `order_numbers`
-              WHERE order_number IN $resultListNumbers";
+    $query = "SELECT customer_name, contract_code, ext_number, activated_at, suspension_at, status
+              FROM contracts_details
+              WHERE ext_number IN $resultListNumbers
+              AND contract_code = '$contractCode'
+              AND status = '$numberStatus'";
 
     $result = $conn->query($query);
 
     // Fetch data and generate the HTML table
     $htmlTable = '<table>';
-    $htmlTable .= '<tr><th>Customer Name</th><th>Order Number</th><th>Order Time</th><th>Status</th><th>User Updated</th><th>Updated At</th></tr>';
+    $htmlTable .= '<tr><th>Customer Name</th><th>Contract Code</th><th>Ext Number</th><th>Activated At</th><th>Suspension At</th><th>Status</th></tr>';
 
     $rowCount = 0;
 
     while ($row = $result->fetch_assoc()) {
         $htmlTable .= '<tr>';
         $htmlTable .= '<td>' . $row['customer_name'] . '</td>';
-        $htmlTable .= '<td>' . $row['order_number'] . '</td>';
-        $htmlTable .= '<td>' . $row['order_time'] . '</td>';
+        $htmlTable .= '<td>' . $row['contract_code'] . '</td>';
+        $htmlTable .= '<td>' . $row['ext_number'] . '</td>';
+        $htmlTable .= '<td>' . $row['activated_at'] . '</td>';
+        $htmlTable .= '<td>' . $row['suspension_at'] . '</td>';
         $htmlTable .= '<td>' . $row['status'] . '</td>';
-        $htmlTable .= '<td>' . $row['user_updated'] . '</td>';
-        $htmlTable .= '<td>' . $row['updated_at'] . '</td>';
         $htmlTable .= '</tr>';
         $rowCount++;
     }
@@ -45,6 +47,8 @@ function fetchDataFromDB($numberSequence)
 
     // Store input values in the session
     $_SESSION['numberSequence'] = $numberSequence;
+    $_SESSION['contractCode'] = $contractCode;
+    $_SESSION['numberStatus'] = $numberStatus;
 
     // Return the HTML table string and row count
     return array('table' => $htmlTable, 'rowCount' => $rowCount);
@@ -53,9 +57,11 @@ function fetchDataFromDB($numberSequence)
 if (isset($_POST['check_data'])) {
     // Get values from the form
     $numberSequence = $_POST['number_sequence'];
+    $contractCode = $_POST['contract_code'];
+    $numberStatus = $_POST['number_status'];
 
     // Call the function to fetch data
-    $resultData = fetchDataFromDB($numberSequence);
+    $resultData = fetchDataFromDB($numberSequence, $contractCode, $numberStatus);
 
     // Display the total number of rows
     echo '<div class="total-row mt-3">Total Rows: ' . $resultData['rowCount'] . '</div>';
@@ -66,7 +72,7 @@ if (isset($_POST['check_data'])) {
 
 
 // Function to update data in the database
-function updateDataInDB($statusNumber, $orderNumberLog, $numberSequence)
+function updateDataInDB($activatedAt, $contractDetailsLog, $numberSequence, $contractCode, $numberStatus)
 {
     $conn = connectDatabase(
         $_ENV['DB_HOSTNAME_DIGINEXT_TEST'],
@@ -75,13 +81,18 @@ function updateDataInDB($statusNumber, $orderNumberLog, $numberSequence)
         $_ENV['DB_DATABASE_BILLING_DIGINEXT']
     );
 
+    // Format activatedAt as needed
+    $activatedAtFormatted = date('Y-m-d H:i:s', strtotime($activatedAt));
+
     $resultListNumbers = convertNumberSequence($numberSequence);
 
     // You should modify the update query based on your actual database schema
-    $query = "UPDATE order_numbers 
-              SET status = '$statusNumber', 
-                  log = CONCAT(log, '\n', CONCAT(NOW(), '__', '$orderNumberLog/')) 
-              WHERE order_number IN $resultListNumbers";
+    $query = "UPDATE contracts_details 
+              SET activated_at = '$activatedAtFormatted', 
+                  log = CONCAT(log, '\n', CONCAT(NOW(), '__', '$contractDetailsLog/')) 
+              WHERE ext_number IN $resultListNumbers
+                AND contract_code = '$contractCode'
+                AND status = '$numberStatus'";
 
     $result = $conn->query($query);
 
@@ -97,17 +108,19 @@ function updateDataInDB($statusNumber, $orderNumberLog, $numberSequence)
 
 if (isset($_POST['update_data'])) {
     // Get values from the update form
-    $statusNumber = $_POST['status_number'];
-    $orderNumberLog = $_POST['order_numbers_log'];
+    $activatedAt = $_POST['activated_at'];
+    $contractDetailsLog = $_POST['contract_details_log'];
 
     $numberSequence = $_SESSION['numberSequence'];
+    $contractCode = $_SESSION['contractCode'];
+    $numberStatus = $_SESSION['numberStatus'];
 
     // Store input values in the session
-    $_SESSION['status_number'] = $statusNumber;
-    $_SESSION['order_numbers_log'] = $orderNumberLog;
+    $_SESSION['activated_at'] = $activatedAt;
+    $_SESSION['contract_details_log'] = $contractDetailsLog;
 
     // Call the function to update data
-    $updateResult = updateDataInDB($statusNumber, $orderNumberLog, $numberSequence);
+    $updateResult = updateDataInDB($activatedAt, $contractDetailsLog, $numberSequence, $contractCode, $numberStatus);
 
     // Display a success or failure message
     if ($updateResult) {
@@ -123,7 +136,7 @@ if (isset($_POST['update_data'])) {
     }
 
     // Call the function to fetch updated data
-    $resultData = fetchDataFromDB($numberSequence);
+    $resultData = fetchDataFromDB($numberSequence, $contractCode, $numberStatus);
 
     // Display the total number of rows
     echo '<div class="total-row mt-3">Total Rows: ' . $resultData['rowCount'] . '</div>';

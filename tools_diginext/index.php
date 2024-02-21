@@ -32,18 +32,19 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="text-center mb-4">
-                <a href="/check_customer" class="btn btn-primary btn-lg">Kiểm tra thông tin Khách hàng</a>
+                <a href="/tools_diginext/check_customer" class="btn btn-primary btn-lg">Kiểm tra thông tin Khách
+                    hàng</a>
             </div>
             <div class="text-center mb-4">
-                <a href="/release_number" class="btn btn-primary btn-lg">Kiểm tra và nhả số</a>
+                <a href="/tools_diginext/release_number" class="btn btn-primary btn-lg">Kiểm tra và nhả số</a>
             </div>
             <div class="text-center mb-4">
-                <a href="/update_contract_details" class="btn btn-primary btn-lg">Kiểm tra và Cập nhật chi tiết hợp
-                    đồng</a>
+                <a href="/tools_diginext/update_contract_details" class="btn btn-primary btn-lg">Kiểm tra và Cập nhật
+                    chi tiết hợp đồng</a>
             </div>
             <div class="text-center mb-4">
-                <a href="/export_ctc_by_contract" class="btn btn-primary btn-lg">Kiểm tra và xuất chi tiết cước theo
-                    hợp đồng</a>
+                <a href="/tools_diginext/export_ctc_by_contract" class="btn btn-primary btn-lg">Kiểm tra và xuất chi
+                    tiết cước theo hợp đồng</a>
             </div>
             <div class="text-center mb-4">
                 <a href="/report_ctc" class="btn btn-primary btn-lg">BÁO CÁO CUỘC GỌI HỆ THỐNG VOS</a>

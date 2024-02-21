@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Update Contract Details DigiNext</title>
+    <title>Release Number DigiNext</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <!-- Add Select2 CSS -->
@@ -14,7 +14,7 @@
     <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
 
-    <link rel="stylesheet" href="/update_contract_details/static/css/style.css">
+    <link rel="stylesheet" href="/tools_diginext/static/css/style.css">
 
     <!-- Font Awesome CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
@@ -27,8 +27,8 @@
             <img src="/static/images/logo-diginext.png" alt="Diginext Logo" class="img-fluid">
         </div>
         <div class="col-md-10 text-center mt-3">
-            <h1 class="text-center">Update Contract Details DigiNext</h1>
-            <h4 class="text-center">Kiểm tra và Cập nhật ngày kích hoạt hợp đồng trong chi tiết hợp đồng</h4>
+            <h1 class="text-center">Release Number DigiNext</h1>
+            <h4 class="text-center">Kiểm tra và Nhả số</h4>
         </div>
     </div>
 
@@ -48,16 +48,6 @@
             <input type="text" name="number_sequence" id="number_sequence" class="form-control" required
                 placeholder="Enter a number sequence (separated by spaces) - e.g., 123 456 789">
         </div>
-        <div class="form-group">
-            <label for="contract_code">Contract Code:</label>
-            <input type="text" name="contract_code" id="contract_code" class="form-control" required
-                placeholder="Enter Contract Code">
-        </div>
-        <div class="form-group">
-            <label for="number_status">EXT/Number Status:</label>
-            <input type="text" name="number_status" id="number_status" class="form-control" required
-                placeholder="Enter EXT/Number Status">
-        </div>
 
         <button type="submit" name="check_data" class="btn btn-primary">Check Data</button>
     </form>
@@ -71,14 +61,14 @@
     <!-- update-data -->
     <form method="POST" action="" class="mt-4" id="update-data">
         <div class="form-group">
-            <label for="activated_at">Activated At:</label>
-            <input type="datetime-local" name="activated_at" id="activated_at" class="form-control" required
-                placeholder="Enter Activated At" step="1">
+            <label for="status_number">Status Number:</label>
+            <input type="text" name="status_number" id="status_number" class="form-control" required
+                placeholder="Enter Status Number" step="1">
         </div>
         <div class="form-group">
-            <label for="contract_details_log">Log:</label>
-            <input type="text" name="contract_details_log" id="contract_details_log" class="form-control" required
-                placeholder="Enter Contract Details Log - e.g., admin_update-activated_at">
+            <label for="order_numbers_log">Log:</label>
+            <input type="text" name="order_numbers_log" id="order_numbers_log" class="form-control" required
+                placeholder="Enter Order Number Log - e.g., admin_update-status-order-number">
         </div>
 
         <button type="submit" name="update_data" class="btn btn-success">Update Data</button>
@@ -90,7 +80,7 @@
 
     <?php include 'includes/body_data.php'; ?>
 
-    <?php include 'footer.php'; ?>
+    <?php include '../footer.php'; ?>
 
     <!-- Add Select2 JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

@@ -12,7 +12,7 @@
     <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
 
-    <link rel="stylesheet" href="/export_ctc_by_contract/static/css/style.css">
+    <link rel="stylesheet" href="/tools_diginext/static/css/style.css">
 
     <!-- Font Awesome CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
@@ -76,12 +76,12 @@
         </div>
 
         <button type="submit" name="check_data" class="btn btn-primary">Check Data</button>
-        <button type="submit" name="export_excel" class="btn btn-success">Export Excel</button>
+        <button type="submit" name="export_excel" class="btn btn-success">Export Excel and Send Telegram</button>
     </form>
 
     <?php include 'includes/body_index.php'; ?>
 
-    <?php include 'footer.php'; ?>
+    <?php include '../footer.php'; ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">

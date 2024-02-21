@@ -5,7 +5,7 @@ session_start(); // Start the session
 require '/var/www/html/send_email/config.php';
 require '/var/www/html/send_email/includes/database_connection.php';
 require '/var/www/html/send_email/includes/send_telegram_message.php';
-require '/var/www/html/export_ctc_by_contract/includes/export_list_numbers.php';
+require '/var/www/html/tools_diginext/export_ctc_by_contract/includes/export_list_numbers.php';
 
 
 // Function to connect to the database and fetch data based on input values
@@ -207,7 +207,7 @@ function handleExport()
     $botToken = $_ENV['TELEGRAM_BOT_TOKEN'];
     $chatId = $_ENV['TELEGRAM_CHAT_ID'];
 
-    $attachment = '/var/www/html/export_ctc_by_contract/files/' . str_replace("/", "_", $time_export_excel) . '_CTC_' . str_replace("/", "_", $contract_code) . '_' . $year . $month . '_' . $day_from . '_' . $day_to . '.xlsx';
+    $attachment = '/var/www/html/check_customer/files/export_ctc_by_contract/' . str_replace("/", "_", $time_export_excel) . '_CTC_' . str_replace("/", "_", $contract_code) . '_' . $year . $month . '_' . $day_from . '_' . $day_to . '.xlsx';
     $subject = "Báo cáo chi tiết cước hợp đồng: $contract_code - Thời gian thực hiện: $now_day";
 
     // Export dữ liệu từ các câu truy vấn và kết hợp vào một tệp Excel
