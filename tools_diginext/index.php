@@ -2,45 +2,16 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tools DigiNext</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <!-- Add Select2 CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/tools_diginext/static/css/style.css">
-
     <!-- Favicon -->
     <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
-
-    <style>
-    /* Tùy chỉnh style cho button */
-    .custom-button {
-        background-color: #007bff;
-        /* Màu nền */
-        color: #fff;
-        /* Màu chữ */
-        border-radius: 20px;
-        /* Bo góc */
-        padding: 10px 20px;
-        /* Padding */
-        font-size: 18px;
-        /* Kích thước chữ */
-        border: none;
-        /* Bỏ viền */
-        transition: all 0.3s ease;
-        /* Hiệu ứng chuyển đổi */
-    }
-
-    /* Hover effect */
-    .custom-button:hover {
-        background-color: #0056b3;
-        /* Màu nền khi hover */
-    }
-    </style>
 </head>
 
 <body class="container mt-3">
@@ -57,26 +28,24 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="text-center mb-4">
-                <a href="/tools_diginext/check_customer" class="btn btn-primary btn-lg custom-button">Kiểm tra thông tin
-                    Khách
-                    hàng</a>
+                <a href="/tools_diginext/check_customer"
+                    class="btn btn-outline-primary btn-lg rounded-pill px-5 py-3 me-3"><i
+                        class="fas fa-users me-2"></i>Kiểm
+                    tra thông tin Khách hàng</a>
+                <a href="/tools_diginext/release_number"
+                    class="btn btn-outline-primary btn-lg rounded-pill px-5 py-3 me-3"><i
+                        class="fas fa-phone-square-alt me-2"></i>Kiểm tra và nhả số</a>
+                <a href="/tools_diginext/update_contract_details"
+                    class="btn btn-outline-primary btn-lg rounded-pill px-5 py-3 me-3"><i
+                        class="fas fa-file-contract me-2"></i>Kiểm
+                    tra và Cập nhật chi tiết hợp đồng</a>
             </div>
             <div class="text-center mb-4">
-                <a href="/tools_diginext/release_number" class="btn btn-primary btn-lg custom-button">Kiểm tra và nhả
-                    số</a>
-            </div>
-            <div class="text-center mb-4">
-                <a href="/tools_diginext/update_contract_details" class="btn btn-primary btn-lg custom-button">Kiểm tra
-                    và Cập nhật
-                    chi tiết hợp đồng</a>
-            </div>
-            <div class="text-center mb-4">
-                <a href="/tools_diginext/export_ctc_by_contract" class="btn btn-primary btn-lg custom-button">Kiểm tra
-                    và xuất chi
-                    tiết cước theo hợp đồng</a>
-            </div>
-            <div class="text-center mb-4">
-                <a href="/report_ctc" class="btn btn-primary btn-lg custom-button">BÁO CÁO CUỘC GỌI HỆ THỐNG VOS</a>
+                <a href="/tools_diginext/export_ctc_by_contract"
+                    class="btn btn-outline-primary btn-lg rounded-pill px-5 py-3 me-3"><i
+                        class="fas fa-file-export me-2"></i>Kiểm tra và xuất chi tiết cước theo hợp đồng</a>
+                <a href="/report_ctc" class="btn btn-outline-primary btn-lg rounded-pill px-5 py-3 me-3"><i
+                        class="fas fa-file-alt me-2"></i>BÁO CÁO CUỘC GỌI HỆ THỐNG VOS</a>
             </div>
         </div>
     </div>
