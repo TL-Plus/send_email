@@ -24,9 +24,10 @@ function fetchDataFromDB($numberSequence)
     $result = $conn->query($query);
 
     // Fetch data and generate the HTML table
-    $htmlTable = '<table>';
-    $htmlTable .= '<tr><th>Customer Name</th><th>Order Number</th><th>Order Time</th><th>Status</th><th>User Updated</th><th>Updated At</th></tr>';
-
+    $htmlTable = '<div class="table-responsive">';
+    $htmlTable .= '<table class="table table-bordered">';
+    $htmlTable .= '<thead><tr><th>Customer Name</th><th>Order Number</th><th>Order Time</th><th>Status</th><th>User Updated</th><th>Updated At</th></tr></thead>';
+    $htmlTable .= '<tbody>';
     $rowCount = 0;
 
     while ($row = $result->fetch_assoc()) {
@@ -41,7 +42,9 @@ function fetchDataFromDB($numberSequence)
         $rowCount++;
     }
 
+    $htmlTable .= '</tbody>';
     $htmlTable .= '</table>';
+    $htmlTable .= '</div>';
 
     // Store input values in the session
     $_SESSION['numberSequence'] = $numberSequence;

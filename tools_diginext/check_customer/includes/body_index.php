@@ -62,9 +62,10 @@ function fetchDataFromDB($numberSequence)
     $result = $conn->query($query);
 
     // Fetch data and generate the HTML table
-    $htmlTable = '<table>';
-    $htmlTable .= '<tr><th>Customer Name</th><th>Saler Name</th><th>Contract Code</th><th>Number</th></tr>';
-
+    $htmlTable = '<div class="table-responsive">';
+    $htmlTable .= '<table class="table table-bordered">';
+    $htmlTable .= '<thead><tr><th>Customer Name</th><th>Saler Name</th><th>Contract Code</th><th>Number</th></tr></thead>';
+    $htmlTable .= '<tbody>';
     $rowCount = 0;
 
     while ($row = $result->fetch_assoc()) {
@@ -77,7 +78,9 @@ function fetchDataFromDB($numberSequence)
         $rowCount++;
     }
 
+    $htmlTable .= '</tbody>';
     $htmlTable .= '</table>';
+    $htmlTable .= '</div>';
 
     // Store input values in the session
     $_SESSION['numberSequence'] = $numberSequence;
@@ -88,6 +91,12 @@ function fetchDataFromDB($numberSequence)
 
 function checkData()
 {
+    // Check if the input is empty
+    if (empty($_POST['number_sequence'])) {
+        echo '<div class="alert alert-warning my-3" role="alert"><strong>Error:</strong> Please enter a number sequence!</div>';
+        return;
+    }
+
     // Get values from the form
     $numberSequence = $_POST['number_sequence'];
 
@@ -113,13 +122,20 @@ function handleExport()
     $result_list_numbers = $_SESSION['result_list_numbers'];
 
     $now_day = date('Y-m-d H:i:s');
+    $now_day_int = strtotime(date('Y-m-d H:i:s'));
+    $time_export_excel = date('d/m/Y');
+    $time_export_excel = $time_export_excel . "_" . $now_day_int;
+
     $year = date('Y', strtotime($now_day));
     $month = date('m', strtotime($now_day));
 
-    $sql_query = "SELECT customer_name AS CustomerName, user_name AS SalerName, contract_code AS ContracCode, ext_number AS Number 
-        FROM dcn" . $year . $month . "
-        WHERE ext_number IN $result_list_numbers 
-        GROUP BY ext_number";
+    $sql_query = "SELECT customer_name AS CustomerName,
+                user_name AS SalerName, 
+                contract_code AS ContracCode, 
+                ext_number AS Number 
+                FROM dcn" . $year . $month . "
+                WHERE ext_number IN $result_list_numbers 
+                GROUP BY ext_number";
 
     $header = [
         'CustomerName', 'SalerName', 'ContractCode', 'Number',
@@ -129,8 +145,9 @@ function handleExport()
     $botToken = $_ENV['TELEGRAM_BOT_TOKEN'];
     $chatId = $_ENV['TELEGRAM_CHAT_ID'];
 
-    $attachment = "/var/www/html/tools_diginext/files/check_customer/report_customer_data.xlsx";
-    $subject = "Report Data From Number";
+    $attachment = '/var/www/html/tools_diginext/files/check_customer/' . str_replace("/", "_", $time_export_excel) . '_report_customer_data.xlsx';
+    $subject = "Báo cáo thông tin khách hàng" . PHP_EOL
+        . "Thời gian thực hiện: $now_day";
 
     $exportStatus = exportToExcel($sql_query, $dbName, $header, $attachment);
 

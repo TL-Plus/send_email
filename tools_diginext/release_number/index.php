@@ -1,3 +1,15 @@
+<?php
+session_start();
+
+// Kiểm tra nếu người dùng đã đăng nhập, chuyển hướng đến trang index
+if (!isset($_SESSION['user'])) {
+    header('Location: /tools_diginext/login.php');
+    exit();
+}
+
+$user = $_SESSION['user'];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,7 +39,7 @@
             <img src="/static/images/logo-diginext.png" alt="Diginext Logo" class="img-fluid">
         </div>
         <div class="col-md-10 text-center mt-3">
-            <h1 class="text-center">Release Number DigiNext</h1>
+            <h1 class="title-table mb-4 mx-auto">Release Number DigiNext</h1>
             <h4 class="text-center">Kiểm tra và Nhả số</h4>
         </div>
     </div>

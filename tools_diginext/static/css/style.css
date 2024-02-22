@@ -1,27 +1,21 @@
 body {
-    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
     background-color: #f8f9fa;
-    color: #333;
-    padding-top: 50px;
+    font-style: italic;
+    /* font-family: 'Poppins', sans-serif; */
 }
 
 .container {
-    margin: 0 auto;
-    padding: 20px;
+    background-color: #ffffff;
     border-radius: 10px;
-    background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 50px;
 }
 
-h1 {
+h1, h3 {
     color: #007bff;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.form-group {
-    margin-bottom: 20px;
 }
 
 label {
@@ -30,9 +24,9 @@ label {
     color: #555;
 }
 
-input,
-select {
-    border-radius: 5px;
+/* button */
+button {
+    font-style: italic;
 }
 
 .btn-primary,
@@ -52,43 +46,68 @@ select {
     background-color: #0056b3;
 }
 
-/* Customize Select2 dropdown */
-.select2-container--default .select2-selection--single {
-    height: 38px;
-    border: 1px solid #ced4da;
-    border-radius: 5px;
-}
-
-.select2-selection__rendered {
-    line-height: 36px;
-    padding-top: 4px;
-}
-
-.select2-container .select2-selection--single .select2-selection__arrow {
-    height: 36px;
-}
-
-/* Table styles */
-table {
-    width: 100%;
-    margin-top: 20px;
-    border-collapse: collapse;
-}
-
-th,
-td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-th {
-    background-color: #007bff;
-    color: white;
+input {
+    font-style: italic;
+    border-radius: 5%;
+    border: inset;
 }
 
 .total-row {
     margin-bottom: 10px;
     font-weight: bold;
     color: #007bff;
+}
+
+/* login */
+.login-container {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-button {
+    width: 100%;
+}
+
+.login-input{
+    font-style: italic;
+    border-radius: 5%;
+    border: inset;
+    margin-bottom: 10px;
+}
+
+@media (min-width: 500px) {
+    .login-container {
+        width: 500px;
+    }
+}
+
+.error-message {
+    color: red;
+    margin-top: 10px;
+}
+
+.logo-container img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+/* table */
+.table{
+    text-align: center;
+}
+
+.table thead th {
+    background-color: #007bff;
+    color: #fff;
+    font-weight: bold;
+    padding: 10px;
+}   
+
+.table tbody td {
+    padding: 8px;
+    font-size: 14px;
 }

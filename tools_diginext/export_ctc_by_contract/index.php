@@ -1,3 +1,15 @@
+<?php
+session_start();
+
+// Kiểm tra nếu người dùng đã đăng nhập, chuyển hướng đến trang index
+if (!isset($_SESSION['user'])) {
+    header('Location: /tools_diginext/login.php');
+    exit();
+}
+
+$user = $_SESSION['user'];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,7 +28,6 @@
 
     <!-- Font Awesome CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-
 
 </head>
 

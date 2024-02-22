@@ -16,6 +16,31 @@
     <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
 
+    <style>
+    /* Tùy chỉnh style cho button */
+    .custom-button {
+        background-color: #007bff;
+        /* Màu nền */
+        color: #fff;
+        /* Màu chữ */
+        border-radius: 20px;
+        /* Bo góc */
+        padding: 10px 20px;
+        /* Padding */
+        font-size: 18px;
+        /* Kích thước chữ */
+        border: none;
+        /* Bỏ viền */
+        transition: all 0.3s ease;
+        /* Hiệu ứng chuyển đổi */
+    }
+
+    /* Hover effect */
+    .custom-button:hover {
+        background-color: #0056b3;
+        /* Màu nền khi hover */
+    }
+    </style>
 </head>
 
 <body class="container mt-3">
@@ -32,22 +57,26 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="text-center mb-4">
-                <a href="/tools_diginext/check_customer" class="btn btn-primary btn-lg">Kiểm tra thông tin Khách
+                <a href="/tools_diginext/check_customer" class="btn btn-primary btn-lg custom-button">Kiểm tra thông tin
+                    Khách
                     hàng</a>
             </div>
             <div class="text-center mb-4">
-                <a href="/tools_diginext/release_number" class="btn btn-primary btn-lg">Kiểm tra và nhả số</a>
+                <a href="/tools_diginext/release_number" class="btn btn-primary btn-lg custom-button">Kiểm tra và nhả
+                    số</a>
             </div>
             <div class="text-center mb-4">
-                <a href="/tools_diginext/update_contract_details" class="btn btn-primary btn-lg">Kiểm tra và Cập nhật
+                <a href="/tools_diginext/update_contract_details" class="btn btn-primary btn-lg custom-button">Kiểm tra
+                    và Cập nhật
                     chi tiết hợp đồng</a>
             </div>
             <div class="text-center mb-4">
-                <a href="/tools_diginext/export_ctc_by_contract" class="btn btn-primary btn-lg">Kiểm tra và xuất chi
+                <a href="/tools_diginext/export_ctc_by_contract" class="btn btn-primary btn-lg custom-button">Kiểm tra
+                    và xuất chi
                     tiết cước theo hợp đồng</a>
             </div>
             <div class="text-center mb-4">
-                <a href="/report_ctc" class="btn btn-primary btn-lg">BÁO CÁO CUỘC GỌI HỆ THỐNG VOS</a>
+                <a href="/report_ctc" class="btn btn-primary btn-lg custom-button">BÁO CÁO CUỘC GỌI HỆ THỐNG VOS</a>
             </div>
         </div>
     </div>

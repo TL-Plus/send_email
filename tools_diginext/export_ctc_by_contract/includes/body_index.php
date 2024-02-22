@@ -5,7 +5,7 @@ session_start(); // Start the session
 require '/var/www/html/send_email/config.php';
 require '/var/www/html/send_email/includes/database_connection.php';
 require '/var/www/html/send_email/includes/send_telegram_message.php';
-require '/var/www/html/tools_diginext/export_ctc_by_contract/includes/export_list_numbers.php';
+require '/var/www/html/tools_diginext/includes/export_list_numbers.php';
 
 
 // Function to connect to the database and fetch data based on input values
@@ -37,21 +37,29 @@ function fetchDataFromDB($caller_object, $call_type, $contract_code, $day_start,
     }
 
     if (!empty($Caller)) {
-        $resultCallers = convertNumberSequence($Caller);
+        $resultCallers = convertNumberSequence84($Caller);
     }
 
-    $htmlTable = '<table>';
-    $htmlTable .= '<tr><th>Time</th><th>Time End</th><th>Minute</th><th>Caller</th><th>Callee</th><th>Caller Object</th><th>Callee Object</th><th>Duration</th><th>Call Type</th><th>Fixed Type</th><th>Cost</th></tr>';
+    // Fetch data and generate the HTML table
+    $htmlTable = '<div class="table-responsive">';
+    $htmlTable .= '<table class="table table-bordered">';
+    $htmlTable .= '<thead><tr><th>Time</th><th>Time End</th><th>Minute</th><th>Caller</th><th>Callee</th><th>Caller Object</th><th>Callee Object</th><th>Duration</th><th>Call Type</th><th>Fixed Type</th><th>Cost</th></tr></thead>';
+    $htmlTable .= '<tbody>';
     $rowCount = 0;
 
     for ($i = (int)$day_from; $i <= (int)$day_to; $i++) {
         $day = str_pad($i, 2, '0', STR_PAD_LEFT); // Đảm bảo ngày có 2 chữ số
 
-        $query = "SELECT time, time_end, minute, Caller, Callee, caller_object, callee_object, duration, call_type, fixed_type, cost
-        FROM cdr" . $year . $month . $day . "
-        WHERE duration > 0 
-        AND contract_code = '$contract_code'
-        AND DAY(time) >= $day_from AND DAY(time) <= $day_to";
+        $infoCustomers = [];
+
+        $query = "SELECT time, time_end, minute, 
+                Caller, Callee, caller_object, callee_object, 
+                duration, call_type, fixed_type, cost, 
+                customer_name, contract_code, user_name
+            FROM cdr" . $year . $month . $day . "
+            WHERE duration > 0 
+            AND contract_code = '$contract_code'
+            AND DAY(time) >= $day_from AND DAY(time) <= $day_to";
 
         // Kiểm tra và thêm điều kiện cho caller_object
         if (!empty($caller_object)) {
@@ -87,10 +95,19 @@ function fetchDataFromDB($caller_object, $call_type, $contract_code, $day_start,
             $htmlTable .= '<td>' . $row['cost'] . '</td>';
             $htmlTable .= '</tr>';
             $rowCount++;
+
+            $infoCustomers[] = [
+                'customerName' => $row['customer_name'],
+                'contractCode' => $row['contract_code'],
+                'userName' => $row['user_name'],
+            ];
         }
     }
 
+    $htmlTable .= '</tbody>';
     $htmlTable .= '</table>';
+    $htmlTable .= '</div>';
+
 
     // Store input values in the session
     $_SESSION['caller_object'] = $caller_object;
@@ -101,7 +118,11 @@ function fetchDataFromDB($caller_object, $call_type, $contract_code, $day_start,
     $_SESSION['Caller'] = $Caller;
 
     // Return the HTML table string and row count
-    return array('table' => $htmlTable, 'rowCount' => $rowCount);
+    return array(
+        'table' => $htmlTable,
+        'infoCustomers' => $infoCustomers,
+        'rowCount' => $rowCount
+    );
 }
 
 function checkData()
@@ -118,6 +139,11 @@ function checkData()
 
     // Call the function to fetch data
     $resultData = fetchDataFromDB($caller_object, $call_type, $contract_code, $day_start, $day_end, $Caller);
+
+    // Display customer, saler and contract
+    echo '<div class="total-row mt-3">Customer: ' . $resultData['infoCustomers'][0]['customerName'] . '</div>';
+    echo '<div class="total-row mt-3">Contract Code: ' . $resultData['infoCustomers'][0]['contractCode'] . '</div>';
+    echo '<div class="total-row mt-3">Sale: ' . $resultData['infoCustomers'][0]['userName'] . '</div>';
 
     // Display the total number of rows
     echo '<div class="total-row mt-3">Total Rows: ' . $resultData['rowCount'] . '</div>';
@@ -136,7 +162,6 @@ function handleExport()
     $now_day = date('Y-m-d H:i:s');
     $now_day_int = strtotime(date('Y-m-d H:i:s'));
     $time_export_excel = date('d/m/Y');
-    $day_export = date('d-m-Y');
     $time_export_excel = $time_export_excel . "_" . $now_day_int;
 
     // Retrieve input values from the session
@@ -164,7 +189,7 @@ function handleExport()
     }
 
     if (!empty($Caller)) {
-        $resultCallers = convertNumberSequence($Caller);
+        $resultCallers = convertNumberSequence84($Caller);
     }
 
     $queries = array(); // Mảng lưu trữ các câu truy vấn
@@ -173,11 +198,14 @@ function handleExport()
     for ($i = (int)$day_from; $i <= (int)$day_to; $i++) {
         $day = str_pad($i, 2, '0', STR_PAD_LEFT); // Đảm bảo ngày có 2 chữ số
 
-        $query = "SELECT time, time_end, minute, Caller, Callee, caller_object, callee_object, duration, call_type, fixed_type, cost
-        FROM cdr" . $year . $month . $day . "
-        WHERE duration > 0 
-        AND contract_code = '$contract_code'
-        AND DAY(time) >= $day_from AND DAY(time) <= $day_to";
+        $query = "SELECT time, time_end, minute, 
+                    Caller, Callee, caller_object, callee_object, 
+                    duration, call_type, fixed_type, cost, 
+                    customer_name, contract_code, user_name
+                FROM cdr" . $year . $month . $day . "
+                WHERE duration > 0 
+                AND contract_code = '$contract_code'
+                AND DAY(time) >= $day_from AND DAY(time) <= $day_to";
 
         // Kiểm tra và thêm điều kiện cho caller_object
         if (!empty($caller_object)) {
@@ -200,15 +228,16 @@ function handleExport()
     }
 
     $header = [
-        'Time', 'Time End', 'Minute', 'Caller', 'Callee', 'Caller Object', 'Callee Object', 'Duration', 'Call Type', 'Fixed Type', 'Cost'
+        'Time', 'Time End', 'Minute', 'Caller', 'Callee', 'Caller Object', 'Callee Object', 'Duration', 'Call Type', 'Fixed Type', 'Cost', 'Customer Name', 'Contract Code', 'Saler Name'
     ];
 
     $dbName = $_ENV['DB_DATABASE_VOICEREPORT'];
     $botToken = $_ENV['TELEGRAM_BOT_TOKEN'];
     $chatId = $_ENV['TELEGRAM_CHAT_ID'];
 
-    $attachment = '/var/www/html/check_customer/files/export_ctc_by_contract/' . str_replace("/", "_", $time_export_excel) . '_CTC_' . str_replace("/", "_", $contract_code) . '_' . $year . $month . '_' . $day_from . '_' . $day_to . '.xlsx';
-    $subject = "Báo cáo chi tiết cước hợp đồng: $contract_code - Thời gian thực hiện: $now_day";
+    $attachment = '/var/www/html/tools_diginext/files/export_ctc_by_contract/' . str_replace("/", "_", $time_export_excel) . '_CTC_' . str_replace("/", "_", $contract_code) . '_' . $year . $month . '_' . $day_from . '_' . $day_to . '.xlsx';
+    $subject = "Báo cáo chi tiết cước hợp đồng: $contract_code" . PHP_EOL
+        . "Thời gian thực hiện: $now_day";
 
     // Export dữ liệu từ các câu truy vấn và kết hợp vào một tệp Excel
     $exportStatus = exportToExcels($queries, $dbName, $header, $attachment);
