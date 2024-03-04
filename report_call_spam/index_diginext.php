@@ -30,7 +30,7 @@ date_default_timezone_set("Asia/Ho_Chi_Minh");
 
 // today
 $today = date('Y_m_d');
-$attachment = "Report_Call_Spam_By_Number_Contract_DIGINEXT_$today.xlsx";
+$attachment = "/var/www/html/send_email/files_export/Report_Call_Spam_By_Number_Contract_DIGINEXT_$today.xlsx";
 $subject = "Report Call Spam By Number Contract DIGINEXT ($today)";
 
 // Call the function to send a message via Telegram

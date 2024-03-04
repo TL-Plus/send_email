@@ -58,7 +58,7 @@ $recipients = $_ENV['RECIPIENTS'];
 
 // Prepare email details
 $month_liabilities = date('Y_m', strtotime('-2 months'));
-$attachment = "Report_warning_liabilities_$month_liabilities.xlsx";
+$attachment = "/var/www/html/send_email/files_export/Report_warning_liabilities_$month_liabilities.xlsx";
 $subject = "Report Warning Liabilities ($month_liabilities)";
 
 // Call function to send email notification for warning liabilities

@@ -40,7 +40,7 @@ date_default_timezone_set("Asia/Ho_Chi_Minh");
 
 // yesterday
 $yesterday = date('Y_m_d', strtotime('-1 days'));
-$attachment = "Report_DNC_$yesterday.xlsx";
+$attachment = "/var/www/html/send_email/files_export/Report_DNC_$yesterday.xlsx";
 $subject = "Report DNC DIGINEXT ($yesterday)";
 
 // Call the function to send a message via Telegram

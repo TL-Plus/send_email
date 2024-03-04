@@ -44,7 +44,8 @@ function getInfoCustomersFromDatabase($dbName)
             AND contracts_details.categories_expand IN ('1900', '1800', 'CALLCENTER')
             AND contracts_details.status = 'actived'
             AND contracts_details.cost_expand > 0
-        ORDER BY contracts_details.contract_code";
+        ORDER BY contracts_details.contract_code
+        LIMIT 5;";
 
     $result = $conn->query($query);
 
@@ -56,7 +57,7 @@ function getInfoCustomersFromDatabase($dbName)
                 'contractCode' => $row['contract_code'],
                 'customerName' => $row['customer_name'],
                 'customerCode' => $row['customer_code'],
-                'customerEmail' => $row['customer_email'],
+                'customerEmail' => 'thelaniq@gmail.com', //$row['customer_email'],
                 'categoriesCode' => $row['categories_code'],
                 'categoriesExpand' => $row['categories_expand'],
             ];
@@ -168,6 +169,6 @@ function processEmails($dbName, $header, $fileName, $title)
 processEmails(
     $dbName,
     $header,
-    "/var/www/html/send_email/fee_payment_cycle/files/Billing_Cycle_Notification_For_",
+    "/var/www/html/send_email/files_export/Billing_Cycle_Notification_For_",
     "[DIGINEXT] - THÔNG BÁO CHU KỲ THANH TOÁN CƯỚC ĐẦU SỐ DỊCH VỤ",
 );

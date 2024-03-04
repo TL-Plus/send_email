@@ -32,7 +32,7 @@ date_default_timezone_set("Asia/Ho_Chi_Minh");
 // today
 $today = date('Y_m_d');
 $currentTime = date('H:i d-m-Y');
-$attachment = "Report_Warning_CDRLog_$today.xlsx";
+$attachment = "/var/www/html/send_email/files_export/Report_Warning_CDRLog_$today.xlsx";
 $subject = "Report Warning CDRLog DIGINEXT ($currentTime)";
 
 // Call the function to send a message via Telegram

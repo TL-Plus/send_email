@@ -160,7 +160,7 @@ processEmailsAndTelegrams(
     WARNING_THRESHOLD,
     $dbName,
     $header,
-    'Report_warning_dvgtgt_',
+    '/var/www/html/send_email/files_export/Report_warning_dvgtgt_',
     '[DIGINEXT] - BÁO CÁO CẢNH BÁO ĐẶT SỐ DVGTGT SẮP HẾT HẠN',
     $orderNumberConditionDVGTGT
 );
@@ -169,7 +169,7 @@ processEmailsAndTelegrams(
     TERMINATION_THRESHOLD,
     $dbName,
     $header,
-    'Report_termination_dvgtgt_',
+    '/var/www/html/send_email/files_export/Report_termination_dvgtgt_',
     '[DIGINEXT] - BÁO CÁO CẢNH BÁO ĐẶT SỐ DVGTGT HẾT HẠN',
     $orderNumberConditionDVGTGT
 );
@@ -180,7 +180,7 @@ processEmailsAndTelegrams(
     WARNING_THRESHOLD,
     $dbName,
     $header,
-    'Report_warning_888_fixed_',
+    '/var/www/html/send_email/files_export/Report_warning_888_fixed_',
     '[DIGINEXT] - BÁO CÁO CẢNH BÁO ĐẶT SỐ CỐ ĐỊNH 888 SẮP HẾT HẠN',
     $orderNumberCondition888Fixed
 );
@@ -189,7 +189,7 @@ processEmailsAndTelegrams(
     TERMINATION_THRESHOLD,
     $dbName,
     $header,
-    'Report_termination_888_fixed_',
+    '/var/www/html/send_email/files_export/Report_termination_888_fixed_',
     '[DIGINEXT] - BÁO CÁO CẢNH BÁO ĐẶT SỐ CỐ ĐỊNH 888 HẾT HẠN',
     $orderNumberCondition888Fixed
 );

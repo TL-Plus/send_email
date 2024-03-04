@@ -38,7 +38,7 @@ date_default_timezone_set("Asia/Ho_Chi_Minh");
 
 // Get the period for the report (start and end dates)
 $report_period = date('Y_m_d', strtotime('last Monday', strtotime('now'))) . '_' . date('Y_m_d', strtotime('previous Sunday', strtotime('now')));
-$attachment = "Report_quantity_DNC_Week_$report_period.xlsx";
+$attachment = "/var/www/html/send_email/files_export/Report_quantity_DNC_Week_$report_period.xlsx";
 $subject = "Báo cáo số lượng DNC trong tuần (Tuần $report_period)";
 
 // Call the function to send a message via Telegram

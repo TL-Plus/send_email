@@ -89,7 +89,23 @@ LEFT JOIN ContractManagement ON ContractManagement.CustomerCode = Customers.Code
 LEFT JOIN Salers ON Salers.Code = Customers.SalerCode";
 
 // Call function to send email notification for 17-day warning
-sendEmailForDayFixed($query_888_fixed_17_day_part1, $query_888_fixed_17_day_part2, $dbName, $header, 'Report_contracts_warning_888_fixed_17_days.xlsx', 'Report Contracts Warning 888 Fixed (17-Days)',  $recipients);
+sendEmailForDayFixed(
+    $query_888_fixed_17_day_part1,
+    $query_888_fixed_17_day_part2,
+    $dbName,
+    $header,
+    '/var/www/html/send_email/files_export/Report_contracts_warning_888_fixed_17_days.xlsx',
+    'Report Contracts Warning 888 Fixed (17-Days)',
+    $recipients
+);
 
 // Call function to send email notification for 19-day warning
-sendEmailForDayFixed($query_888_fixed_19_day_part1, $query_888_fixed_19_day_part2, $dbName, $header, 'Report_on_contracts_termination_888_fixed_19_days.xlsx', 'Report on Contracts Termination 888 Fixed (19 Days)',  $recipients);
+sendEmailForDayFixed(
+    $query_888_fixed_19_day_part1,
+    $query_888_fixed_19_day_part2,
+    $dbName,
+    $header,
+    '/var/www/html/send_email/files_export/Report_on_contracts_termination_888_fixed_19_days.xlsx',
+    'Report on Contracts Termination 888 Fixed (19 Days)',
+    $recipients
+);

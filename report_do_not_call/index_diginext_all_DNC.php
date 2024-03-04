@@ -30,7 +30,7 @@ $chatId = $_ENV['TELEGRAM_CHAT_ID'];
 
 // Define the base filename for the exported files
 $today = date('Y_m_d');
-$baseFilename = "Report_all_DNC_$today";
+$baseFilename = "/var/www/html/send_email/files_export/Report_all_DNC_$today";
 
 // Call the function to export data to Excel
 $exportedFiles = exportToExcelLargeFiles($query_report_all_do_not_call_blacklist, $dbName, $header, $baseFilename);
@@ -38,7 +38,7 @@ $exportedFiles = exportToExcelLargeFiles($query_report_all_do_not_call_blacklist
 // Check if export was successful before iterating over the result
 if ($exportedFiles !== false) {
     // Define $subject
-    $subject = "Report all DNC DIGINEXT ($today)";
+    $subject = "/var/www/html/send_email/files_export/Report all DNC DIGINEXT ($today)";
 
     // Send each exported file to Telegram
     foreach ($exportedFiles as $exportedFile) {
