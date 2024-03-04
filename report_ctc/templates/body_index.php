@@ -4,13 +4,13 @@ require_once '/var/www/html/vendor/autoload.php';
 require_once '/var/www/html/send_email/config.php';
 require_once '/var/www/html/send_email/includes/database_connection.php';
 require_once '/var/www/html/send_email/includes/export_excel.php';
-require_once '/var/www/html/send_email/report_ctc/includes/helpers.php';
+require_once '/var/www/html/report_ctc/includes/helpers.php';
 
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 // Specify the path to your Excel file
 $today = date('Y_m_d');
-$excelFilePath = "/var/www/html/Report_CTC_$today.xlsx";
+$excelFilePath = "/var/www/html/report_ctc/files/Report_CTC_$today.xlsx";
 
 // Load the Excel file
 $spreadsheet = IOFactory::load($excelFilePath);

@@ -1,8 +1,8 @@
 <?php
 
 require_once '/var/www/html/vendor/autoload.php';
-require_once '/var/www/html/send_email/report_ctc/includes/custom_tcpdf.php';
-require_once '/var/www/html/send_email/report_ctc/includes/helpers.php';
+require_once '/var/www/html/report_ctc/includes/custom_tcpdf.php';
+require_once '/var/www/html/report_ctc/includes/helpers.php';
 
 
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -194,13 +194,12 @@ function convertExcelToPDF($excelFilePath, $pdfFileName, $userName, $ccuValues, 
             $pdf->Ln();
         }
 
-        $pdfFilePath = '/var/www/html/' . $pdfFileName;
-
         // Output PDF to file
-        $pdf->Output($pdfFilePath, 'F');
+        $pdf->Output($pdfFileName, 'F');
 
         echo "File $pdfFileName converted successfully.\n";
-        return $pdfFilePath; // Return the file path
+
+        return $pdfFileName;
     } catch (Exception $e) {
         echo "Error converting Excel to PDF: " . $e->getMessage() . "\n";
         return false;

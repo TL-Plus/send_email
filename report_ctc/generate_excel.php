@@ -51,10 +51,10 @@ $userName = $_ENV['USERNAME'];
 $password = $_ENV['PASSWORD'];
 
 $today = date('Y_m_d');
-$excelFilePath = "/var/www/html/Report_CTC_$today.xlsx";
+$excelFilePath = "/var/www/html/report_ctc/files/Report_CTC_$today.xlsx";
 $currentTime = date('d-m-Y H:i');
 $textMessage = "Dữ liệu Báo Cáo Cuộc Gọi Hệ Thống VOS DIGINEXT ngày: $currentTime đã được cập nhật xong!" . PHP_EOL
-  . "Kính mời đội ngũ vận hành vào website: http://103.112.209.152/send_email/report_ctc/ để xem và cập nhật thêm dữ liệu!" . PHP_EOL
+  . "Kính mời đội ngũ vận hành vào website: http://103.112.209.152/report_ctc/ để xem và cập nhật thêm dữ liệu!" . PHP_EOL
   . "Hãy đăng nhập với tài khoản sau đây:" . PHP_EOL
   . "Tài khoản: $userName" . PHP_EOL
   . "Mật khẩu: $password";
@@ -63,6 +63,12 @@ $exportSuccessful = exportToExcel($query_report_ctc, $dbName, $header, $excelFil
 
 if ($exportSuccessful) {
   sendTelegramMessage($textMessage, $botToken, $chatId);
+
+  sendTelegramMessage(
+    $textMessage,
+    $_ENV['TELEGRAM_BOT_TOKEN_DIGINEXT'],
+    $_ENV['TELEGRAM_CHAT_ID']
+  );
 } else {
   echo "Error exporting data to Excel.\n";
 }
