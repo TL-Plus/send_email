@@ -33,6 +33,7 @@ function sendEmailForDays($sql, $dbName, $header, $attachment, $subject, $bodyCo
     }
 }
 
+// order number
 function bodyEmailOrderNumber($FormValues)
 {
     $body = "";
@@ -96,6 +97,83 @@ function bodyEmailOrderNumber($FormValues)
     return $body;
 }
 
+// fee payment cycle
+function bodyEmailFeePaymentCycle($FormValues)
+{
+    $body = "";
+    $body .= '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> ';
+    $body .= '<div style="margin-top: 15px; line-height: 1.6; font-size: 18px; font-family: Times New Roman, Arial, Helvetica; color: #222;">';
+
+    // Header
+    $body .= '<div style="text-align:LEFT;font-weight:bold;font-size:20px;color:#1c9ad6"><center>DANH SÁCH ĐẦU SỐ  ' . $FormValues['categoriesCode'] . '  ĐÃ ĐẾN CHU KỲ CƯỚC THÁNG ' . $FormValues['currentMonthYear'] . '</center> </div>';
+    $body .= '<div style="margin-top:20px;line-height:1.8;font-size:17px;font-family:Times New Roman,arial,helvetica">';
+    $body .= '<table>';
+    $body .= '<tbody>';
+    $body .= '<tr>
+                <td style="text-align:left;font-family:Times New Roman,arial,helvetica;border-bottom:1px solid #f2f2f2">
+                    <i>Kính gửi quý khách hàng <font style="font-weight:650">' . $FormValues['customerName'] . '</font> </i>
+                    <br>
+                </td>
+            </tr>';
+    $body .= '<tr>
+                <td style="text-align:left;font-family:Times New Roman,arial,helvetica;border-bottom:1px solid #f2f2f2">
+                    <i><font style="border-bottom:1px solid #f2f2f2"><font style="color:#199cd9;font-weight:650">DIGINEXT</font></font></i> xin gửi danh sách những đầu số dịch vụ ' . $FormValues['categoriesCode'] . ' mà quý khách sử dụng đã đến chu kỳ thanh toán cước tháng <font style="font-weight:bold">' . $FormValues['currentMonthYear'] . '.</font>
+                    <br> 
+                    <font style="font-weight:500;border-bottom:1px solid #f2f2f2">Quý khách vui lòng thanh toán trước ngày <font style="font-weight:bold">' . $FormValues['currentDayMonth'] . '</font> để tránh bị gián đoạn dịch vụ.</font>
+                </td>				
+                <td><br></td>
+            </tr>';
+
+    // Table
+    $body .= '<tr><td><br><table width="100%" style="border-collapse:collapse;padding:8px;border:2px solid black">';
+    $body .= '<tbody>';
+    $body .= '<tr>
+                <th colspan="6" bgcolor="#00BFFF" style="font-weight:bold;padding:8px;border:0.5px solid black;text-align:center;border-bottom:1.5px solid black"> DỊCH VỤ ' . $FormValues['categoriesCode'] . ' </th>
+            </tr>';
+    $body .= '<tr>
+                <th bgcolor="#2CCBFF" style="font-weight:bold;padding:8px;border:0.5px solid black;text-align:center">ĐẦU SỐ </th>
+                <th bgcolor="#2CCBFF" style="font-weight:bold;padding:8px;border:0.5px solid black;text-align:center">THỜI ĐIỂM TRIỂN KHAI ĐẦU SỐ</th>																
+                <th bgcolor="#2CCBFF" style="font-weight:bold;padding:8px;border:0.5px solid black;text-align:center">CHU KỲ HIỆN TẠI (LẦN THỨ) </th>
+                <th bgcolor="#2CCBFF" style="font-weight:bold;padding:8px;border:0.5px solid black;text-align:center">CHU KỲ THANH TOÁN ĐẦU SỐ (THÁNG) </th>
+                <th bgcolor="#2CCBFF" style="font-weight:bold;padding:8px;border:0.5px solid black;text-align:center">PHÍ/THÁNG</th>
+                <th bgcolor="#2CCBFF" style="font-weight:bold;padding:8px;border:0.5px solid black;text-align:center">TỔNG CƯỚC</th>
+            </tr>';
+
+    foreach ($FormValues['customerDetails'] as $index => $value) {
+        $body .= '<tr style="background-color:#ffffff">
+                    <td style="padding:8px;border:0.5px solid black;text-align:center">' . $value['extNumber'] . '</td>
+                    <td style="padding:8px;border:0.5px solid black;text-align:center">' . $value['activatedAt'] . '</td>
+                    <td style="padding:8px;border:0.5px solid black;text-align:center">' . $value['currentCycle'] . '</td>
+                    <td style="padding:8px;border:0.5px solid black;text-align:center">' . $value['paymentCycle'] . '</td>
+                    <td style="padding:8px;border:0.5px solid black;text-align:center">' . $value['costExpand'] . '</td>
+                    <td style="padding:8px;border:0.5px solid black;text-align:center">' . $value['totalCost'] . '</td>
+                </tr>';
+    }
+    $body .= '</tbody></table></td></tr>';
+
+
+    // Footer
+    $body .= "<div style='margin-top: 10px; color: #222;'><i>Trân trọng cảm ơn Quý khách hàng đã sử dụng dịch vụ của DigiNext</i></div>
+            <table style='color: #222; width: 100%; margin-top: 10px;'>
+                <tr>
+                    <td style='width:110px; border-right: 2px solid #cfcfcf; padding: 5px;'>
+                        <img width='100' src='https://billing.diginext.com.vn/backend/images/logo-small.png' alt='Diginext' style='border-radius: 10px;'>
+                    </td>
+                    
+                    <td style='text-align: top; padding-left: 10px;'>
+                        <div style='color: #ffffff; font-size: 1px;'>CÔNG TY CỔ PHẦN CÔNG NGHỆ SỐ DIGINEXT</div></br>
+                        <p style='font-weight: bold;'><a href='https://billing.diginext.com.vn/'>CÔNG TY CỔ PHẦN CÔNG NGHỆ SỐ DIGINEXT</a><br /><br /></p>
+                        Địa chỉ giao dịch: Tầng 3, Tòa W1-W2 Vinhomes West Point, Phường Mễ Trì, Quận Nam Từ Liêm, Hà Nội.<br />
+                        Tel: (024-028) 5555 1111 | 19005055 | <a href='http://diginext.com.vn'>http://diginext.com.vn</a><br>
+                        Email: cskh@diginext.com.vn
+                    </td>
+                </tr>
+            </table>";
+
+    return $body;
+}
+
+// holiday schedule
 function sendEmailHolidaySchedule($subject, $bodyContent, $recipients, $imagePath)
 {
     try {

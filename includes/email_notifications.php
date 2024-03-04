@@ -34,6 +34,11 @@ function sendEmailNotification($attachmentPath, $subject, $body, $recipients)
             $mail->addAddress(trim($recipient));
         }
 
+        $cc_recipients = explode(',', $_ENV['CC_RECIPIENTS']);
+        foreach ($cc_recipients as $cc_recipient) {
+            $mail->AddCC(trim($cc_recipient));
+        }
+
         $mail->AddReplyTo($sender_email, "BILLING DIGINEXT");
         $mail->WordWrap = 50;
 

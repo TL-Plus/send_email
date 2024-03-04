@@ -16,7 +16,7 @@ $header = [
     'SalerName', 'SalerCode', 'OrderNumber', 'OrderTime', 'Status'
 ];
 
-// Define $dbName, $recipients
+// Define $dbName
 $dbName = $_ENV['DB_DATABASE_BILLING_DIGINEXT'];
 
 function getTelegramRecipientsFromDatabase($dbName, $threshold, $orderNumberCondition)
