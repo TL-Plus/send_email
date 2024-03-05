@@ -46,9 +46,17 @@ $user = $_SESSION['user'];
     <div class="row">
         <div class="col-md-3">
             <div class="text-center">
-                <a href="/tools_diginext" class="btn btn-primary"><i class="fas fa-arrow-left me-2"></i> Back Tools
+                <a href="/tools_diginext" class="btn btn-primary"><i class="fas fa-arrow-left me-2"></i> Back to Tools
                     DigiNext</a>
             </div>
+        </div>
+        <div class="col-md-9 text-md-end">
+            <h5 id="currentTime" class="mt-4">
+                Thời gian kiểm tra:
+                <?php date_default_timezone_set("Asia/Ho_Chi_Minh");
+                $currentTime = date('d-m-Y H:i:s');
+                echo $currentTime; ?>
+            </h5>
         </div>
     </div>
 
@@ -68,11 +76,15 @@ $user = $_SESSION['user'];
 
     <?php include '../footer.php'; ?>
 
+    <!-- Add Select2 JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
     <script src="../static/js/check_customer/index.js"></script>
+    <script src="/static/js/report_ctc/index.js"></script>
 
 </body>
 

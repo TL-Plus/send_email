@@ -9,9 +9,9 @@ require '/var/www/html/tools_diginext/includes/export_list_numbers.php';
 function fetchDataFromDB($numberSequence)
 {
     $conn = connectDatabase(
-        $_ENV['DB_HOSTNAME_DIGINEXT_TEST'],
-        $_ENV['DB_USERNAME_DIGINEXT_TEST'],
-        $_ENV['DB_PASSWORD_DIGINEXT_TEST'],
+        $_ENV['DB_HOSTNAME_DIGINEXT'],
+        $_ENV['DB_USERNAME_DIGINEXT'],
+        $_ENV['DB_PASSWORD_DIGINEXT'],
         $_ENV['DB_DATABASE_BILLING_DIGINEXT']
     );
 
@@ -72,9 +72,9 @@ if (isset($_POST['check_data'])) {
 function updateDataInDB($statusNumber, $orderNumberLog, $numberSequence)
 {
     $conn = connectDatabase(
-        $_ENV['DB_HOSTNAME_DIGINEXT_TEST'],
-        $_ENV['DB_USERNAME_DIGINEXT_TEST'],
-        $_ENV['DB_PASSWORD_DIGINEXT_TEST'],
+        $_ENV['DB_HOSTNAME_DIGINEXT'],
+        $_ENV['DB_USERNAME_DIGINEXT'],
+        $_ENV['DB_PASSWORD_DIGINEXT'],
         $_ENV['DB_DATABASE_BILLING_DIGINEXT']
     );
 
@@ -84,7 +84,8 @@ function updateDataInDB($statusNumber, $orderNumberLog, $numberSequence)
     $query = "UPDATE order_numbers 
               SET status = '$statusNumber', 
                   log = CONCAT(log, '\n', CONCAT(NOW(), '__', '$orderNumberLog/')) 
-              WHERE order_number IN $resultListNumbers";
+              WHERE order_number IN $resultListNumbers
+              AND status = 'holding'";
 
     $result = $conn->query($query);
 

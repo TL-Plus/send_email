@@ -20,31 +20,51 @@
             <img src="/static/images/logo-diginext.png" alt="Diginext Logo" class="img-fluid">
         </div>
         <div class="col-md-10 text-center mt-3">
-            <h1 class="text-center">Tools DigiNext</h1>
+            <h1 class="title-table mb-4 mx-auto">Tools DigiNext</h1>
             <h4 class="text-center">Công cụ hỗ trợ cho DigiNext</h4>
+        </div>
+    </div>
+
+    <div class="row mt-3 mb-5">
+        <div class="col-md-12">
+            <h5 id="currentTime" class="mt-4">
+                Thời gian kiểm tra:
+                <?php date_default_timezone_set("Asia/Ho_Chi_Minh");
+                $currentTime = date('d-m-Y H:i:s');
+                echo $currentTime; ?>
+            </h5>
         </div>
     </div>
 
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <div class="text-center mb-4">
+            <div class="text-center">
                 <a href="/tools_diginext/check_customer"
-                    class="btn btn-outline-primary btn-lg rounded-pill px-5 py-3 me-3"><i
-                        class="fas fa-users me-2"></i>Kiểm
-                    tra thông tin Khách hàng</a>
+                    class="btn btn-outline-primary btn-lg rounded-pill px-md-5 py-md-3 px-3 py-2 me-3 mb-4"><i
+                        class="fas fa-users me-2"></i>Kiểm tra thông tin Khách hàng</a>
                 <a href="/tools_diginext/release_number"
-                    class="btn btn-outline-primary btn-lg rounded-pill px-5 py-3 me-3"><i
+                    class="btn btn-outline-primary btn-lg rounded-pill px-md-5 py-md-3 px-3 py-2 me-3 mb-4"><i
                         class="fas fa-phone-square-alt me-2"></i>Kiểm tra và nhả số</a>
                 <a href="/tools_diginext/update_contract_details"
-                    class="btn btn-outline-primary btn-lg rounded-pill px-5 py-3 me-3"><i
-                        class="fas fa-file-contract me-2"></i>Kiểm
-                    tra và Cập nhật chi tiết hợp đồng</a>
+                    class="btn btn-outline-primary btn-lg rounded-pill px-md-5 py-md-3 px-3 py-2 me-3 mb-4"><i
+                        class="fas fa-file-contract me-2"></i>Kiểm tra và Cập nhật chi tiết hợp đồng</a>
             </div>
+
+            <div class="text-center">
+                <a href="/tools_diginext/check_totalcost"
+                    class="btn btn-outline-primary btn-lg rounded-pill px-md-5 py-md-3 px-3 py-2 me-3 mb-4"><i
+                        class="fas fa-file-contract me-2"></i>Kiểm tra tổng cước</a>
+                <a href="/tools_diginext/check_cdr_cdrdsip"
+                    class="btn btn-outline-primary btn-lg rounded-pill px-md-5 py-md-3 px-3 py-2 me-3 mb-4"><i
+                        class="fas fa-file-contract me-2"></i>Kiểm tra sản lượng CDR và CDRDSIP</a>
+            </div>
+
             <div class="text-center mb-4">
                 <a href="/tools_diginext/export_ctc_by_contract"
-                    class="btn btn-outline-primary btn-lg rounded-pill px-5 py-3 me-3"><i
+                    class="btn btn-outline-primary btn-lg rounded-pill px-md-5 py-md-3 px-3 py-2 me-3 mb-4"><i
                         class="fas fa-file-export me-2"></i>Kiểm tra và xuất chi tiết cước theo hợp đồng</a>
-                <a href="/report_ctc" class="btn btn-outline-primary btn-lg rounded-pill px-5 py-3 me-3"><i
+                <a href="/report_ctc"
+                    class="btn btn-outline-primary btn-lg rounded-pill px-md-5 py-md-3 px-3 py-2 me-3 mb-4"><i
                         class="fas fa-file-alt me-2"></i>BÁO CÁO CUỘC GỌI HỆ THỐNG VOS</a>
             </div>
         </div>
@@ -58,6 +78,8 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+    <script src="/static/js/report_ctc/index.js"></script>
 
 </body>
 

@@ -9,9 +9,9 @@ require '/var/www/html/tools_diginext/includes/export_list_numbers.php';
 function fetchDataFromDB($numberSequence, $contractCode, $numberStatus)
 {
     $conn = connectDatabase(
-        $_ENV['DB_HOSTNAME_DIGINEXT_TEST'],
-        $_ENV['DB_USERNAME_DIGINEXT_TEST'],
-        $_ENV['DB_PASSWORD_DIGINEXT_TEST'],
+        $_ENV['DB_USERNAME_DIGINEXT'],
+        $_ENV['DB_PASSWORD_DIGINEXT'],
+        $_ENV['DB_HOSTNAME_DIGINEXT'],
         $_ENV['DB_DATABASE_BILLING_DIGINEXT']
     );
 
@@ -78,9 +78,9 @@ if (isset($_POST['check_data'])) {
 function updateDataInDB($activatedAt, $contractDetailsLog, $numberSequence, $contractCode, $numberStatus)
 {
     $conn = connectDatabase(
-        $_ENV['DB_HOSTNAME_DIGINEXT_TEST'],
-        $_ENV['DB_USERNAME_DIGINEXT_TEST'],
-        $_ENV['DB_PASSWORD_DIGINEXT_TEST'],
+        $_ENV['DB_HOSTNAME_DIGINEXT'],
+        $_ENV['DB_USERNAME_DIGINEXT'],
+        $_ENV['DB_PASSWORD_DIGINEXT'],
         $_ENV['DB_DATABASE_BILLING_DIGINEXT']
     );
 

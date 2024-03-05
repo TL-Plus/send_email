@@ -7,7 +7,7 @@
                         <i class="fas fa-smile"></i>
                         <i class="fas fa-heart"></i>
                         <i class="fas fa-star"></i>
-                        Chúc Mừng Năm Mới 2024
+                        DIGINEXT FOREVER!!!
                         <i class="fas fa-star"></i>
                         <i class="fas fa-heart"></i>
                         <i class="fas fa-smile"></i>
