@@ -44,6 +44,7 @@ function getInfoCustomersFromDatabase($dbName)
             AND contracts_details.categories_expand IN ('1900', '1800', 'CALLCENTER')
             AND contracts_details.status = 'actived'
             AND contracts_details.cost_expand > 0
+            AND MOD(FLOOR(TIMESTAMPDIFF(MONTH, contracts_details.activated_at, CURRENT_DATE())), contracts_details.payment_cycle) = 0
         ORDER BY contracts_details.contract_code";
 
     $result = $conn->query($query);
@@ -117,21 +118,22 @@ function processEmails($dbName, $header, $fileName, $title)
 
         // Build the query to retrieve customer details
         $query = "SELECT 
-            contracts_details.ext_number, 
-            DATE_FORMAT(contracts_details.activated_at, '%d/%m/%Y') AS activated_at,
-            TIMESTAMPDIFF(MONTH, contracts_details.activated_at, CURRENT_DATE()) AS current_cycle,
-            contracts_details.payment_cycle, 
-            contracts_details.cost_expand, 
-            contracts_details.payment_cycle * contracts_details.cost_expand AS total_cost
-        FROM 
-            contracts_details
-        WHERE 
-            TIMESTAMPDIFF(MONTH, contracts_details.activated_at, CURRENT_DATE()) >= contracts_details.payment_cycle
-            AND contracts_details.categories_expand IN ('1900', '1800', 'CALLCENTER')
-            AND status = 'actived'
-            AND contracts_details.cost_expand > 0
-            AND contracts_details.contract_code = '$contractCode'
-            AND contracts_details.categories_code = '$categoriesCode'";
+                contracts_details.ext_number, 
+                DATE_FORMAT(contracts_details.activated_at, '%d/%m/%Y') AS activated_at,
+                FLOOR(TIMESTAMPDIFF(MONTH, contracts_details.activated_at, CURRENT_DATE()) / contracts_details.payment_cycle) AS current_cycle,
+                contracts_details.payment_cycle, 
+                contracts_details.cost_expand, 
+                contracts_details.payment_cycle * contracts_details.cost_expand AS total_cost
+            FROM 
+                contracts_details
+            WHERE 
+                TIMESTAMPDIFF(MONTH, contracts_details.activated_at, CURRENT_DATE()) >= contracts_details.payment_cycle
+                AND contracts_details.categories_expand IN ('1900', '1800', 'CALLCENTER')
+                AND status = 'actived'
+                AND contracts_details.cost_expand > 0
+                AND contracts_details.contract_code = '$contractCode'
+                AND contracts_details.categories_code = '$categoriesCode'
+                AND MOD(FLOOR(TIMESTAMPDIFF(MONTH, contracts_details.activated_at, CURRENT_DATE())), contracts_details.payment_cycle) = 0";
 
         // Check if this contract has already been processed for this category
         if (!in_array($key, $processedContracts)) {
