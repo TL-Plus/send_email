@@ -44,8 +44,7 @@ function getInfoCustomersFromDatabase($dbName)
             AND contracts_details.categories_expand IN ('1900', '1800', 'CALLCENTER')
             AND contracts_details.status = 'actived'
             AND contracts_details.cost_expand > 0
-        ORDER BY contracts_details.contract_code
-        LIMIT 5;";
+        ORDER BY contracts_details.contract_code";
 
     $result = $conn->query($query);
 
@@ -57,7 +56,7 @@ function getInfoCustomersFromDatabase($dbName)
                 'contractCode' => $row['contract_code'],
                 'customerName' => $row['customer_name'],
                 'customerCode' => $row['customer_code'],
-                'customerEmail' => 'thelaniq@gmail.com', //$row['customer_email'],
+                'customerEmail' => $row['customer_email'],
                 'categoriesCode' => $row['categories_code'],
                 'categoriesExpand' => $row['categories_expand'],
             ];
