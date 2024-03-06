@@ -40,7 +40,7 @@ function getInfoCustomersFromDatabase($dbName)
         JOIN 
             customers ON contracts_details.customer_code = customers.customer_code
         WHERE 
-            DATEDIFF(CURRENT_DATE(), contracts_details.activated_at) / 30 >= contracts_details.payment_cycle
+            TIMESTAMPDIFF(MONTH, contracts_details.activated_at, CURRENT_DATE()) >= contracts_details.payment_cycle
             AND contracts_details.categories_expand IN ('1900', '1800', 'CALLCENTER')
             AND contracts_details.status = 'actived'
             AND contracts_details.cost_expand > 0
@@ -119,14 +119,14 @@ function processEmails($dbName, $header, $fileName, $title)
         $query = "SELECT 
             contracts_details.ext_number, 
             DATE_FORMAT(contracts_details.activated_at, '%d/%m/%Y') AS activated_at,
-            FLOOR(DATEDIFF(CURRENT_DATE(), contracts_details.activated_at) / 30) AS current_cycle,
+            TIMESTAMPDIFF(MONTH, contracts_details.activated_at, CURRENT_DATE()) AS current_cycle,
             contracts_details.payment_cycle, 
             contracts_details.cost_expand, 
             contracts_details.payment_cycle * contracts_details.cost_expand AS total_cost
         FROM 
             contracts_details
         WHERE 
-            DATEDIFF(CURRENT_DATE(), contracts_details.activated_at) / 30 >= contracts_details.payment_cycle
+            TIMESTAMPDIFF(MONTH, contracts_details.activated_at, CURRENT_DATE()) >= contracts_details.payment_cycle
             AND contracts_details.categories_expand IN ('1900', '1800', 'CALLCENTER')
             AND status = 'actived'
             AND contracts_details.cost_expand > 0
