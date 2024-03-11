@@ -1,13 +1,26 @@
 <?php
+
 session_start();
 
-// Kiểm tra nếu người dùng đã đăng nhập, chuyển hướng đến trang index
-if (!isset($_SESSION['user'])) {
+require_once '/var/www/html/send_email/config.php';
+
+// Function to check if the session has expired
+function isSessionExpired()
+{
+    $session_expire_time = $_ENV['SESSION_EXPIRE_TIME'];
+    if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > $session_expire_time) {
+        session_unset();
+        session_destroy();
+        return true;
+    }
+    return false;
+}
+
+// Check if the user is logged in or session has expired
+if (!isset($_SESSION['user']) || isSessionExpired()) {
     header('Location: /tools_diginext/login.php');
     exit();
 }
-
-$user = $_SESSION['user'];
 ?>
 
 <!DOCTYPE html>
@@ -66,17 +79,22 @@ $user = $_SESSION['user'];
         <div class="form-group">
             <label for="number_sequence">EXT/Number:</label>
             <input type="text" name="number_sequence" id="number_sequence" class="form-control" required
-                placeholder="Enter a number sequence (separated by spaces) - e.g., 123 456 789">
+                placeholder="Enter a number sequence (separated by spaces) - e.g., 123 456 789"
+                value="<?php echo isset($_POST['number_sequence']) ? htmlspecialchars($_POST['number_sequence']) : ''; ?>">
         </div>
         <div class="form-group">
             <label for="contract_code">Contract Code:</label>
             <input type="text" name="contract_code" id="contract_code" class="form-control" required
-                placeholder="Enter Contract Code">
+                placeholder="Enter Contract Code"
+                value="<?php echo isset($_POST['contract_code']) ? htmlspecialchars($_POST['contract_code']) : ''; ?>">
+
         </div>
         <div class="form-group">
-            <label for="number_status">EXT/Number Status:</label>
+            <label for="number_status">EXT/Number Status (inStock - holding - pending - actived - liquidated -
+                expired):</label>
             <input type="text" name="number_status" id="number_status" class="form-control" required
-                placeholder="Enter EXT/Number Status">
+                placeholder="Enter EXT/Number Status"
+                value="<?php echo isset($_POST['number_status']) ? htmlspecialchars($_POST['number_status']) : ''; ?>">
         </div>
 
         <button type="submit" name="check_data" class="btn btn-primary">Check Data</button>
@@ -92,13 +110,19 @@ $user = $_SESSION['user'];
     <form method="POST" action="" class="mt-4" id="update-data">
         <div class="form-group">
             <label for="activated_at">Activated At:</label>
+            <?php
+            date_default_timezone_set("Asia/Ho_Chi_Minh");
+            // Tạo giá trị mặc định là thời gian hiện tại hoặc giá trị đã nhập nếu có
+            $activated_at_default = isset($_POST['activated_at']) ? $_POST['activated_at'] : date('Y-m-d H:i:s');
+            ?>
             <input type="datetime-local" name="activated_at" id="activated_at" class="form-control" required
-                placeholder="Enter Activated At" step="1">
+                placeholder="Enter Activated At" step="1" value="<?php echo $activated_at_default; ?>">
         </div>
         <div class="form-group">
             <label for="contract_details_log">Log:</label>
             <input type="text" name="contract_details_log" id="contract_details_log" class="form-control" required
-                placeholder="Enter Contract Details Log - e.g., admin_update-activated_at">
+                placeholder="Enter Contract Details Log - e.g., admin_update-activated_at"
+                value="<?php echo isset($_POST['contract_details_log']) ? htmlspecialchars($_POST['contract_details_log']) : ''; ?>">
         </div>
 
         <button type="submit" name="update_data" class="btn btn-success">Update Data</button>

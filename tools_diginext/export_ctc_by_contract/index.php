@@ -1,13 +1,26 @@
 <?php
+
 session_start();
 
-// Kiểm tra nếu người dùng đã đăng nhập, chuyển hướng đến trang index
-if (!isset($_SESSION['user'])) {
+require_once '/var/www/html/send_email/config.php';
+
+// Function to check if the session has expired
+function isSessionExpired()
+{
+    $session_expire_time = $_ENV['SESSION_EXPIRE_TIME'];
+    if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > $session_expire_time) {
+        session_unset();
+        session_destroy();
+        return true;
+    }
+    return false;
+}
+
+// Check if the user is logged in or session has expired
+if (!isset($_SESSION['user']) || isSessionExpired()) {
     header('Location: /tools_diginext/login.php');
     exit();
 }
-
-$user = $_SESSION['user'];
 ?>
 
 <!DOCTYPE html>
@@ -83,19 +96,37 @@ $user = $_SESSION['user'];
             <input type="text" name="call_type" id="call_type" class="form-control" placeholder="Enter Call Type"
                 value="<?php echo isset($_POST['call_type']) ? htmlspecialchars($_POST['call_type']) : ''; ?>">
         </div>
-        <div class="mb-3">
-            <label for="day_start" class="form-label">Start Day:</label>
-            <input type="date" name="day_start" id="day_start" class="form-control" required
-                value="<?php echo isset($_POST['day_start']) ? htmlspecialchars($_POST['day_start']) : ''; ?>">
-        </div>
-        <div class="mb-3">
-            <label for="day_end" class="form-label">End Day:</label>
-            <input type="date" name="day_end" id="day_end" class="form-control" required
-                value="<?php echo isset($_POST['day_end']) ? htmlspecialchars($_POST['day_end']) : ''; ?>">
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="day_start" class="form-label">Start Day:</label>
+                    <?php
+                        // Tạo giá trị mặc định là ngày đầu của tháng
+                        $day_start_default = isset($_POST['day_start']) ? $_POST['day_start'] : date('Y-m-01');
+                     ?>
+                    <input type="date" name="day_start" id="day_start" class="form-control" required
+                        value="<?php echo $day_start_default; ?>">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="day_end" class="form-label">End Day:</label>
+                    <?php
+                        // Tạo giá trị mặc định là ngày đầu của tháng
+                        $day_end_default = isset($_POST['day_end']) ? $_POST['day_end'] : date('Y-m-d');
+                     ?>
+                    <input type="date" name="day_end" id="day_end" class="form-control" required
+                        value="<?php echo $day_end_default; ?>">
+                </div>
+            </div>
         </div>
 
-        <button type="submit" name="check_data" class="btn btn-primary">Check Data</button>
-        <button type="submit" name="export_excel" class="btn btn-success">Export Excel and Send Telegram</button>
+        <div class="mb-3">
+            <button type="submit" name="check_data" class="btn btn-primary">Check Data</button>
+            <button type="submit" name="export_excel" class="btn btn-success">Export Excel and Send
+                Telegram</button>
+        </div>
     </form>
 
     <?php include 'includes/body_index.php'; ?>

@@ -1,5 +1,4 @@
 <?php
-session_start(); // Start the session
 
 require '/var/www/html/send_email/config.php';
 require '/var/www/html/send_email/includes/database_connection.php';
@@ -39,14 +38,10 @@ function fetchDataFromDB($numberSequence)
         $_ENV['DB_DATABASE_VOICEREPORT']
     );
 
-    // Check if the session data is empty
-    if (empty($_SESSION['result_list_numbers'])) {
-        echo '<div class="alert alert-warning my-3" role="alert"><span style="color: red;">No data to export. Please convert a number sequence first!</span></div>';
-        return;
-    }
-
     // Retrieve the result from the session
-    $resultListNumbers = convertNumberSequence($numberSequence);
+    $result_list_numbers = convertNumberSequence($numberSequence);
+
+    $_SESSION['result_list_numbers'] = $result_list_numbers;
 
     date_default_timezone_set("Asia/Ho_Chi_Minh");
 
@@ -56,10 +51,12 @@ function fetchDataFromDB($numberSequence)
 
     $query = "SELECT customer_name AS CustomerName, user_name AS SalerName, contract_code AS ContracCode, ext_number AS Number 
         FROM dcn" . $year . $month . "
-        WHERE ext_number IN $resultListNumbers 
+        WHERE ext_number IN $result_list_numbers 
         GROUP BY ext_number";
 
     $result = $conn->query($query);
+
+    $conn->close();
 
     // Fetch data and generate the HTML table
     $htmlTable = '<div class="table-responsive">';
@@ -81,9 +78,6 @@ function fetchDataFromDB($numberSequence)
     $htmlTable .= '</tbody>';
     $htmlTable .= '</table>';
     $htmlTable .= '</div>';
-
-    // Store input values in the session
-    $_SESSION['numberSequence'] = $numberSequence;
 
     // Return the HTML table string and row count
     return array('table' => $htmlTable, 'rowCount' => $rowCount);
@@ -112,6 +106,12 @@ function checkData()
 
 function handleExport()
 {
+    // Check if the input is empty
+    if (empty($_POST['number_sequence'])) {
+        echo '<div class="alert alert-warning my-3" role="alert"><strong>Error:</strong> Please enter a number sequence!</div>';
+        return;
+    }
+
     // Check if the session data is empty
     if (empty($_SESSION['result_list_numbers'])) {
         echo '<div class="alert alert-warning my-3" role="alert"><span style="color: red;">No data to export. Please convert a number sequence first!</span></div>';
@@ -154,10 +154,7 @@ function handleExport()
     if (strpos($exportStatus, 'successfully') !== false) {
         $telegramStatus = sendTelegramMessages($attachment, $subject, $botToken, $chatId);
 
-        // Remove the session data after successful Telegram message send
         unset($_SESSION['result_list_numbers']);
-        // Alternatively, you can use session_destroy() to destroy the entire session
-        // session_destroy();
 
         // Display the Telegram message status
         echo '<div class="alert alert-success my-3" role="alert">' . $telegramStatus . '</div>';

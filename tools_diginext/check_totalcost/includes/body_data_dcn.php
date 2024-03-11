@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 require '/var/www/html/send_email/config.php';
 require '/var/www/html/send_email/includes/database_connection.php';
@@ -8,14 +7,6 @@ require '/var/www/html/send_email/includes/database_connection.php';
 function fetchDataFromDB($start_at, $end_at)
 {
     date_default_timezone_set("Asia/Ho_Chi_Minh");
-
-    $start_date = date_create($start_at);
-    $end_date = date_create($end_at);
-
-    $start_year = date_format($start_date, 'Y');
-    $start_month = date_format($start_date, 'm');
-    $end_year = date_format($end_date, 'Y');
-    $end_month = date_format($end_date, 'm');
 
     $conn = connectDatabase(
         $_ENV['DB_HOSTNAME_DIGINEXT'],
@@ -29,32 +20,40 @@ function fetchDataFromDB($start_at, $end_at)
 
     $htmlTable = '<div class="table-responsive">';
     $htmlTable .= '<table class="table table-bordered">';
-    $htmlTable .= '<thead><tr><th>Month</th><th>Total Call</th><th>Total Cost</th></tr></thead>';
+    $htmlTable .= '<thead><tr><th>Date</th><th>Total Call</th><th>Total Cost</th></tr></thead>';
     $htmlTable .= '<tbody>';
 
-    for ($year = $start_year; $year <= $end_year; $year++) {
-        $start = ($year == $start_year) ? $start_month : 1;
-        $end = ($year == $end_year) ? $end_month : 12;
+    $startDateTimestamp = strtotime($start_at);
+    $endDateTimestamp = strtotime($end_at);
 
-        for ($month = $start; $month <= $end; $month++) {
-            $table_name = "dcn" . $year . str_pad($month, 2, '0', STR_PAD_LEFT);
+    $currentDateTimestamp = $startDateTimestamp;
+    while ($currentDateTimestamp <= $endDateTimestamp) {
+        $currentYear = date('Y', $currentDateTimestamp);
+        $currentMonth = date('m', $currentDateTimestamp);
+        $currentDay = date('d', $currentDateTimestamp);
 
-            $query = "SELECT COUNT(*) AS TotalCall, SUM(TotalCost) AS TotalCost 
-                FROM $table_name
-                WHERE year = $year AND month = $month";
+        $table_name = "dcn" . date('Ym', $currentDateTimestamp);
 
-            $result = $conn->query($query);
+        $query = "SELECT COUNT(*) AS TotalCall, SUM(TotalCost) AS TotalCost 
+            FROM $table_name
+            WHERE year = ? AND month = ? AND day = ?";
 
-            while ($row = $result->fetch_assoc()) {
-                $totalCall += $row['TotalCall'];
-                $totalCost += $row['TotalCost'];
-                $htmlTable .= '<tr>';
-                $htmlTable .= '<td>' . $year . '-' . str_pad($month, 2, '0', STR_PAD_LEFT) . '</td>';
-                $htmlTable .= '<td>' . $row['TotalCall'] . '</td>';
-                $htmlTable .= '<td>' . $row['TotalCost'] . '</td>';
-                $htmlTable .= '</tr>';
-            }
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("iii", $currentYear, $currentMonth, $currentDay);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        while ($row = $result->fetch_assoc()) {
+            $totalCall += $row['TotalCall'];
+            $totalCost += $row['TotalCost'];
+            $htmlTable .= '<tr>';
+            $htmlTable .= '<td>' . $currentYear . ' - ' . $currentMonth . ' - ' . $currentDay . '</td>';
+            $htmlTable .= '<td>' . $row['TotalCall'] . '</td>';
+            $htmlTable .= '<td>' . $row['TotalCost'] . '</td>';
+            $htmlTable .= '</tr>';
         }
+
+        $currentDateTimestamp = strtotime('+1 day', $currentDateTimestamp);
     }
 
     $htmlTable .= '</tbody>';
@@ -65,8 +64,8 @@ function fetchDataFromDB($start_at, $end_at)
         'table' => $htmlTable,
         'totalCall' => $totalCall,
         'totalCost' => $totalCost,
-        'start_date' => date_format($start_date, 'd-m-Y'),
-        'end_date' => date_format($end_date, 'd-m-Y'),
+        'start_date' => date('d-m-Y', $startDateTimestamp),
+        'end_date' => date('d-m-Y', $endDateTimestamp),
     );
 }
 
@@ -85,7 +84,7 @@ if (isset($_POST['check_data_dcn'])) {
     }
 }
 
-// check cdr theo tháng
+// check dcn theo tháng
 // function fetchDataFromDB($start_at, $end_at)
 // {
 //     date_default_timezone_set("Asia/Ho_Chi_Minh");

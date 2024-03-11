@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 require '/var/www/html/send_email/config.php';
 require '/var/www/html/send_email/includes/database_connection.php';
@@ -8,14 +7,6 @@ require '/var/www/html/send_email/includes/database_connection.php';
 function fetchDataFromDB($start_at, $end_at)
 {
     date_default_timezone_set("Asia/Ho_Chi_Minh");
-
-    $start_date = date_create($start_at);
-    $end_date = date_create($end_at);
-
-    $start_year = date_format($start_date, 'Y');
-    $start_month = date_format($start_date, 'm');
-    $end_year = date_format($end_date, 'Y');
-    $end_month = date_format($end_date, 'm');
 
     $conn = connectDatabase(
         $_ENV['DB_HOSTNAME_DIGINEXT'],
@@ -32,30 +23,36 @@ function fetchDataFromDB($start_at, $end_at)
     $htmlTable .= '<thead><tr><th>Date</th><th>Total Call</th><th>Total Duration</th></tr></thead>';
     $htmlTable .= '<tbody>';
 
-    for ($year = $start_year; $year <= $end_year; $year++) {
-        $start = ($year == $start_year) ? $start_month : 1;
-        $end = ($year == $end_year) ? $end_month : 12;
+    $startDateTimestamp = strtotime($start_at);
+    $endDateTimestamp = strtotime($end_at);
 
-        for ($month = $start; $month <= $end; $month++) {
-            $table_name = "cdrdsip" . $year . str_pad($month, 2, '0', STR_PAD_LEFT);
+    $currentDateTimestamp = $startDateTimestamp;
+    while ($currentDateTimestamp <= $endDateTimestamp) {
+        $currentDate = date('Y-m-d', $currentDateTimestamp);
+        $table_name = "cdrdsip" . date('Ym', $currentDateTimestamp);
 
-            $query = "SELECT DATE(time) AS Date, COUNT(*) AS TotalCall, SUM(duration) AS TotalDuration 
-                FROM $table_name
-                WHERE callee_gw LIKE 'RT_DIGISIP_VINAPHONE' AND duration > 0 
-                GROUP BY DATE(time)";
+        $query = "SELECT DATE(time) AS Date, COUNT(*) AS TotalCall, SUM(duration) AS TotalDuration 
+            FROM $table_name
+            WHERE callee_gw LIKE 'RT_DIGISIP_VINAPHONE' AND duration > 0 
+            AND DATE(time) = ?
+            GROUP BY DATE(time)";
 
-            $result = $conn->query($query);
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("s", $currentDate);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-            while ($row = $result->fetch_assoc()) {
-                $totalCall += $row['TotalCall'];
-                $totalDuration += $row['TotalDuration'];
-                $htmlTable .= '<tr>';
-                $htmlTable .= '<td>' . $row['Date'] . '</td>';
-                $htmlTable .= '<td>' . $row['TotalCall'] . '</td>';
-                $htmlTable .= '<td>' . $row['TotalDuration'] . '</td>';
-                $htmlTable .= '</tr>';
-            }
+        while ($row = $result->fetch_assoc()) {
+            $totalCall += $row['TotalCall'];
+            $totalDuration += $row['TotalDuration'];
+            $htmlTable .= '<tr>';
+            $htmlTable .= '<td>' . $row['Date'] . '</td>';
+            $htmlTable .= '<td>' . $row['TotalCall'] . '</td>';
+            $htmlTable .= '<td>' . $row['TotalDuration'] . '</td>';
+            $htmlTable .= '</tr>';
         }
+
+        $currentDateTimestamp = strtotime('+1 day', $currentDateTimestamp);
     }
 
     $htmlTable .= '</tbody>';
@@ -66,8 +63,8 @@ function fetchDataFromDB($start_at, $end_at)
         'table' => $htmlTable,
         'totalCall' => $totalCall,
         'totalDuration' => $totalDuration,
-        'start_date' => date_format($start_date, 'd-m-Y'),
-        'end_date' => date_format($end_date, 'd-m-Y'),
+        'start_date' => date('d-m-Y', $startDateTimestamp),
+        'end_date' => date('d-m-Y', $endDateTimestamp),
     );
 }
 

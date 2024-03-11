@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 require '/var/www/html/send_email/config.php';
 require '/var/www/html/send_email/includes/database_connection.php';

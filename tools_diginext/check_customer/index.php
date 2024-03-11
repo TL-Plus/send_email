@@ -1,13 +1,26 @@
 <?php
+
 session_start();
 
-// Kiểm tra nếu người dùng đã đăng nhập, chuyển hướng đến trang index
-if (!isset($_SESSION['user'])) {
+require_once '/var/www/html/send_email/config.php';
+
+// Function to check if the session has expired
+function isSessionExpired()
+{
+    $session_expire_time = $_ENV['SESSION_EXPIRE_TIME'];
+    if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > $session_expire_time) {
+        session_unset();
+        session_destroy();
+        return true;
+    }
+    return false;
+}
+
+// Check if the user is logged in or session has expired
+if (!isset($_SESSION['user']) || isSessionExpired()) {
     header('Location: /tools_diginext/login.php');
     exit();
 }
-
-$user = $_SESSION['user'];
 ?>
 
 <!DOCTYPE html>

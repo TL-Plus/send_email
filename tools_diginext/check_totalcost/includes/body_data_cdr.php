@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 require '/var/www/html/send_email/config.php';
 require '/var/www/html/send_email/includes/database_connection.php';
@@ -82,7 +81,7 @@ if (isset($_POST['check_data_cdr'])) {
     }
 }
 
-// check cdr theo tháng
+// // check cdr theo tháng
 // function fetchDataFromDB($start_at, $end_at)
 // {
 //     date_default_timezone_set("Asia/Ho_Chi_Minh");

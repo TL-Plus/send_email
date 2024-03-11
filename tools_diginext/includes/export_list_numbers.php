@@ -15,6 +15,10 @@ function convertNumberSequence($number_sequence)
             $number = substr($number, 2);
         }
 
+        // if (substr($number, 0, 1) === "0") {
+        //     $number = substr($number, 1);
+        // }
+
         $quoted_number = '"' . $number . '"';
         $list_numbers[] = $quoted_number;
     }
@@ -31,6 +35,11 @@ function convertNumberSequence($number_sequence)
 // convert chuỗi số thêm đầu 84
 function convertNumberSequence84($number_sequence)
 {
+    // Kiểm tra nếu số bắt đầu bằng "0" thì thêm "84" vào đầu số
+    if (substr($number_sequence, 0, 1) === "0") {
+        $number_sequence = "84" . substr($number_sequence, 1);
+    }
+
     // Kiểm tra nếu số bắt đầu bằng "84" thì giữ nguyên, ngược lại thêm "84" vào đầu số
     if (substr($number_sequence, 0, 2) !== "84") {
         $number_sequence = "84" . $number_sequence;

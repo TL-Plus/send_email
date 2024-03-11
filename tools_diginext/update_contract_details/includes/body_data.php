@@ -1,5 +1,4 @@
 <?php
-session_start(); // Start the session
 
 require '/var/www/html/send_email/config.php';
 require '/var/www/html/send_email/includes/database_connection.php';
@@ -9,9 +8,9 @@ require '/var/www/html/tools_diginext/includes/export_list_numbers.php';
 function fetchDataFromDB($numberSequence, $contractCode, $numberStatus)
 {
     $conn = connectDatabase(
+        $_ENV['DB_HOSTNAME_DIGINEXT'],
         $_ENV['DB_USERNAME_DIGINEXT'],
         $_ENV['DB_PASSWORD_DIGINEXT'],
-        $_ENV['DB_HOSTNAME_DIGINEXT'],
         $_ENV['DB_DATABASE_BILLING_DIGINEXT']
     );
 
@@ -92,7 +91,7 @@ function updateDataInDB($activatedAt, $contractDetailsLog, $numberSequence, $con
     // You should modify the update query based on your actual database schema
     $query = "UPDATE contracts_details 
               SET activated_at = '$activatedAtFormatted', 
-                  log = CONCAT(log, '\n', CONCAT(NOW(), '__', '$contractDetailsLog/')) 
+                log = CONCAT(log, '\n', CONCAT(NOW(), '__', '$contractDetailsLog/')) 
               WHERE ext_number IN $resultListNumbers
                 AND contract_code = '$contractCode'
                 AND status = '$numberStatus'";

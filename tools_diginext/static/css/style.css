@@ -14,7 +14,8 @@ body {
     margin-top: 50px;
 }
 
-h1, h3 {
+h1,
+h3 {
     color: #007bff;
 }
 
@@ -70,7 +71,7 @@ input {
     width: 100%;
 }
 
-.login-input{
+.login-input {
     font-style: italic;
     border-radius: 5%;
     border: inset;
@@ -96,7 +97,7 @@ input {
 }
 
 /* table */
-.table{
+.table {
     text-align: center;
 }
 
@@ -105,9 +106,15 @@ input {
     color: #fff;
     font-weight: bold;
     padding: 10px;
-}   
+}
 
 .table tbody td {
     padding: 8px;
     font-size: 14px;
+}
+
+@media (max-width: 1024px) {
+    .header-current-time {
+        text-align: center;
+    }
 }

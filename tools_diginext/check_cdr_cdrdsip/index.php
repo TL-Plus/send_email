@@ -1,13 +1,26 @@
 <?php
+
 session_start();
 
-// Kiểm tra nếu người dùng đã đăng nhập, chuyển hướng đến trang index
-if (!isset($_SESSION['user'])) {
+require_once '/var/www/html/send_email/config.php';
+
+// Function to check if the session has expired
+function isSessionExpired()
+{
+    $session_expire_time = $_ENV['SESSION_EXPIRE_TIME'];
+    if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > $session_expire_time) {
+        session_unset();
+        session_destroy();
+        return true;
+    }
+    return false;
+}
+
+// Check if the user is logged in or session has expired
+if (!isset($_SESSION['user']) || isSessionExpired()) {
     header('Location: /tools_diginext/login.php');
     exit();
 }
-
-$user = $_SESSION['user'];
 ?>
 
 <!DOCTYPE html>
@@ -71,8 +84,8 @@ $user = $_SESSION['user'];
                 <div class="form-group">
                     <label for="start_at_cdr">Start At:</label>
                     <?php
-                    // Tạo giá trị mặc định là ngày đầu của tháng
-                    $start_at_default = date('Y-m-01');
+                    // Tạo giá trị mặc định là ngày đầu của tháng hoặc giá trị đã nhập nếu có
+                    $start_at_default = isset($_POST['start_at_cdr']) ? $_POST['start_at_cdr'] : date('Y-m-01');
                     ?>
                     <input type="date" name="start_at_cdr" id="start_at_cdr" class="form-control" required
                         placeholder="Enter Start At" step="1" value="<?php echo $start_at_default; ?>">
@@ -80,8 +93,8 @@ $user = $_SESSION['user'];
                 <div class="form-group">
                     <label for="end_at_cdr">End At:</label>
                     <?php
-                    // Tạo giá trị mặc định là ngày hiện tại
-                    $end_at_default = date('Y-m-d');
+                    // Tạo giá trị mặc định là ngày hiện tại hoặc giá trị đã nhập nếu có
+                    $end_at_default = isset($_POST['end_at_cdr']) ? $_POST['end_at_cdr'] : date('Y-m-d');
                     ?>
                     <input type="date" name="end_at_cdr" id="end_at_cdr" class="form-control" required
                         placeholder="Enter End At" step="1" value="<?php echo $end_at_default; ?>">
@@ -109,8 +122,8 @@ $user = $_SESSION['user'];
                 <div class="form-group">
                     <label for="start_at_cdrdsip">Start At:</label>
                     <?php
-                    // Tạo giá trị mặc định là ngày đầu của tháng
-                    $start_at_default = date('Y-m-01');
+                    // Set the default value to the first day of the current month or the submitted value if available
+                    $start_at_default = isset($_POST['start_at_cdrdsip']) ? $_POST['start_at_cdrdsip'] : date('Y-m-01');
                     ?>
                     <input type="date" name="start_at_cdrdsip" id="start_at_cdrdsip" class="form-control" required
                         placeholder="Enter Start At" step="1" value="<?php echo $start_at_default; ?>">
@@ -118,8 +131,8 @@ $user = $_SESSION['user'];
                 <div class="form-group">
                     <label for="end_at_cdrdsip">End At:</label>
                     <?php
-                    // Tạo giá trị mặc định là ngày hiện tại
-                    $end_at_default = date('Y-m-d');
+                    // Set the default value to the current date or the submitted value if available
+                    $end_at_default = isset($_POST['end_at_cdrdsip']) ? $_POST['end_at_cdrdsip'] : date('Y-m-d');
                     ?>
                     <input type="date" name="end_at_cdrdsip" id="end_at_cdrdsip" class="form-control" required
                         placeholder="Enter End At" step="1" value="<?php echo $end_at_default; ?>">
