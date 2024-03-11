@@ -100,6 +100,25 @@ function sendTelegramMessagesWithFilePDF($pdfFilePath, $textMessage, $botToken, 
     }
 }
 
+// Send telegram message with zip file attachment
+function sendTelegramMessagesWithFileZip($zipFilePath, $textMessage, $botToken, $chatId)
+{
+    try {
+        // Initialize the Telegram API object with your bot token
+        $telegram = new BotApi($botToken);
+
+        // Prepare the document for sending
+        $document = new \CURLFile(realpath($zipFilePath), 'application/zip');
+
+        // Send the text message along with the document
+        $telegram->sendDocument($chatId, $document, $textMessage);
+
+        return "Telegram message successfully sent with file $zipFilePath\n";
+    } catch (Exception $e) {
+        return 'Error: ' . $e->getMessage();
+    }
+}
+
 // Send telegram message
 function sendTelegramMessage($textMessage, $botToken, $chatId)
 {

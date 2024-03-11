@@ -20,7 +20,7 @@ ORDER BY time_update ASC;";
 
 // Define Excel header
 $header = [
-  'time_update', 'ext_number', 'contract_code', 'customer_name', 'user_name'
+  'Time Update', 'Ext/Number', 'Contract Code', 'Customer Name', 'Saler Name'
 ];
 
 // Define $dbName, $botToken, $chatId

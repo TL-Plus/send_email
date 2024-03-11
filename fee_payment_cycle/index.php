@@ -57,7 +57,7 @@ function getInfoCustomersFromDatabase($dbName)
                 'contractCode' => $row['contract_code'],
                 'customerName' => $row['customer_name'],
                 'customerCode' => $row['customer_code'],
-                'customerEmail' => $row['customer_email'],
+                'customerEmail' => 'thelaniq@gmail.com', //$row['customer_email'],
                 'categoriesCode' => $row['categories_code'],
                 'categoriesExpand' => $row['categories_expand'],
             ];
