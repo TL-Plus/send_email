@@ -8,3 +8,4 @@ composer.lock
 /files_export
 /report_ctc/files
 /tools_diginext/files
+credentials.json
