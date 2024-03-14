@@ -12,6 +12,11 @@ function getRowColor($rowCounter)
 // Function to modify values based on column names
 function modifyValue($column, $value)
 {
+    // Ensure $value is a string
+    if (!is_string($value)) {
+        return $value;
+    }
+    
     // Remove unwanted words from the column values
     $unwantedWords = [
         'DỊCH VỤ VÀ GIẢI PHÁP XỬ LÝ DỮ LIỆU ',
