@@ -107,8 +107,8 @@ function convertExcelToPDF($excelFilePath, $pdfFileName, $userName, $ccuValues, 
 
                 $rowCounter++;
 
-                $ccuValue = isset($_POST['ccu'][$rowCounter]) ? $_POST['ccu'][$rowCounter] : '';
-                if (empty($ccuValue)) {
+                $ccuValue = isset ($_POST['ccu'][$rowCounter]) ? $_POST['ccu'][$rowCounter] : '';
+                if (empty ($ccuValue)) {
                     continue; // Skip the row if CCU value is empty
                 }
 
@@ -142,8 +142,8 @@ function convertExcelToPDF($excelFilePath, $pdfFileName, $userName, $ccuValues, 
                             break;
 
                         case 'TotalCurrentCall':
-                            $totalCCU += (int)$ccuValue;
-                            $pdf->Cell($cellWidth - 15, 10, $ccuValue, 1, 0, $cellInfo['align'], getRowColor($rowCounter - 1));
+                            $totalCCU += (int) $ccuValue;
+                            $pdf->Cell($cellWidth - 15, 10, $ccuValue, 1, 0, 'C', getRowColor($rowCounter - 1));
                             break;
 
                         default:
@@ -155,8 +155,8 @@ function convertExcelToPDF($excelFilePath, $pdfFileName, $userName, $ccuValues, 
             }
 
             // Assuming both $ccuTotals and $totalCCU are supposed to be integers
-            $ccuTotals = (int)$ccuTotals;
-            $totalCCU = (int)$totalCCU;
+            $ccuTotals = (int) $ccuTotals;
+            $totalCCU = (int) $totalCCU;
 
             $pdf->SetFont('dejavusans', 'I', 11);
             // Add three additional rows at the end

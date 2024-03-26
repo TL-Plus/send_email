@@ -1,6 +1,5 @@
 <?php
-require_once '/var/www/html/vendor/autoload.php';
-
+require_once '/var/www/html/send_email/vendor/autoload.php';
 
 try {
     // date default timezone
@@ -11,5 +10,5 @@ try {
     $dotenv->load();
 } catch (Exception $e) {
     // Output the error message for debugging
-    die('Error: ' . $e->getMessage());
+    die ('Error: ' . $e->getMessage());
 }

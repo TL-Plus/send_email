@@ -2,7 +2,7 @@
 
 function getRowColor($rowCounter)
 {
-    if ((int)(($rowCounter) / 5) % 2 == 0) {
+    if ((int) (($rowCounter) / 5) % 2 == 0) {
         return array(230, 240, 255); // Lighter Blue
     } else {
         return array();
@@ -16,7 +16,7 @@ function modifyValue($column, $value)
     if (!is_string($value)) {
         return $value;
     }
-    
+
     // Remove unwanted words from the column values
     $unwantedWords = [
         'DỊCH VỤ VÀ GIẢI PHÁP XỬ LÝ DỮ LIỆU ',
@@ -40,6 +40,7 @@ function modifyValue($column, $value)
         'THƯƠNG MẠI DỊCH VỤ ',
         'DỊCH VỤ - TƯ VẤN ',
         'DT & PT THẨM MỸ ',
+        'ĐẦU TƯ XÂY DỰNG ',
         'TRUYỀN HÌNH CÁP ',
         'MỘT THÀNH VIÊN ',
         'HỘ KINH DOANH ',
@@ -53,6 +54,7 @@ function modifyValue($column, $value)
         'GIẢI PHÁP ',
         'SẢN XUẤT ',
         'TẬP ĐOÀN ',
+        'XÂY DỰNG ',
         'GIÁO DỤC ',
         'CÔNG TY ',
         'CỔ PHẦN ',
