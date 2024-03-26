@@ -16,6 +16,12 @@ function fetchDataFromDB($numberSequence, $contractCode, $numberStatus)
 
     $resultListNumbers = convertNumberSequence($numberSequence);
 
+    $validStatus = array("inStock", "holding", "pending", "actived", "liquidated", "expired");
+    if (!in_array($numberStatus, $validStatus)) {
+        echo '<div class="alert alert-danger my-3" role="alert"><strong>Lỗi:</strong>Trạng thái không hợp lệ!</div>';
+        exit;
+    }
+
     $query = "SELECT customer_name, contract_code, ext_number, activated_at, suspension_at, status
               FROM contracts_details
               WHERE ext_number IN $resultListNumbers
@@ -56,7 +62,7 @@ function fetchDataFromDB($numberSequence, $contractCode, $numberStatus)
     return array('table' => $htmlTable, 'rowCount' => $rowCount);
 }
 
-if (isset($_POST['check_data'])) {
+if (isset ($_POST['check_data'])) {
     // Get values from the form
     $numberSequence = $_POST['number_sequence'];
     $contractCode = $_POST['contract_code'];
@@ -88,6 +94,12 @@ function updateDataInDB($activatedAt, $contractDetailsLog, $numberSequence, $con
 
     $resultListNumbers = convertNumberSequence($numberSequence);
 
+    $validStatus = array("inStock", "holding", "pending", "actived", "liquidated", "expired");
+    if (!in_array($numberStatus, $validStatus)) {
+        echo '<div class="alert alert-danger my-3" role="alert"><strong>Lỗi:</strong>Trạng thái không hợp lệ!</div>';
+        exit;
+    }
+
     // You should modify the update query based on your actual database schema
     $query = "UPDATE contracts_details 
               SET activated_at = '$activatedAtFormatted', 
@@ -108,7 +120,7 @@ function updateDataInDB($activatedAt, $contractDetailsLog, $numberSequence, $con
     return $result;
 }
 
-if (isset($_POST['update_data'])) {
+if (isset ($_POST['update_data'])) {
     // Get values from the update form
     $activatedAt = $_POST['activated_at'];
     $contractDetailsLog = $_POST['contract_details_log'];
