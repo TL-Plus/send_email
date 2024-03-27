@@ -1,6 +1,6 @@
 <?php
 
-require_once '/var/www/html/vendor/autoload.php';
+require_once '/var/www/html/send_email/vendor/autoload.php';
 require_once '/var/www/html/report_ctc/includes/custom_tcpdf.php';
 require_once '/var/www/html/report_ctc/includes/helpers.php';
 

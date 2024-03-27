@@ -21,7 +21,7 @@ async function generatePdfAndHandleModal(formData) {
         // Make the AJAX request
         const response = await $.ajax({
             type: 'POST',
-            url: '/send_email/report_ctc/generate_pdf.php',
+            url: '/report_ctc/generate_pdf.php',
             data: formData,
         });
 
@@ -32,7 +32,7 @@ async function generatePdfAndHandleModal(formData) {
         const delayDuration = 5000;
         await new Promise(resolve => setTimeout(resolve, delayDuration));
 
-        window.location.href = '/send_email/report_ctc/';
+        window.location.href = '/report_ctc/';
     } catch (error) {
         showNotification('Đã xảy ra lỗi khi tạo và gửi tệp PDF.');
     }

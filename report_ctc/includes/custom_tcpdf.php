@@ -1,7 +1,7 @@
 <?php
 
 require_once '/var/www/html/vendor/tecnickcom/tcpdf/tcpdf.php';
-require_once '/var/www/html/vendor/autoload.php';
+require_once '/var/www/html/send_email/vendor/autoload.php';
 
 class CustomTCPDF extends TCPDF
 {

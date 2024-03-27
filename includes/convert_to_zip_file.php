@@ -1,5 +1,5 @@
 <?php
-require_once '/var/www/html/vendor/autoload.php';
+require_once '/var/www/html/send_email/vendor/autoload.php';
 require_once '/var/www/html/send_email/config.php';
 
 function ConvertToZipFile($excelFile, $zipFile, $randstring)

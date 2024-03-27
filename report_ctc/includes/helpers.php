@@ -50,6 +50,7 @@ function modifyValue($column, $value)
         'DƯỢC MỸ PHẨM ',
         'THƯƠNG MẠI ',
         'TRỰC TUYẾN ',
+        'VIỄN THÔNG ',
         'CÔNG NGHỆ ',
         'GIẢI PHÁP ',
         'SẢN XUẤT ',

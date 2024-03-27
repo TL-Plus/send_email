@@ -1,6 +1,6 @@
 <?php
 
-require_once '/var/www/html/vendor/autoload.php';
+require_once '/var/www/html/send_email/vendor/autoload.php';
 require_once '/var/www/html/send_email/config.php';
 require_once '/var/www/html/send_email/includes/database_connection.php';
 require_once '/var/www/html/send_email/includes/export_excel.php';
@@ -27,7 +27,9 @@ $currentTime = date('d-m-Y H:i:s');
 <form id="checkData" action="check_data.php" method="post">
     <div class="row mt-3">
         <div class="col-md-12">
-            <h5 id="currentTime" class="mt-4">Thời gian kiểm tra: <?php echo $currentTime; ?></h5>
+            <h5 id="currentTime" class="mt-4">Thời gian kiểm tra:
+                <?php echo $currentTime; ?>
+            </h5>
         </div>
     </div>
     <div class="table-responsive">
@@ -100,12 +102,12 @@ $currentTime = date('d-m-Y H:i:s');
                             echo '<script>sessionStorage.setItem("ccuTotals", ' . json_encode($ccuTotalsValue) . ');</script>';
                         } elseif ($key == 4) {
                             $totalInput = array_sum(array_map(function ($row) {
-                                return (int)$row[4];
+                                return (int) $row[4];
                             }, array_slice($data, 1)));
                             echo '<span style="color: red;">' . $totalInput . '</span>';
                         } elseif ($key == 5) {
                             $totalInput = array_sum(array_map(function ($row) {
-                                return (int)$row[5];
+                                return (int) $row[5];
                             }, array_slice($data, 1)));
                             echo '<span style="color: red;">' . $totalInput . '</span>';
                         }
