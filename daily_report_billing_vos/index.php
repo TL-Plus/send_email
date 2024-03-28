@@ -1,6 +1,7 @@
 <?php
 
 require_once '/var/www/html/send_email/config.php';
+require_once '/var/www/html/send_email/vendor/autoload.php';
 require_once '/var/www/html/send_email/includes/database_connection.php';
 require_once '/var/www/html/send_email/includes/send_telegram_message.php';
 
@@ -8,7 +9,7 @@ use Google\Client as Google_Client;
 use Google\Service\Sheets as Google_Service_Sheets;
 use Google\Service\Sheets\ValueRange as Google_Service_Sheets_ValueRange;
 
-// Configure the Google Client
+// Configure the Google Clients
 $client = new Google_Client();
 $client->setApplicationName('Daily Report Billing-Vos');
 $client->setScopes([Google_Service_Sheets::SPREADSHEETS]);

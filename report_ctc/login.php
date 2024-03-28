@@ -53,8 +53,10 @@
                         <div class="mt-4 mb-5">
                             <button type="submit" class="btn btn-primary btn-lg login-button">Đăng nhập</button>
                         </div>
-                        <?php if (isset($error_message)) : ?>
-                        <p class="error-message"><?php echo $error_message; ?></p>
+                        <?php if (isset($error_message)): ?>
+                            <p class="error-message">
+                                <?php echo $error_message; ?>
+                            </p>
                         <?php endif; ?>
                     </form>
 
