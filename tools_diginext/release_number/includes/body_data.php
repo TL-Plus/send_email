@@ -18,7 +18,7 @@ function fetchDataFromDB($numberSequence, $statusNumberCheck)
 
     $resultListNumbers = convertNumberSequence($numberSequence);
 
-    $validStatus = array("inStock", "holding", "pending", "actived", "liquidated", "expired");
+    $validStatus = array("", "inStock", "holding", "pending", "actived", "liquidated", "expired");
     if (!in_array($statusNumberCheck, $validStatus)) {
         echo '<div class="alert alert-danger my-3" role="alert"><strong>Lỗi:</strong>Trạng thái không hợp lệ!</div>';
         exit;
@@ -28,7 +28,7 @@ function fetchDataFromDB($numberSequence, $statusNumberCheck)
               FROM `order_numbers`
               WHERE order_number IN $resultListNumbers";
 
-    if (!empty ($statusNumberCheck)) {
+    if (!empty($statusNumberCheck) || $statusNumberCheck != "") {
         $query .= " AND status = '$statusNumberCheck'";
     }
 
@@ -65,7 +65,7 @@ function fetchDataFromDB($numberSequence, $statusNumberCheck)
     return array('table' => $htmlTable, 'rowCount' => $rowCount);
 }
 
-if (isset ($_POST['check_data'])) {
+if (isset($_POST['check_data'])) {
     // Get values from the form
     $numberSequence = $_POST['number_sequence'];
     $statusNumberCheck = $_POST['status_number_check'];
@@ -93,7 +93,7 @@ function updateDataInDB($statusNumber, $orderNumberLog, $numberSequence, $status
 
     $resultListNumbers = convertNumberSequence($numberSequence);
 
-    $validStatus = array("inStock", "holding", "pending", "actived", "liquidated", "expired");
+    $validStatus = array("", "inStock", "holding", "pending", "actived", "liquidated", "expired");
     if (!in_array($statusNumberCheck, $validStatus)) {
         echo '<div class="alert alert-danger my-3" role="alert"><strong>Lỗi:</strong>Trạng thái không hợp lệ!</div>';
         exit;
@@ -109,7 +109,7 @@ function updateDataInDB($statusNumber, $orderNumberLog, $numberSequence, $status
                   log = CONCAT(log, '\n', CONCAT(NOW(), '__', '$orderNumberLog/')) 
               WHERE order_number IN $resultListNumbers";
 
-    if (!empty ($statusNumberCheck)) {
+    if (!empty($statusNumberCheck) || $statusNumberCheck != "") {
         $query .= " AND status = '$statusNumberCheck'";
     } else {
         $query .= " AND status = 'holding'";
@@ -127,7 +127,7 @@ function updateDataInDB($statusNumber, $orderNumberLog, $numberSequence, $status
     return $result;
 }
 
-if (isset ($_POST['update_data'])) {
+if (isset($_POST['update_data'])) {
     // Get values from the update form
     $statusNumber = $_POST['status_number'];
     $orderNumberLog = $_POST['order_numbers_log'];

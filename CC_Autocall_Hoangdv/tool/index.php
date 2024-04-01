@@ -12,7 +12,7 @@ use Telegram\Bot\FileUpload\InputFile;
 $telegram = new Api('6585137930:AAEm1XLVeqtVgaZ6sZLSnXEaSVnnPeymgOk'); //6585137930:AAEm1XLVeqtVgaZ6sZLSnXEaSVnnPeymgOk //6270605477:AAExLD7871ALJiRHOqIG8pH40FOhmtDstNQ
 
 // Chat ID của người nhận (thay YOUR_CHAT_ID bằng chat ID thực tế)
-$chatId = '1357759489'; // -1002125329148 //1357759489 //-1001943556791
+$chatId = '-1001943556791'; // -1002125329148 //1357759489 //-1001943556791
 
 // Đường dẫn đến file output.png
 $filePath = '/media/imgCC.png';

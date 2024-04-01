@@ -30,7 +30,11 @@ $yesterday = date("Y-m-d", strtotime("-1 day"));
 $table_name_cdr = "cdr" . date('Ymd', strtotime($yesterday));
 $table_name_cdrdsip = "cdrdsip" . date('Ym', strtotime($yesterday));
 $currentTime = date('H:i:s d-m-Y');
-$current_month = date('m/Y');
+$current_date = date('Y-m-d');
+$current_month = date('m/Y', strtotime($current_date));
+if (date('d', strtotime($current_date)) === '01') {
+    $current_month = date('m/Y', strtotime('-1 month', strtotime($current_date)));
+}
 
 // cdr
 $query_cdr = "SELECT DATE(time) AS Time, COUNT(*) as TotalCallCDR, SUM(duration) as TotalDurationCDR 

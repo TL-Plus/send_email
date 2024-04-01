@@ -62,7 +62,7 @@ function fetchDataFromDB($numberSequence, $contractCode, $numberStatus)
     return array('table' => $htmlTable, 'rowCount' => $rowCount);
 }
 
-if (isset ($_POST['check_data'])) {
+if (isset($_POST['check_data'])) {
     // Get values from the form
     $numberSequence = $_POST['number_sequence'];
     $contractCode = $_POST['contract_code'];
@@ -120,7 +120,7 @@ function updateDataInDB($activatedAt, $contractDetailsLog, $numberSequence, $con
     return $result;
 }
 
-if (isset ($_POST['update_data'])) {
+if (isset($_POST['update_data'])) {
     // Get values from the update form
     $activatedAt = $_POST['activated_at'];
     $contractDetailsLog = $_POST['contract_details_log'];
