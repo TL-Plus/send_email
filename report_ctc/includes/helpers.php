@@ -55,6 +55,8 @@ function modifyValue($column, $value)
         'GIẢI PHÁP ',
         'SẢN XUẤT ',
         'TẬP ĐOÀN ',
+        'CỬA HÀNG ',
+        'TỔNG HỢP ',
         'XÂY DỰNG ',
         'GIÁO DỤC ',
         'CÔNG TY ',
@@ -72,6 +74,7 @@ function modifyValue($column, $value)
         'DT ',
         'CP ',
         ' - ',
+        '- ',
     ];
     $value = str_replace($unwantedWords, '', $value);
 
