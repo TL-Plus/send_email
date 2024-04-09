@@ -1,11 +1,11 @@
 <?php
 
 // Include necessary files
-require '/var/www/html/send_email/config.php';
-require '/var/www/html/send_email/includes/database_connection.php';
+require_once '/var/www/html/send_email/config.php';
+require_once '/var/www/html/send_email/includes/database_connection.php';
 require_once '/var/www/html/send_email/includes/convert_to_zip_file.php';
-require '/var/www/html/send_email/includes/send_telegram_message.php';
-require '/var/www/html/tools_diginext/includes/export_list_numbers.php';
+require_once '/var/www/html/send_email/includes/send_telegram_message.php';
+require_once '/var/www/html/tools_diginext/includes/export_list_numbers.php';
 
 
 // Function to connect to the database and fetch data based on input values
@@ -134,8 +134,8 @@ function checkData()
     // Call the function to fetch data
     $resultData = fetchDataFromDB($contract_code, $caller, $caller_object, $call_type, $day_start, $day_end);
 
-    echo '<div class="total-row mt-3">Start Day: ' . $resultData['start_date']. ' - End Day: ' . $resultData['end_date'] . '</div>';
-    
+    echo '<div class="total-row mt-3">Start Day: ' . $resultData['start_date'] . ' - End Day: ' . $resultData['end_date'] . '</div>';
+
     // Display customer, saler and contract
     echo '<div class="total-row mt-3">Customer: ' . $resultData['infoCustomers'][0]['customerName'] . '</div>';
     echo '<div class="total-row mt-3">Contract Code: ' . $resultData['infoCustomers'][0]['contractCode'] . '</div>';
@@ -209,7 +209,20 @@ function handleExport()
     }
 
     $header = [
-        'Time', 'Time End', 'Minute', 'Caller', 'Callee', 'Caller Object', 'Callee Object', 'Duration', 'Call Type', 'Fixed Type', 'Cost', 'Customer Name', 'Contract Code', 'Saler Name'
+        'Time',
+        'Time End',
+        'Minute',
+        'Caller',
+        'Callee',
+        'Caller Object',
+        'Callee Object',
+        'Duration',
+        'Call Type',
+        'Fixed Type',
+        'Cost',
+        'Customer Name',
+        'Contract Code',
+        'Saler Name'
     ];
 
     $dbName = $_ENV['DB_DATABASE_VOICEREPORT'];
@@ -219,7 +232,7 @@ function handleExport()
     $excelFile = '/var/www/html/tools_diginext/files/export_ctc_by_contract/' . str_replace("/", "_", $time_export_excel) . '_CTC_' . str_replace("/", "_", $contract_code) . '_' . date('Y_m_d', $startDateTimestamp) . '_' . date('Y_m_d', $endDateTimestamp) . '.xlsx';
     $zipFile = '/var/www/html/tools_diginext/files/export_ctc_by_contract/' . str_replace("/", "_", $time_export_excel) . '_CTC_' . str_replace("/", "_", $contract_code) . '_' . date('Y_m_d', $startDateTimestamp) . '_' . date('Y_m_d', $endDateTimestamp) . '.zip';
     $randstring = generateRandomString();
-    $subject = "Báo cáo chi tiết cước hợp đồng: $contract_code" . PHP_EOL . "Thời gian thực hiện: $now_day"  . PHP_EOL . "Mật khẩu giải nén: $randstring";
+    $subject = "Báo cáo chi tiết cước hợp đồng: $contract_code" . PHP_EOL . "Thời gian thực hiện: $now_day" . PHP_EOL . "Mật khẩu giải nén: $randstring";
 
     // Export data from queries and combine into an Excel file
     $exportStatus = exportToExcels($queries, $dbName, $header, $excelFile);

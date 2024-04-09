@@ -1,9 +1,9 @@
 <?php
 
-require '/var/www/html/send_email/config.php';
-require '/var/www/html/send_email/includes/database_connection.php';
-require '/var/www/html/send_email/includes/send_telegram_message.php';
-require '/var/www/html/tools_diginext/includes/export_list_numbers.php';
+require_once '/var/www/html/send_email/config.php';
+require_once '/var/www/html/send_email/includes/database_connection.php';
+require_once '/var/www/html/send_email/includes/send_telegram_message.php';
+require_once '/var/www/html/tools_diginext/includes/export_list_numbers.php';
 
 function handleConvert()
 {
@@ -138,7 +138,10 @@ function handleExport()
                 GROUP BY ext_number";
 
     $header = [
-        'CustomerName', 'SalerName', 'ContractCode', 'Number',
+        'CustomerName',
+        'SalerName',
+        'ContractCode',
+        'Number',
     ];
 
     $dbName = $_ENV['DB_DATABASE_VOICEREPORT'];

@@ -29,7 +29,7 @@ if (!isset($_SESSION['user']) || isSessionExpired()) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>DIGINEXT</title>
+    <title>DIGINEXT | BÁO CÁO CUỘC GỌI HỆ THỐNG VOS</title>
     <!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">

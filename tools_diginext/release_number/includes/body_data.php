@@ -93,7 +93,7 @@ function updateDataInDB($statusNumber, $orderNumberLog, $numberSequence, $status
 
     $resultListNumbers = convertNumberSequence($numberSequence);
 
-    $validStatus = array("", "inStock", "holding", "pending", "actived", "liquidated", "expired");
+    $validStatus = array("inStock", "holding", "pending", "actived", "liquidated", "expired");
     if (!in_array($statusNumberCheck, $validStatus)) {
         echo '<div class="alert alert-danger my-3" role="alert"><strong>Lỗi:</strong>Trạng thái không hợp lệ!</div>';
         exit;
@@ -109,7 +109,7 @@ function updateDataInDB($statusNumber, $orderNumberLog, $numberSequence, $status
                   log = CONCAT(log, '\n', CONCAT(NOW(), '__', '$orderNumberLog/')) 
               WHERE order_number IN $resultListNumbers";
 
-    if (!empty($statusNumberCheck) || $statusNumberCheck != "") {
+    if (!empty($statusNumberCheck)) {
         $query .= " AND status = '$statusNumberCheck'";
     } else {
         $query .= " AND status = 'holding'";
@@ -135,22 +135,13 @@ if (isset($_POST['update_data'])) {
     $numberSequence = $_SESSION['number_sequence'];
     $statusNumberCheck = $_SESSION['status_number_check'];
 
-    // // Store input values in the session
-    // $_SESSION['status_number'] = $statusNumber;
-    // $_SESSION['order_numbers_log'] = $orderNumberLog;
-
     // Call the function to update data
     $updateResult = updateDataInDB($statusNumber, $orderNumberLog, $numberSequence, $statusNumberCheck);
 
     // Display a success or failure message
     if ($updateResult) {
+        unset($_SESSION['status_number'], $_SESSION['status_number']);
         echo '<div class="mt-3" style="color: green;">Data updated successfully!</div>';
-
-        // Unset all session variables
-        session_unset();
-
-        // Destroy the session
-        session_destroy();
     } else {
         echo '<div style="color: red;">Failed to update data. Please try again.</div>';
     }

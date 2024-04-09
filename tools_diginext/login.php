@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>DIGINEXT</title>
+    <title>DIGINEXT | LOGIN</title>
     <!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -52,8 +52,10 @@
                         <div class="mt-4 mb-5">
                             <button type="submit" class="btn btn-primary btn-lg login-button">Đăng nhập</button>
                         </div>
-                        <?php if (isset($error_message)) : ?>
-                        <p class="error-message"><?php echo $error_message; ?></p>
+                        <?php if (isset($error_message)): ?>
+                            <p class="error-message">
+                                <?php echo $error_message; ?>
+                            </p>
                         <?php endif; ?>
                     </form>
 

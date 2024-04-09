@@ -107,8 +107,8 @@ function convertExcelToPDF($excelFilePath, $pdfFileName, $userName, $ccuValues, 
 
                 $rowCounter++;
 
-                $ccuValue = isset ($_POST['ccu'][$rowCounter]) ? $_POST['ccu'][$rowCounter] : '';
-                if (empty ($ccuValue)) {
+                $ccuValue = isset($_POST['ccu'][$rowCounter]) ? $_POST['ccu'][$rowCounter] : '';
+                if (empty($ccuValue)) {
                     continue; // Skip the row if CCU value is empty
                 }
 

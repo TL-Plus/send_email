@@ -1,7 +1,7 @@
 <?php
 
-require_once '/var/www/html/send_email/config.php';
 require_once '/var/www/html/send_email/vendor/autoload.php';
+require_once '/var/www/html/send_email/config.php';
 require_once '/var/www/html/send_email/includes/export_excel.php';
 require_once '/var/www/html/send_email/includes/database_connection.php';
 require_once '/var/www/html/report_ctc/includes/convert_excel_to_pdf.php';

@@ -8,7 +8,7 @@ require_once '/var/www/html/send_email/config.php';
 function isSessionExpired()
 {
     $session_expire_time = $_ENV['SESSION_EXPIRE_TIME'];
-    if (isset ($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > $session_expire_time) {
+    if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > $session_expire_time) {
         session_unset();
         session_destroy();
         return true;
@@ -17,7 +17,7 @@ function isSessionExpired()
 }
 
 // Check if the user is logged in or session has expired
-if (!isset ($_SESSION['user']) || isSessionExpired()) {
+if (!isset($_SESSION['user']) || isSessionExpired()) {
     header('Location: /tools_diginext/login.php');
     exit();
 }
@@ -29,7 +29,7 @@ if (!isset ($_SESSION['user']) || isSessionExpired()) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Release Number DigiNext</title>
+    <title>DIGINEXT | RELEASE NUMBER</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <!-- Add Select2 CSS -->
@@ -80,21 +80,21 @@ if (!isset ($_SESSION['user']) || isSessionExpired()) {
             <label for="number_sequence">EXT/Number:</label>
             <input type="text" name="number_sequence" id="number_sequence" class="form-control" required
                 placeholder="Enter a number sequence (separated by spaces) - e.g., 123 456 789"
-                value="<?php echo isset ($_POST['number_sequence']) ? htmlspecialchars($_POST['number_sequence']) : ''; ?>">
+                value="<?php echo isset($_POST['number_sequence']) ? htmlspecialchars($_POST['number_sequence']) : ''; ?>">
         </div>
         <div class="form-group">
             <label for="status_number_check">Status Number Check (inStock - holding - pending - actived - liquidated -
                 expired):</label>
             <input type="text" name="status_number_check" id="status_number_check" class="form-control"
                 placeholder="Enter Status Number Check" step="1"
-                value="<?php echo isset ($_POST['status_number_check']) ? htmlspecialchars($_POST['status_number_check']) : ''; ?>">
+                value="<?php echo isset($_POST['status_number_check']) ? htmlspecialchars($_POST['status_number_check']) : ''; ?>">
         </div>
 
         <button type="submit" name="check_data" class="btn btn-primary">Check Data</button>
     </form>
 
     <?php
-    $showUpdateForm = isset ($_POST['check_data']);
+    $showUpdateForm = isset($_POST['check_data']);
 
     if ($showUpdateForm) {
         ?>
@@ -106,13 +106,13 @@ if (!isset ($_SESSION['user']) || isSessionExpired()) {
                     expired):</label>
                 <input type="text" name="status_number" id="status_number" class="form-control" required
                     placeholder="Enter Status Number" step="1"
-                    value="<?php echo isset ($_POST['status_number']) ? htmlspecialchars($_POST['status_number']) : ''; ?>">
+                    value="<?php echo isset($_POST['status_number']) ? htmlspecialchars($_POST['status_number']) : ''; ?>">
             </div>
             <div class="form-group">
                 <label for="order_numbers_log">Log:</label>
                 <input type="text" name="order_numbers_log" id="order_numbers_log" class="form-control" required
                     placeholder="Enter Order Number Log - e.g., admin-update-status-order-number"
-                    value="<?php echo isset ($_POST['order_numbers_log']) ? htmlspecialchars($_POST['order_numbers_log']) : ''; ?>">
+                    value="<?php echo isset($_POST['order_numbers_log']) ? htmlspecialchars($_POST['order_numbers_log']) : ''; ?>">
             </div>
 
             <button type="submit" name="update_data" class="btn btn-success">Update Data</button>

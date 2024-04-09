@@ -29,7 +29,7 @@ if (!isset($_SESSION['user']) || isSessionExpired()) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Export CTC By Contract</title>
+    <title>DIGINEXT | CTC BY CONTRACT</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
@@ -102,9 +102,9 @@ if (!isset($_SESSION['user']) || isSessionExpired()) {
                 <div class="mb-3">
                     <label for="day_start" class="form-label">Start Day:</label>
                     <?php
-                        // Tạo giá trị mặc định là ngày đầu của tháng
-                        $day_start_default = isset($_POST['day_start']) ? $_POST['day_start'] : date('Y-m-01');
-                     ?>
+                    // Tạo giá trị mặc định là ngày đầu của tháng
+                    $day_start_default = isset($_POST['day_start']) ? $_POST['day_start'] : date('Y-m-01');
+                    ?>
                     <input type="date" name="day_start" id="day_start" class="form-control" required
                         value="<?php echo $day_start_default; ?>">
                 </div>
@@ -113,9 +113,9 @@ if (!isset($_SESSION['user']) || isSessionExpired()) {
                 <div class="mb-3">
                     <label for="day_end" class="form-label">End Day:</label>
                     <?php
-                        // Tạo giá trị mặc định là ngày đầu của tháng
-                        $day_end_default = isset($_POST['day_end']) ? $_POST['day_end'] : date('Y-m-d');
-                     ?>
+                    // Tạo giá trị mặc định là ngày đầu của tháng
+                    $day_end_default = isset($_POST['day_end']) ? $_POST['day_end'] : date('Y-m-d');
+                    ?>
                     <input type="date" name="day_end" id="day_end" class="form-control" required
                         value="<?php echo $day_end_default; ?>">
                 </div>
@@ -124,7 +124,7 @@ if (!isset($_SESSION['user']) || isSessionExpired()) {
 
         <div class="mb-3">
             <button type="submit" name="check_data" class="btn btn-primary">Check Data</button>
-            <button type="submit" name="export_excel" class="btn btn-success">Export Excel and Send
+            <button type="submit" name="export_excel" class="btn btn-success">Export Excel & Send
                 Telegram</button>
         </div>
     </form>
@@ -137,7 +137,7 @@ if (!isset($_SESSION['user']) || isSessionExpired()) {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
-    </script>
+        </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
 

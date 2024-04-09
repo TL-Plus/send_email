@@ -1,6 +1,6 @@
 <?php
-require_once '/var/www/html/send_email/config.php';
 require_once '/var/www/html/send_email/vendor/autoload.php';
+require_once '/var/www/html/send_email/config.php';
 require_once '/var/www/html/send_email/includes/export_excel.php';
 require_once '/var/www/html/send_email/includes/database_connection.php';
 require_once '/var/www/html/send_email/includes/send_telegram_message.php';
@@ -10,7 +10,6 @@ date_default_timezone_set("Asia/Ho_Chi_Minh");
 $now_day = date('Y-m-d H:i:s');
 $year = date('Y', strtotime($now_day));
 $month = date('m', strtotime($now_day));
-$day = date('d', strtotime($now_day));
 
 $table_name = "dcn" . $year . $month;
 
@@ -35,7 +34,6 @@ FROM
 $table_name
 WHERE            
 DATE($table_name.TimeUpdate) = CURDATE()
-AND $table_name.day = $day
 GROUP BY
 $table_name.customer_name
 ORDER BY 

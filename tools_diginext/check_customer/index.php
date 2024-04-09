@@ -29,7 +29,7 @@ if (!isset($_SESSION['user']) || isSessionExpired()) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Check Customer DigiNext</title>
+    <title>DIGINEXT | CUSTOMER</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
@@ -82,7 +82,7 @@ if (!isset($_SESSION['user']) || isSessionExpired()) {
         </div>
         <button type="submit" name="convert" class="btn btn-primary">Check and Convert Number Sequence</button>
         <button type="submit" name="check_data" class="btn btn-primary">Check Data</button>
-        <button type="submit" name="export_excel" class="btn btn-success">Export to Excel and Send Telegram</button>
+        <button type="submit" name="export_excel" class="btn btn-success">Export to Excel & Send Telegram</button>
     </form>
 
     <?php include 'includes/body_index.php'; ?>
@@ -93,7 +93,7 @@ if (!isset($_SESSION['user']) || isSessionExpired()) {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
-    </script>
+        </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
     <script src="../static/js/check_customer/index.js"></script>

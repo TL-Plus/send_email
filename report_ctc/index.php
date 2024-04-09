@@ -8,7 +8,7 @@ require_once '/var/www/html/send_email/config.php';
 function isSessionExpired()
 {
     $session_expire_time = $_ENV['SESSION_EXPIRE_TIME'];
-    if (isset ($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > $session_expire_time) {
+    if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > $session_expire_time) {
         session_unset();
         session_destroy();
         return true;
@@ -17,7 +17,7 @@ function isSessionExpired()
 }
 
 // Check if the user is logged in or session has expired
-if (!isset ($_SESSION['user']) || isSessionExpired()) {
+if (!isset($_SESSION['user']) || isSessionExpired()) {
     header('Location: /report_ctc/login.php');
     exit();
 }
@@ -29,7 +29,7 @@ if (!isset ($_SESSION['user']) || isSessionExpired()) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>DIGINEXT</title>
+    <title>DIGINEXT | BÁO CÁO CUỘC GỌI HỆ THỐNG VOS</title>
     <!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">

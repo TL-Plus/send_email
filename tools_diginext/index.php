@@ -8,7 +8,7 @@ require_once '/var/www/html/send_email/config.php';
 function isSessionExpired()
 {
     $session_expire_time = $_ENV['SESSION_EXPIRE_TIME'];
-    if (isset ($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > $session_expire_time) {
+    if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > $session_expire_time) {
         session_unset();
         session_destroy();
         return true;
@@ -17,7 +17,7 @@ function isSessionExpired()
 }
 
 // Check if the user is logged in or session has expired
-if (!isset ($_SESSION['user']) || isSessionExpired()) {
+if (!isset($_SESSION['user']) || isSessionExpired()) {
     header('Location: /tools_diginext/login.php');
     exit();
 }
@@ -29,7 +29,7 @@ if (!isset ($_SESSION['user']) || isSessionExpired()) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tools DigiNext</title>
+    <title>DIGINEXT | TOOLS</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
@@ -70,9 +70,6 @@ if (!isset ($_SESSION['user']) || isSessionExpired()) {
                 <a href="/tools_diginext/release_number"
                     class="btn btn-outline-primary btn-lg rounded-pill px-md-5 py-md-3 px-3 py-2 me-3 mb-4"><i
                         class="fas fa-phone-square-alt me-2"></i>Kiểm tra và nhả số</a>
-                <a href="/tools_diginext/update_contract_details"
-                    class="btn btn-outline-primary btn-lg rounded-pill px-md-5 py-md-3 px-3 py-2 me-3 mb-4"><i
-                        class="fas fa-file-contract me-2"></i>Kiểm tra và Cập nhật chi tiết hợp đồng</a>
             </div>
 
             <div class="text-center">
@@ -82,6 +79,15 @@ if (!isset ($_SESSION['user']) || isSessionExpired()) {
                 <a href="/tools_diginext/check_cdr_cdrdsip"
                     class="btn btn-outline-primary btn-lg rounded-pill px-md-5 py-md-3 px-3 py-2 me-3 mb-4"><i
                         class="fas fa-file-contract me-2"></i>Kiểm tra sản lượng CDR và CDRDSIP</a>
+            </div>
+
+            <div class="text-center">
+                <a href="/tools_diginext/check_cdr_log"
+                    class="btn btn-outline-primary btn-lg rounded-pill px-md-5 py-md-3 px-3 py-2 me-3 mb-4"><i
+                        class="fas fa-phone-square-alt me-2"></i>Kiểm tra thông tin cuộc gọi</a>
+                <a href="/tools_diginext/update_contract_details"
+                    class="btn btn-outline-primary btn-lg rounded-pill px-md-5 py-md-3 px-3 py-2 me-3 mb-4"><i
+                        class="fas fa-file-contract me-2"></i>Kiểm tra và Cập nhật chi tiết hợp đồng</a>
             </div>
 
             <div class="text-center mb-4">
