@@ -182,16 +182,15 @@ function handleExport()
     $botToken = $_ENV['TELEGRAM_BOT_TOKEN'];
     $chatId = $_ENV['TELEGRAM_CHAT_ID'];
 
-    // if (!empty($Caller) && !empty($Caller)) {
-    //     $attachment = '/var/www/html/tools_diginext/files/check_cdr_log/' . str_replace("/", "_", $time_export_excel) . '_report_cdr_log_' . $Caller . '_' . $Callee . '.xlsx';
-    // } elseif (!empty($Caller)) {
-    //     $attachment = '/var/www/html/tools_diginext/files/check_cdr_log/' . str_replace("/", "_", $time_export_excel) . '_report_cdr_log_' . $Caller . '.xlsx';
-    // } elseif (!empty($Callee)) {
-    //     $attachment = '/var/www/html/tools_diginext/files/check_cdr_log/' . str_replace("/", "_", $time_export_excel) . '_report_cdr_log_' . $Callee . '.xlsx';
-    // } else {
-    //     $attachment = '/var/www/html/tools_diginext/files/check_cdr_log/' . str_replace("/", "_", $time_export_excel) . '_report_cdr_log.xlsx';
-    // }
-    $attachment = '/var/www/html/tools_diginext/files/check_cdr_log/' . str_replace("/", "_", $time_export_excel) . '_report_cdr_log.xlsx';
+    if (!empty($Caller) && !empty($Callee)) {
+        $attachment = '/var/www/html/tools_diginext/files/check_cdr_log/' . str_replace("/", "_", $time_export_excel) . '_report_cdr_log_' . $Caller . '_' . $Callee . '.xlsx';
+    } elseif (!empty($Caller)) {
+        $attachment = '/var/www/html/tools_diginext/files/check_cdr_log/' . str_replace("/", "_", $time_export_excel) . '_report_cdr_log_' . $Caller . '.xlsx';
+    } elseif (!empty($Callee)) {
+        $attachment = '/var/www/html/tools_diginext/files/check_cdr_log/' . str_replace("/", "_", $time_export_excel) . '_report_cdr_log_' . $Callee . '.xlsx';
+    } else {
+        $attachment = '/var/www/html/tools_diginext/files/check_cdr_log/' . str_replace("/", "_", $time_export_excel) . '_report_cdr_log.xlsx';
+    }
 
     $subject = "Báo cáo thông tin cuộc gọi" . PHP_EOL
         . "Thời gian thực hiện: $now_day";
