@@ -76,7 +76,7 @@ function bodyEmailOrderNumber($FormValues)
 
     // Additional Information and Footer
     $body .= "<div style='font-weight:bold; margin-bottom:10px; margin-top:20px;color:#222;'>Thông tin tra cứu chi tiết quý khách vui lòng truy cập :</div>
-        <div style='margin-left:10px;color:#222;'><span>- Địa chỉ : https://billing.diginext.com.vn/</span></div>
+        <div style='margin-left:10px;color:#222;'><span>- Địa chỉ : https://billing.diginext.com.vn</span></div>
         <div style='margin-bottom:10px; margin-top:20px; color:#222;'><span><i>Trân trọng cảm ơn Quý khách hàng đã sử dụng dịch vụ của DigiNext</i></span></div>
         <table style='color:#222;'>
             <tr>
@@ -86,9 +86,9 @@ function bodyEmailOrderNumber($FormValues)
                 
                 <td style='text-align:top;padding-left:10px'>
                     <div style='color:#ffffff;font-size:1px'>CÔNG TY CỔ PHẦN CÔNG NGHỆ SỐ DIGINEXT</div></br>
-                    <p style='font-weight:bold;'><a href='https://billing.diginext.com.vn/'>CÔNG TY CỔ PHẦN CÔNG NGHỆ SỐ DIGINEXT</a><br /><br /></p>
+                    <p style='font-weight:bold;'><a href='https://billing.diginext.com.vn'>CÔNG TY CỔ PHẦN CÔNG NGHỆ SỐ DIGINEXT</a><br /><br /></p>
                     Địa chỉ giao dịch: Tầng 3, Tòa W1-W2 Vinhomes West Point, Phường Mễ Trì, Quận Nam Từ Liêm, Hà Nội.<br />
-                    Tel: (024-028) 5555 1111 | 19005055 | <a href='http://diginext.com.vn'>http://diginext.com.vn</a><br>
+                    Tel: (024-028) 5555 1111 | 19005055 | <a href='https://diginext.com.vn'>https://diginext.com.vn</a><br>
                     Email: cskh@diginext.com.vn
                 </td>
             </tr>
@@ -153,22 +153,24 @@ function bodyEmailFeePaymentCycle($FormValues)
 
 
     // Footer
-    $body .= "<div style='margin-top: 10px; color: #222;'><i>Trân trọng cảm ơn Quý khách hàng đã sử dụng dịch vụ của DigiNext</i></div>
-            <table style='color: #222; width: 100%; margin-top: 10px;'>
-                <tr>
-                    <td style='width:110px; border-right: 2px solid #cfcfcf; padding: 5px;'>
-                        <img width='100' src='https://billing.diginext.com.vn/backend/images/logo-small.png' alt='Diginext' style='border-radius: 10px;'>
-                    </td>
-                    
-                    <td style='text-align: top; padding-left: 10px;'>
-                        <div style='color: #ffffff; font-size: 1px;'>CÔNG TY CỔ PHẦN CÔNG NGHỆ SỐ DIGINEXT</div></br>
-                        <p style='font-weight: bold;'><a href='https://billing.diginext.com.vn/'>CÔNG TY CỔ PHẦN CÔNG NGHỆ SỐ DIGINEXT</a><br /><br /></p>
-                        Địa chỉ giao dịch: Tầng 3, Tòa W1-W2 Vinhomes West Point, Phường Mễ Trì, Quận Nam Từ Liêm, Hà Nội.<br />
-                        Tel: (024-028) 5555 1111 | 19005055 | <a href='http://diginext.com.vn'>http://diginext.com.vn</a><br>
-                        Email: cskh@diginext.com.vn
-                    </td>
-                </tr>
-            </table>";
+    $body .= "<div style='font-weight:bold; margin-bottom:10px; margin-top:20px;color:#222;'>Thông tin tra cứu chi tiết quý khách vui lòng truy cập :</div>
+        <div style='margin-left:10px;color:#222;'><span>- Địa chỉ : https://billing.diginext.com.vn</span></div>
+        <div style='margin-bottom:10px; margin-top:20px; color:#222;'><span><i>Trân trọng cảm ơn Quý khách hàng đã sử dụng dịch vụ của DigiNext</i></span></div>
+        <table style='color:#222;'>
+            <tr>
+                <td style='width:160px; border-right:2px solid #cfcfcf;'>
+                    <img width='160' src='https://billing.diginext.com.vn/backend/images/logo-small.png' alt='Diginext'/>
+                </td>
+                
+                <td style='text-align:top;padding-left:10px'>
+                    <div style='color:#ffffff;font-size:1px'>CÔNG TY CỔ PHẦN CÔNG NGHỆ SỐ DIGINEXT</div></br>
+                    <p style='font-weight:bold;'><a href='https://billing.diginext.com.vn'>CÔNG TY CỔ PHẦN CÔNG NGHỆ SỐ DIGINEXT</a><br /><br /></p>
+                    Địa chỉ giao dịch: Tầng 3, Tòa W1-W2 Vinhomes West Point, Phường Mễ Trì, Quận Nam Từ Liêm, Hà Nội.<br />
+                    Tel: (024-028) 5555 1111 | 19005055 | <a href='https://diginext.com.vn'>https://diginext.com.vn</a><br>
+                    Email: cskh@diginext.com.vn
+                </td>
+            </tr>
+        </table>";
 
     return $body;
 }
@@ -215,22 +217,24 @@ function bodyEmailHolidaySchedule($FormValues)
     $body .= '</div>';
 
     // Footer
-    $body .= "<div style='margin-top: 10px; color: #222;'><i>Trân trọng cảm ơn Quý khách hàng đã sử dụng dịch vụ của DigiNext</i></div>
-            <table style='color: #222; width: 100%; margin-top: 10px;'>
-                <tr>
-                    <td style='width:110px; border-right: 2px solid #cfcfcf; padding: 5px;'>
-                        <img width='100' src='https://billing.diginext.com.vn/backend/images/logo-small.png' alt='Diginext' style='border-radius: 10px;'>
-                    </td>
-                    
-                    <td style='text-align: top; padding-left: 10px;'>
-                        <div style='color: #ffffff; font-size: 1px;'>CÔNG TY CỔ PHẦN CÔNG NGHỆ SỐ DIGINEXT</div></br>
-                        <p style='font-weight: bold;'><a href='https://billing.diginext.com.vn/'>CÔNG TY CỔ PHẦN CÔNG NGHỆ SỐ DIGINEXT</a><br /><br /></p>
-                        Địa chỉ giao dịch: Tầng 3, Tòa W1-W2 Vinhomes West Point, Phường Mễ Trì, Quận Nam Từ Liêm, Hà Nội.<br />
-                        Tel: (024-028) 5555 1111 | 19005055 | <a href='http://diginext.com.vn'>http://diginext.com.vn</a><br>
-                        Email: cskh@diginext.com.vn
-                    </td>
-                </tr>
-            </table>";
+    $body .= "<div style='font-weight:bold; margin-bottom:10px; margin-top:20px;color:#222;'>Thông tin tra cứu chi tiết quý khách vui lòng truy cập :</div>
+        <div style='margin-left:10px;color:#222;'><span>- Địa chỉ : https://billing.diginext.com.vn</span></div>
+        <div style='margin-bottom:10px; margin-top:20px; color:#222;'><span><i>Trân trọng cảm ơn Quý khách hàng đã sử dụng dịch vụ của DigiNext</i></span></div>
+        <table style='color:#222;'>
+            <tr>
+                <td style='width:160px; border-right:2px solid #cfcfcf;'>
+                    <img width='160' src='https://billing.diginext.com.vn/backend/images/logo-small.png' alt='Diginext'/>
+                </td>
+                
+                <td style='text-align:top;padding-left:10px'>
+                    <div style='color:#ffffff;font-size:1px'>CÔNG TY CỔ PHẦN CÔNG NGHỆ SỐ DIGINEXT</div></br>
+                    <p style='font-weight:bold;'><a href='https://billing.diginext.com.vn'>CÔNG TY CỔ PHẦN CÔNG NGHỆ SỐ DIGINEXT</a><br /><br /></p>
+                    Địa chỉ giao dịch: Tầng 3, Tòa W1-W2 Vinhomes West Point, Phường Mễ Trì, Quận Nam Từ Liêm, Hà Nội.<br />
+                    Tel: (024-028) 5555 1111 | 19005055 | <a href='https://diginext.com.vn'>https://diginext.com.vn</a><br>
+                    Email: cskh@diginext.com.vn
+                </td>
+            </tr>
+        </table>";
 
     return $body;
 }
