@@ -48,6 +48,7 @@ function modifyValue($column, $value)
         'TƯ VẤN ĐẦU TƯ ',
         'CÔNG NGHỆ SỐ ',
         'DƯỢC MỸ PHẨM ',
+        'TRUYỀN THÔNG ',
         'THƯƠNG MẠI ',
         'TRỰC TUYẾN ',
         'VIỄN THÔNG ',
