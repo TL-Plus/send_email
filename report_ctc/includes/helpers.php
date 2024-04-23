@@ -67,6 +67,7 @@ function modifyValue($column, $value)
         'TẠP HÓA ',
         'TƯ VẤN ',
         'ĐẦU TƯ ',
+        'TM&DV ',
         'TNHH ',
         'LUẬT ',
         'MTV ',
@@ -91,7 +92,7 @@ function modifyValue($column, $value)
         $value = number_format($value, 0, '.', ',');
     }
 
-    if ($column == 'TotalCost' || $column == 'TotalCurrentCall' || $column == 'BlockViettel' || $column == 'BlockMobifone') {
+    if ($column == 'TotalCost' || $column == 'TotalCurrentCall' || $column == 'BlockViettel' || $column == 'ActiveViettel') {
         return ['value' => $value, 'align' => 'C'];
     }
 
@@ -106,7 +107,7 @@ function translateHeader($text)
         'TotalCost' => 'Số Tiền',
         'TotalCurrentCall' => 'CCU',
         'BlockViettel' => 'Số Khóa VTL',
-        'BlockMobifone' => 'Số Khóa MBF',
+        'ActiveViettel' => 'Số Khóa MBF',
     ];
 
     return $vietnameseMapping[$text] ?? $text;

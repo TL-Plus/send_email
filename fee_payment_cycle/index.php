@@ -30,6 +30,7 @@ function getInfoCustomersFromDatabase($dbName)
     // SQL query
     $query = "SELECT DISTINCT
             contracts_details.contract_code, 
+            contracts_details.addendum, 
             contracts_details.customer_name, 
             contracts_details.customer_code, 
             customers.email AS customer_email,
@@ -45,7 +46,7 @@ function getInfoCustomersFromDatabase($dbName)
             AND contracts_details.status = 'actived'
             AND contracts_details.cost_expand > 0
             AND MOD(FLOOR(TIMESTAMPDIFF(MONTH, contracts_details.activated_at, CURRENT_DATE())), contracts_details.payment_cycle) = 0
-        ORDER BY contracts_details.contract_code";
+        ORDER BY contracts_details.contract_code LIMIT 5";
 
     $result = $conn->query($query);
 
@@ -55,9 +56,10 @@ function getInfoCustomersFromDatabase($dbName)
         while ($row = $result->fetch_assoc()) {
             $infoCustomers[] = [
                 'contractCode' => $row['contract_code'],
+                'addendum' => $row['addendum'],
                 'customerName' => $row['customer_name'],
                 'customerCode' => $row['customer_code'],
-                'customerEmail' => 'thelaniq@gmail.com', //$row['customer_email'],
+                'customerEmail' => 'lan.lt@diginext.com.vn', //$row['customer_email'],
                 'categoriesCode' => $row['categories_code'],
                 'categoriesExpand' => $row['categories_expand'],
             ];
@@ -100,7 +102,8 @@ function fetchCustomerDetails($query, $dbName)
 
 function processEmails($dbName, $header, $fileName, $title)
 {
-
+    $recipients = $_ENV['RECIPIENTS_TEST'];
+    $cc_recipients = $_ENV['CC_RECIPIENTS_TEST'];
     $infoCustomers = getInfoCustomersFromDatabase($dbName);
 
     // Define an array to store processed contract codes and categories codes
@@ -145,6 +148,8 @@ function processEmails($dbName, $header, $fileName, $title)
             $FormValues = [
                 'customerName' => $infoCustomer['customerName'],
                 'customerEmail' => $customerEmail,
+                'contractCode' => $infoCustomer['contractCode'],
+                'addendum' => $infoCustomer['addendum'],
                 'categoriesCode' => $categoriesCode,
                 'categoriesExpand' => $infoCustomer['categoriesExpand'],
                 'customerDetails' => $customerDetails,
@@ -158,9 +163,10 @@ function processEmails($dbName, $header, $fileName, $title)
                 $dbName,
                 $header,
                 "$fileName{$customerCode}_{$categoriesCode}.xlsx",
-                "$title {$categoriesCode}",
+                "$title {$categoriesCode} MÃ HỢP ĐỒNG {$FormValues['contractCode']} PHỤ LỤC {$FormValues['addendum']}",
                 bodyEmailFeePaymentCycle($FormValues),
-                $customerEmail
+                $customerEmail,
+                $cc_recipients
             );
         }
     }

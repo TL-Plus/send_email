@@ -12,12 +12,14 @@ define('TERMINATION_THRESHOLD', 7);
 
 // Define Excel header
 $header = [
-    'CustomerName', 'CustomerCode', 'CustomerAddress', 'CustomerEmail', 'CustomerPhone',
-    'SalerName', 'SalerCode', 'OrderNumber', 'OrderTime', 'Status'
+    'Customer Name', 'Customer Code', 'Customer Address', 'Customer Email', 'Customer Phone',
+    'Saler Name', 'Saler Code', 'Order Number', 'Order Time', 'Status'
 ];
 
 // Define $dbName
 $dbName = $_ENV['DB_DATABASE_BILLING_DIGINEXT'];
+$recipients = $_ENV['RECIPIENTS_TEST'];
+$cc_recipients = $_ENV['CC_RECIPIENTS_TEST'];
 
 function getTelegramRecipientsFromDatabase($dbName, $threshold, $orderNumberCondition)
 {
@@ -92,6 +94,8 @@ function fetchOrderData($query, $dbName)
 
 function processEmailsAndTelegrams($threshold, $dbName, $header, $fileNamePrefix, $title, $orderNumberCondition)
 {
+    $cc_recipients = $_ENV['CC_RECIPIENTS_TEST'];
+
     $telegramRecipients = getTelegramRecipientsFromDatabase($dbName, $threshold, $orderNumberCondition);
 
     // Define an array to store processed customer codes
@@ -135,6 +139,7 @@ function processEmailsAndTelegrams($threshold, $dbName, $header, $fileNamePrefix
                 "$title ($threshold NGÀY)",
                 bodyEmailOrderNumber($FormValues),
                 $FormValues['userEmail'],
+                $cc_recipients
             );
 
             // Call function to send telegram message notification for warning
@@ -170,7 +175,7 @@ processEmailsAndTelegrams(
     $dbName,
     $header,
     '/var/www/html/send_email/files_export/Report_termination_dvgtgt_',
-    '[DIGINEXT] - BÁO CÁO CẢNH BÁO ĐẶT SỐ DVGTGT HẾT HẠN',
+    '[DIGINEXT] - BÁO CÁO ĐẶT SỐ DVGTGT ĐÃ HẾT HẠN',
     $orderNumberConditionDVGTGT
 );
 
@@ -190,6 +195,6 @@ processEmailsAndTelegrams(
     $dbName,
     $header,
     '/var/www/html/send_email/files_export/Report_termination_888_fixed_',
-    '[DIGINEXT] - BÁO CÁO CẢNH BÁO ĐẶT SỐ CỐ ĐỊNH 888 HẾT HẠN',
+    '[DIGINEXT] - BÁO CÁO ĐẶT SỐ CỐ ĐỊNH 888 ĐÃ HẾT HẠN',
     $orderNumberCondition888Fixed
 );

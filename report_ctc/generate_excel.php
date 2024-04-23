@@ -26,10 +26,10 @@ NULL AS TotalCurrentCall,
 ) AS BlockViettel,
 (
     SELECT COUNT(ext_number) 
-    FROM Billing_Diginext.report_number_blockMobi rnbMobi
-    WHERE rnbMobi.customer_name = $table_name.customer_name
-      AND DATE(rnbMobi.time_update) = CURDATE()
-) AS BlockMobifone
+    FROM Billing_Diginext.report_number_active rna
+    WHERE rna.customer_name = dcn202404.customer_name
+      AND DATE(rna.time_update) = CURDATE()
+) AS ActiveViettel
 FROM
 $table_name
 WHERE            
@@ -46,7 +46,7 @@ $header = [
   'TotalCost',
   'TotalCurrentCall',
   'BlockViettel',
-  'BlockMobifone'
+  'ActiveViettel'
 ];
 
 $dbName = $_ENV['DB_DATABASE_VOICEREPORT'];

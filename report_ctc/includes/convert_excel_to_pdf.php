@@ -98,7 +98,7 @@ function convertExcelToPDF($excelFilePath, $pdfFileName, $userName, $ccuValues, 
             $totalCost = 0;
             $totalCCU = 0;
             $totalBlockViettel = 0;
-            $totalBlockMobifone = 0;
+            $totalActiveViettel = 0;
 
             $rowCounter = 0;
 
@@ -135,8 +135,8 @@ function convertExcelToPDF($excelFilePath, $pdfFileName, $userName, $ccuValues, 
                             $pdf->Cell($cellWidth, 10, $cellValue, 1, 0, $cellInfo['align'], getRowColor($rowCounter - 1));
                             break;
 
-                        case 'BlockMobifone':
-                            $totalBlockMobifone += $row[$key];
+                        case 'ActiveViettel':
+                            $totalActiveViettel += $row[$key];
                             $cellValue = ($cell === null) ? 0 : $cellInfo['value'];
                             $pdf->Cell($cellWidth, 10, $cellValue, 1, 0, $cellInfo['align'], getRowColor($rowCounter - 1));
                             break;
@@ -167,7 +167,7 @@ function convertExcelToPDF($excelFilePath, $pdfFileName, $userName, $ccuValues, 
             $pdf->Cell($cellWidth + 5, 10, number_format($totalCost, 0, '.', ','), 1, 0, 'C', true);
             $pdf->Cell($cellWidth - 15, 10, $totalCCU, 1, 0, 'C', true);
             $pdf->Cell($cellWidth, 10, $totalBlockViettel, 1, 0, 'C', true);
-            $pdf->Cell($cellWidth, 10, number_format($totalBlockMobifone, 0, '.', ','), 1, 0, 'C', true);
+            $pdf->Cell($cellWidth, 10, number_format($totalActiveViettel, 0, '.', ','), 1, 0, 'C', true);
             $pdf->SetTextColor(0, 0, 0); // Reset text color to black (optional, if you want to revert to black for subsequent cells)
             $pdf->Ln();
 

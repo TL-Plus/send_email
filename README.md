@@ -10,7 +10,7 @@ You can choose to send the excel file via email or telegram
 
 #### Call the following function to send email
 
-`function sendEmailForDays($sql, $header, $attachment, $subject, $recipients)
+`function sendEmailForDays($sql, $header, $attachment, $subject, $recipients, $cc_recipients)
 `
 
 #### Call the following function to send a telegram message

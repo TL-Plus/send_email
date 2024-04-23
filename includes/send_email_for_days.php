@@ -4,14 +4,14 @@ require_once '/var/www/html/send_email/includes/export_excel.php';
 require_once '/var/www/html/send_email/includes/email_notifications.php';
 
 
-function sendEmailForDay($sql, $dbName, $header, $attachment, $subject, $recipients)
+function sendEmailForDay($sql, $dbName, $header, $attachment, $subject, $bodyContent, $recipients, $cc_recipients)
 {
     try {
         $exportSuccessful = exportToExcel($sql, $dbName, $header, $attachment);
 
         // Check if export was successful before sending email
         if ($exportSuccessful) {
-            sendEmailNotification($attachment, $subject, "Excel Files for {$subject}", $recipients);
+            sendEmailNotification($attachment, $subject, $bodyContent, $recipients, $cc_recipients);
         }
     } catch (Exception $e) {
         echo 'Error: ' . $e->getMessage();
@@ -19,18 +19,62 @@ function sendEmailForDay($sql, $dbName, $header, $attachment, $subject, $recipie
 }
 
 // Function to send email notification
-function sendEmailForDays($sql, $dbName, $header, $attachment, $subject, $bodyContent, $recipients)
+function sendEmailForDays($sql, $dbName, $header, $attachment, $subject, $bodyContent, $recipients, $cc_recipients)
 {
     try {
         $exportSuccessful = exportToExcel($sql, $dbName, $header, $attachment);
 
         // Check if export was successful before sending email
         if ($exportSuccessful) {
-            sendEmailNotification($attachment, $subject, $bodyContent, $recipients);
+            sendEmailNotification($attachment, $subject, $bodyContent, $recipients, $cc_recipients);
         }
     } catch (Exception $e) {
         echo 'Error: ' . $e->getMessage();
     }
+}
+
+// warning liabilities
+function bodyWarningLiabilities($FormValues)
+{
+    $body = "";
+    $body .= '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> ';
+    $body .= '<div style="margin-top: 20px;line-height: 1.8;font-size:17px;font-family:Times New Roman,arial,helvetica;color:#222;">';
+
+    $body .= '<table style="border-collapse:collapse;width:100%;color:#222;" cellpadding="10" >';
+    $body .= '<tr>
+                <td style="text-align:left;font-family:Times New Roman,arial,helvetica;border-bottom:1px solid #f2f2f2">
+                    DIGINEXT GỬI BÁO CÁO CẢNH BÁO CÔNG NỢ THÁNG  ' . $FormValues['twoMonthsAgoMonth'] . '/' . $FormValues['twoMonthsAgoYear'] . '.
+                    <br>
+                </td>
+                <td style="text-align:left;font-family:Times New Roman,arial,helvetica;border-bottom:1px solid #f2f2f2">
+                    <i>Chi tiết xem ở file báo cáo.</i>
+                    <br>
+                </td>
+            </tr>
+        </table>
+    </div>';
+
+    // Additional Information and Footer
+    $body .= "<div style='font-weight:bold; margin-bottom:10px; margin-top:20px;color:#222;'>Thông tin tra cứu chi tiết quý khách vui lòng truy cập :</div>
+        <div style='margin-left:10px;color:#222;'><span>- Địa chỉ : https://billing.diginext.com.vn</span></div>
+        <div style='margin-bottom:10px; margin-top:20px; color:#222;'><span><i>Trân trọng cảm ơn Quý khách hàng đã sử dụng dịch vụ của DigiNext</i></span></div>
+        <table style='color:#222;'>
+            <tr>
+                <td style='width:160px; border-right:2px solid #cfcfcf;'>
+                    <img width='160' src='https://billing.diginext.com.vn/backend/images/logo-small.png' alt='Diginext'/>
+                </td>
+                
+                <td style='text-align:top;padding-left:10px'>
+                    <div style='color:#ffffff;font-size:1px'>CÔNG TY CỔ PHẦN TẬP ĐOÀN DIGINEXT</div></br>
+                    <p style='font-weight:bold;'><a href='https://billing.diginext.com.vn'>CÔNG TY CỔ PHẦN TẬP ĐOÀN DIGINEXT</a><br /><br /></p>
+                    Địa chỉ giao dịch: Tầng 3, Tòa W1-W2 Vinhomes West Point, Phường Mễ Trì, Quận Nam Từ Liêm, Hà Nội.<br />
+                    Tel: (024-028) 5555 1111 | 19005055 | <a href='https://diginext.com.vn'>https://diginext.com.vn</a><br>
+                    Email: cskh@diginext.com.vn
+                </td>
+            </tr>
+        </table>";
+
+    return $body;
 }
 
 // order number
@@ -85,8 +129,8 @@ function bodyEmailOrderNumber($FormValues)
                 </td>
                 
                 <td style='text-align:top;padding-left:10px'>
-                    <div style='color:#ffffff;font-size:1px'>CÔNG TY CỔ PHẦN CÔNG NGHỆ SỐ DIGINEXT</div></br>
-                    <p style='font-weight:bold;'><a href='https://billing.diginext.com.vn'>CÔNG TY CỔ PHẦN CÔNG NGHỆ SỐ DIGINEXT</a><br /><br /></p>
+                    <div style='color:#ffffff;font-size:1px'>CÔNG TY CỔ PHẦN TẬP ĐOÀN DIGINEXT</div></br>
+                    <p style='font-weight:bold;'><a href='https://billing.diginext.com.vn'>CÔNG TY CỔ PHẦN TẬP ĐOÀN DIGINEXT</a><br /><br /></p>
                     Địa chỉ giao dịch: Tầng 3, Tòa W1-W2 Vinhomes West Point, Phường Mễ Trì, Quận Nam Từ Liêm, Hà Nội.<br />
                     Tel: (024-028) 5555 1111 | 19005055 | <a href='https://diginext.com.vn'>https://diginext.com.vn</a><br>
                     Email: cskh@diginext.com.vn
@@ -163,8 +207,8 @@ function bodyEmailFeePaymentCycle($FormValues)
                 </td>
                 
                 <td style='text-align:top;padding-left:10px'>
-                    <div style='color:#ffffff;font-size:1px'>CÔNG TY CỔ PHẦN CÔNG NGHỆ SỐ DIGINEXT</div></br>
-                    <p style='font-weight:bold;'><a href='https://billing.diginext.com.vn'>CÔNG TY CỔ PHẦN CÔNG NGHỆ SỐ DIGINEXT</a><br /><br /></p>
+                    <div style='color:#ffffff;font-size:1px'>CÔNG TY CỔ PHẦN TẬP ĐOÀN DIGINEXT</div></br>
+                    <p style='font-weight:bold;'><a href='https://billing.diginext.com.vn'>CÔNG TY CỔ PHẦN TẬP ĐOÀN DIGINEXT</a><br /><br /></p>
                     Địa chỉ giao dịch: Tầng 3, Tòa W1-W2 Vinhomes West Point, Phường Mễ Trì, Quận Nam Từ Liêm, Hà Nội.<br />
                     Tel: (024-028) 5555 1111 | 19005055 | <a href='https://diginext.com.vn'>https://diginext.com.vn</a><br>
                     Email: cskh@diginext.com.vn
@@ -227,8 +271,8 @@ function bodyEmailHolidaySchedule($FormValues)
                 </td>
                 
                 <td style='text-align:top;padding-left:10px'>
-                    <div style='color:#ffffff;font-size:1px'>CÔNG TY CỔ PHẦN CÔNG NGHỆ SỐ DIGINEXT</div></br>
-                    <p style='font-weight:bold;'><a href='https://billing.diginext.com.vn'>CÔNG TY CỔ PHẦN CÔNG NGHỆ SỐ DIGINEXT</a><br /><br /></p>
+                    <div style='color:#ffffff;font-size:1px'>CÔNG TY CỔ PHẦN TẬP ĐOÀN DIGINEXT</div></br>
+                    <p style='font-weight:bold;'><a href='https://billing.diginext.com.vn'>CÔNG TY CỔ PHẦN TẬP ĐOÀN DIGINEXT</a><br /><br /></p>
                     Địa chỉ giao dịch: Tầng 3, Tòa W1-W2 Vinhomes West Point, Phường Mễ Trì, Quận Nam Từ Liêm, Hà Nội.<br />
                     Tel: (024-028) 5555 1111 | 19005055 | <a href='https://diginext.com.vn'>https://diginext.com.vn</a><br>
                     Email: cskh@diginext.com.vn

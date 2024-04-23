@@ -102,7 +102,7 @@ $_SESSION['ccuTotals'] = isset($_POST['ccuTotals']) ? $_POST['ccuTotals'] : '';
                             echo '<p class="text-center"> ' . $ccuValue . '</p>';
                         } elseif ($data[0][$key] == 'CustomerName') {
                             echo '<p class="text-left"> ' . $modifiedCell['value'] . '</p>';
-                        } elseif ($data[0][$key] == 'BlockViettel' || $data[0][$key] == 'BlockMobifone') {
+                        } elseif ($data[0][$key] == 'BlockViettel' || $data[0][$key] == 'ActiveViettel') {
                             $cellValue = ($cell === null) ? 0 : $modifiedCell['value'];
                             echo '<p class="text-center"> ' . $cellValue . '</p>';
                         } elseif ($data[0][$key] == 'TotalCCU') {
@@ -131,7 +131,7 @@ $_SESSION['ccuTotals'] = isset($_POST['ccuTotals']) ? $_POST['ccuTotals'] : '';
                 $totalCost = 0;
                 $totalCCU = 0;
                 $totalBlockViettel = 0;
-                $totalBlockMobifone = 0;
+                $totalActiveViettel = 0;
 
                 $rowCounter = 0;
 
@@ -156,8 +156,8 @@ $_SESSION['ccuTotals'] = isset($_POST['ccuTotals']) ? $_POST['ccuTotals'] : '';
                                 $totalBlockViettel += $row[$key];
                                 break;
 
-                            case 'BlockMobifone':
-                                $totalBlockMobifone += $row[$key];
+                            case 'ActiveViettel':
+                                $totalActiveViettel += $row[$key];
                                 break;
 
                             case 'TotalCurrentCall':
@@ -178,7 +178,7 @@ $_SESSION['ccuTotals'] = isset($_POST['ccuTotals']) ? $_POST['ccuTotals'] : '';
                         } elseif ($key == 4) {
                             echo '<span style="color: red;">' . $totalBlockViettel . '</span>';
                         } elseif ($key == 5) {
-                            echo '<span style="color: red;">' . $totalBlockMobifone . '</span>';
+                            echo '<span style="color: red;">' . $totalActiveViettel . '</span>';
                         }
                         echo '</td>';
                     }

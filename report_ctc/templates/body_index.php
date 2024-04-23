@@ -66,7 +66,7 @@ $currentTime = date('d-m-Y H:i:s');
                             echo '<input class="custom-col-input" type="number" pattern="\d*" name="ccu[' . $index . ']" value="' . $ccuValue . '" placeholder="Nhập CCU" />';
                         } elseif ($data[0][$key] == 'CustomerName') {
                             echo '<p class="text-left"> ' . $modifiedCell['value'] . '</p>';
-                        } elseif ($data[0][$key] == 'BlockViettel' || $data[0][$key] == 'BlockMobifone') {
+                        } elseif ($data[0][$key] == 'BlockViettel' || $data[0][$key] == 'ActiveViettel') {
                             $cellValue = ($cell === null) ? 0 : $modifiedCell['value'];
                             echo '<p class="text-center"> ' . $cellValue . '</p>';
                         } else {
@@ -127,16 +127,12 @@ $currentTime = date('d-m-Y H:i:s');
                     </label>
                 </div>
                 <div class="col-md-8">
-                    <input type="text" name="userName" id="userName" class="form-control label-user-name"
-                        placeholder="Nhập Tên Nhân Viên"
-                        value="<?php echo isset($_SESSION['userName']) ? htmlspecialchars($_SESSION['userName']) : ''; ?>"
-                        required />
+                    <input type="text" name="userName" id="userName" class="form-control label-user-name" placeholder="Nhập Tên Nhân Viên" value="<?php echo isset($_SESSION['userName']) ? htmlspecialchars($_SESSION['userName']) : ''; ?>" required />
                 </div>
             </div>
         </div>
         <div class="col-md-6 text-md-end center-on-mobile">
-            <button type="button" class="btn btn-primary btn-lg mt-3 mx-auto" data-toggle="modal"
-                data-target="#notificationModal" onclick="checkData()">Kiểm tra lại dữ
+            <button type="button" class="btn btn-primary btn-lg mt-3 mx-auto" data-toggle="modal" data-target="#notificationModal" onclick="checkData()">Kiểm tra lại dữ
                 liệu</button>
         </div>
     </div>

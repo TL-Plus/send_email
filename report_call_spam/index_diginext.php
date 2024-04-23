@@ -17,28 +17,27 @@ ORDER BY SL DESC";
 
 // Define Excel header
 $header = [
-    'Day', 'CustomerName', 'ContractCode', 'Caller', 'Callee', 'SL'
+    'Day', 'Customer Name', 'Contract Code', 'Caller', 'Callee', 'SL'
 ];
 
 // Define $dbName, $botToken, $chatId, $recipients
 $dbName = $_ENV['DB_DATABASE_REPORT'];
 $botToken = $_ENV['TELEGRAM_BOT_TOKEN_RETURN_OTP'];
 $chatId = $_ENV['TELEGRAM_CHAT_ID_RETURN_OTP'];
-$recipients = $_ENV['RECIPIENTS'];
 
 date_default_timezone_set("Asia/Ho_Chi_Minh");
 
 // today
 $today = date('Y_m_d');
 $attachment = "/var/www/html/send_email/files_export/Report_Call_Spam_By_Number_Contract_DIGINEXT_$today.xlsx";
-$subject = "Report Call Spam By Number Contract DIGINEXT ($today)";
+$subject = "[DIGINEXT] - Report Call Spam By Number Contract ($today)";
 
 // Call the function to send a message via Telegram
 sendTelegramMessageWithSql($query_report_call_spam_by_number_contract_next, $dbName, $header, $attachment, $subject, $botToken, $chatId);
 
 if (!file_exists($attachment)) {
     $day = date('d-m-Y');
-    $error_message = "Today $day No Report Call Spam By Number Contract DIGINEXT.";
+    $error_message = "[DIGINEXT] - Today $day No Report Call Spam By Number Contract.";
     sendTelegramMessage($error_message, $botToken, $chatId);
 }
 

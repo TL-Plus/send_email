@@ -28,7 +28,7 @@
                 <img src="/static/images/logo-diginext.png" alt="Diginext Logo" class="img-fluid" width="300px" height="300px">
             </div>
             <div class="col-md-10 text-center mt-5">
-                <h3 class="title-table mb-4 mx-auto">CÔNG TY CỔ PHẦN CÔNG NGHỆ SỐ DIGINEXT</h3>
+                <h3 class="title-table mb-4 mx-auto">CÔNG TY CỔ PHẦN TẬP ĐOÀN DIGINEXT</h3>
             </div>
         </div>
 

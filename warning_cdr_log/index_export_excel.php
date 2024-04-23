@@ -18,7 +18,7 @@ ORDER BY `CDRLog`.`TimeBegin` DESC";
 
 // Define Excel header
 $header = [
-    'ID', 'Server', 'TimeUpdate', 'TimeBegin', 'TimeEnd', 'Count', 'Condition'
+    'ID', 'Server', 'Time Update', 'Time Begin', 'Time End', 'Count', 'Condition'
 ];
 
 // Define $dbName, $botToken, $chatId, $recipients
@@ -33,7 +33,7 @@ date_default_timezone_set("Asia/Ho_Chi_Minh");
 $today = date('Y_m_d');
 $currentTime = date('H:i d-m-Y');
 $attachment = "/var/www/html/send_email/files_export/Report_Warning_CDRLog_$today.xlsx";
-$subject = "Report Warning CDRLog DIGINEXT ($currentTime)";
+$subject = "[DIGINEXT] - Report Warning CDRLog ($currentTime)";
 
 // Call the function to send a message via Telegram
 sendTelegramMessageWithSql($query_report_warning_cdr_log, $dbName, $header, $attachment, $subject, $botToken, $chatId);

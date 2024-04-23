@@ -33,7 +33,7 @@ function fetchDataFromDB($start_at, $end_at)
 
         $query = "SELECT DATE(time) AS Date, COUNT(*) AS TotalCall, SUM(duration) AS TotalDuration 
             FROM $table_name
-            WHERE callee_gw LIKE 'RT_DIGISIP_VINAPHONE' AND duration > 0 
+            WHERE callee_gw LIKE 'RT_DIGISIP_VINAPHONE%' AND duration > 0 
             AND DATE(time) = ?
             GROUP BY DATE(time)";
 

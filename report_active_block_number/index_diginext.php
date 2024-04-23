@@ -36,10 +36,10 @@ $report_period_end = date('Y-m-d', strtotime('previous Sunday', strtotime('now')
 $report_period = "$report_period_start/$report_period_end";
 
 $attachment_active = "/var/www/html/send_email/files_export/Report_active_number_Viettel.xlsx";
-$subject_active = "Report Active Number Viettel DIGINEXT ($report_period)";
+$subject_active = "[DIGINEXT] - BÁO CÁO SỐ MỞ Viettel ($report_period)";
 
 $attachment_block = "/var/www/html/send_email/files_export/Report_block_number_Viettel.xlsx";
-$subject_block = "Report Block Number Viettel DIGINEXT ($report_period)";
+$subject_block = "[DIGINEXT] - BÁO CÁO SỐ KHÓA Viettel ($report_period)";
 
 // Call the function to send a message via Telegram
 sendTelegramMessageWithSql($query_report_active_number, $dbName, $header, $attachment_active, $subject_active, $botToken, $chatId);

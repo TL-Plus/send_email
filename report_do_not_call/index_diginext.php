@@ -34,21 +34,20 @@ $header = [
 $dbName = $_ENV['DB_DATABASE_BLACKLIST'];
 $botToken = $_ENV['TELEGRAM_BOT_TOKEN_RETURN_OTP'];
 $chatId = $_ENV['TELEGRAM_CHAT_ID_RETURN_OTP'];
-$recipients = $_ENV['RECIPIENTS'];
 
 date_default_timezone_set("Asia/Ho_Chi_Minh");
 
 // yesterday
 $yesterday = date('Y_m_d', strtotime('-1 days'));
 $attachment = "/var/www/html/send_email/files_export/Report_DNC_$yesterday.xlsx";
-$subject = "Report DNC DIGINEXT ($yesterday)";
+$subject = "[DIGINEXT] - Report DNC ($yesterday)";
 
 // Call the function to send a message via Telegram
 sendTelegramMessageWithSql($query_report_do_not_call_blacklist, $dbName, $header, $attachment, $subject, $botToken, $chatId);
 
 if (!file_exists($attachment)) {
   $day = date('d-m-Y', strtotime('-1 days'));
-  $error_message = "Yesterday $day No Report DNC DIGINEXT.";
+  $error_message = "[DIGINEXT] - Yesterday $day No Report DNC.";
   sendTelegramMessage($error_message, $botToken, $chatId);
 }
 

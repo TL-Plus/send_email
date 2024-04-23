@@ -6,7 +6,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 
-function sendEmailNotification($attachmentPath, $subject, $body, $recipients)
+function sendEmailNotification($attachmentPath, $subject, $body, $recipients, $cc_recipients)
 {
     $mail = new PHPMailer();
 
@@ -26,7 +26,7 @@ function sendEmailNotification($attachmentPath, $subject, $body, $recipients)
         $mail->setFrom($sender_email);
 
         $mail->From = $sender_email;
-        $mail->FromName = 'CÔNG TY CỔ PHẦN CÔNG NGHỆ SỐ DIGINEXT';
+        $mail->FromName = 'CÔNG TY CỔ PHẦN TẬP ĐOÀN DIGINEXT';
 
         // Add each recipient to the email
         $recipients = explode(',', $recipients);
@@ -34,7 +34,7 @@ function sendEmailNotification($attachmentPath, $subject, $body, $recipients)
             $mail->addAddress(trim($recipient));
         }
 
-        $cc_recipients = explode(',', $_ENV['CC_RECIPIENTS']);
+        $cc_recipients = explode(',', $cc_recipients);
         foreach ($cc_recipients as $cc_recipient) {
             $mail->AddCC(trim($cc_recipient));
         }
@@ -78,7 +78,7 @@ function sendEmailNotificationHolidaySchedule($subject, $body, $recipients, $ima
         $mail->setFrom($sender_email);
 
         $mail->From = $sender_email;
-        $mail->FromName = 'CÔNG TY CỔ PHẦN CÔNG NGHỆ SỐ DIGINEXT';
+        $mail->FromName = 'CÔNG TY CỔ PHẦN TẬP ĐOÀN DIGINEXT';
 
         // Add each recipient to the email
         $recipients = explode(',', $recipients);

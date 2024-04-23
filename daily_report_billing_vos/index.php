@@ -73,7 +73,7 @@ $service->spreadsheets_values->append($spreadsheetId, $range, $requestBody, ['va
 // cdrdsip
 $query_cdrdsip = "SELECT DATE(time) AS Time, COUNT(*) AS TotalCallCDRDSIP, SUM(duration) AS TotalDurationCDRDSIP 
             FROM $table_name_cdrdsip
-            WHERE callee_gw LIKE 'RT_DIGISIP_VINAPHONE' AND duration > 0 
+            WHERE callee_gw LIKE 'RT_DIGISIP_VINAPHONE%' AND duration > 0 
             AND DATE(time) = '$yesterday'
             GROUP BY DATE(time)";
 
@@ -109,7 +109,7 @@ $service->spreadsheets_values->append($spreadsheetId, $range, $requestBody, ['va
 // send telegram
 $textMessage = "Dữ liệu Báo Cáo Billing-VOS DIGINEXT đã được cập nhật xong vào lúc: $currentTime!" . PHP_EOL
     . "Bạn hãy vào link: https://docs.google.com/spreadsheets/d/1hZ5df7fQpKRnYOrK7OMpwmiv0sWD4dYRbcazk3I_ZJQ/edit#gid=559014398 để xem và cập nhật thêm dữ liệu!" . PHP_EOL
-    . "link chính: https://docs.google.com/spreadsheets/d/1Z3O7Hy_uxpPXjjikFoJwsgqisYwXasD6mLd4g3AiIFM/edit#gid=1198928396";
+    . "link cũ: https://docs.google.com/spreadsheets/d/1Z3O7Hy_uxpPXjjikFoJwsgqisYwXasD6mLd4g3AiIFM/edit#gid=1198928396";
 
 sendTelegramMessage(
     $textMessage,

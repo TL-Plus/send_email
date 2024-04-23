@@ -7,14 +7,16 @@ require '/var/www/html/send_email/warning_with_day_and_status_contract_details/i
 
 // Define Excel header
 $header = [
-    'CustomerName', 'CustomerPhone', 'CustomerEmail', 'CustomerCode', 'ContractCode', 'Number',
-    'DateStarted', 'DateEnded', 'StatusISDN', 'SalerCode', 'SalerName', 'SalerPhone', 'SalerEmail'
+    'Customer Name', 'Customer Phone', 'Customer Email', 'Customer Code', 'Contract Code', 'Number',
+    'Date Started', 'Date Ended', 'Status ISDN', 'Saler Code', 'Saler Name', 'Saler Phone', 'Saler Email'
 ];
 
 // Define $dbName, $recipients
 $dbName = $_ENV['DB_DATABASE_DIGITEL'];
-$recipients = $_ENV['RECIPIENTS'];
+$recipients = $_ENV['RECIPIENTS_TEST'];
+$cc_recipients = $_ENV['CC_RECIPIENTS_TEST'];
 
+$FormValues = [];
 
 // SQL query first (for 17-day warning)
 $query_dvgtgt_17_day = "SELECT DISTINCT 
@@ -44,10 +46,28 @@ AND ContractDetailsDVGTGT.StatusISDN='3'
 AND ContractDetailsDVGTGT.ContractCode='00069/2023/1900/DIGITEL'";
 
 // Call function to send email notification for 17-day warning
-sendEmailForDay($query_dvgtgt_17_day, $dbName, $header, 'Report_contracts_warning_dvgtgt_17_days.xlsx', 'Report Contracts Warning DVGTGT (17 Days)',  $recipients);
+sendEmailForDay(
+    $query_dvgtgt_17_day,
+    $dbName,
+    $header,
+    'Report_contracts_warning_dvgtgt_17_days.xlsx',
+    'Report Contracts Warning DVGTGT (17 Days)',
+    bodyWarningLiabilities($FormValues),
+    $recipients,
+    $cc_recipients
+);
 
 // Call function to send email notification for termination on the 19th day
-sendEmailForDay($query_dvgtgt_19_day, $dbName, $header, 'Report_on_contracts_termination_dvgtgt_19_days.xlsx', 'Report on Contracts Termination DVGTGT (19 Days)',  $recipients);
+sendEmailForDay(
+    $query_dvgtgt_19_day,
+    $dbName,
+    $header,
+    'Report_on_contracts_termination_dvgtgt_19_days.xlsx',
+    'Report on Contracts Termination DVGTGT (19 Days)',
+    bodyWarningLiabilities($FormValues),
+    $recipients,
+    $cc_recipients
+);
 
 // Get a list of numbers that meet the requirements from the initial query (17-day warning)
 $query_888_fixed_17_day_part1 = "SELECT DISTINCT 
@@ -96,7 +116,9 @@ sendEmailForDayFixed(
     $header,
     '/var/www/html/send_email/files_export/Report_contracts_warning_888_fixed_17_days.xlsx',
     'Report Contracts Warning 888 Fixed (17-Days)',
-    $recipients
+    bodyWarning($FormValues),
+    $recipients,
+    $cc_recipients
 );
 
 // Call function to send email notification for 19-day warning
@@ -107,5 +129,7 @@ sendEmailForDayFixed(
     $header,
     '/var/www/html/send_email/files_export/Report_on_contracts_termination_888_fixed_19_days.xlsx',
     'Report on Contracts Termination 888 Fixed (19 Days)',
-    $recipients
+    bodyWarning($FormValues),
+    $recipients,
+    $cc_recipients
 );
