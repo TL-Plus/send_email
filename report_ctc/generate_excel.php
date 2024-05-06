@@ -27,7 +27,7 @@ NULL AS TotalCurrentCall,
 (
     SELECT COUNT(ext_number) 
     FROM Billing_Diginext.report_number_active rna
-    WHERE rna.customer_name = dcn202404.customer_name
+    WHERE rna.customer_name = $table_name.customer_name
       AND DATE(rna.time_update) = CURDATE()
 ) AS ActiveViettel
 FROM

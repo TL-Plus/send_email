@@ -85,6 +85,10 @@ function convertExcelToPDF($excelFilePath, $pdfFileName, $userName, $ccuValues, 
                         $pdf->Cell($cellWidth + 5, 10, $headerValue, 1, 0, 'C', true);
                         break;
 
+                    case 'Số Mở VTL':
+                        $pdf->Cell($cellWidth - 5, 10, $headerValue, 1, 0, 'C', true);
+                        break;
+
                     default:
                         // Decrease width for other columns
                         $pdf->Cell($cellWidth, 10, $headerValue, 1, 0, 'C', true);
@@ -117,7 +121,13 @@ function convertExcelToPDF($excelFilePath, $pdfFileName, $userName, $ccuValues, 
 
                     switch ($data[0][$key]) {
                         case 'CustomerName':
-                            $pdf->Cell($cellWidth + 30, 10, $cellInfo['value'], 1, 0, '', getRowColor($rowCounter - 1));
+                            $value = $cellInfo['value'];
+                            $valueLength = strlen($value);
+                            if ($valueLength > 30) {
+                                $pdf->MultiCell($cellWidth + 30, 10, $value, 1, '', 1, 0, '', '', true);
+                            } else {
+                                $pdf->Cell($cellWidth + 30, 10, $value, 1, 0, '', getRowColor($rowCounter - 1));
+                            }
                             break;
 
                         case 'SalerName':
@@ -138,7 +148,7 @@ function convertExcelToPDF($excelFilePath, $pdfFileName, $userName, $ccuValues, 
                         case 'ActiveViettel':
                             $totalActiveViettel += $row[$key];
                             $cellValue = ($cell === null) ? 0 : $cellInfo['value'];
-                            $pdf->Cell($cellWidth, 10, $cellValue, 1, 0, $cellInfo['align'], getRowColor($rowCounter - 1));
+                            $pdf->Cell($cellWidth - 5, 10, $cellValue, 1, 0, $cellInfo['align'], getRowColor($rowCounter - 1));
                             break;
 
                         case 'TotalCurrentCall':
@@ -167,7 +177,7 @@ function convertExcelToPDF($excelFilePath, $pdfFileName, $userName, $ccuValues, 
             $pdf->Cell($cellWidth + 5, 10, number_format($totalCost, 0, '.', ','), 1, 0, 'C', true);
             $pdf->Cell($cellWidth - 15, 10, $totalCCU, 1, 0, 'C', true);
             $pdf->Cell($cellWidth, 10, $totalBlockViettel, 1, 0, 'C', true);
-            $pdf->Cell($cellWidth, 10, number_format($totalActiveViettel, 0, '.', ','), 1, 0, 'C', true);
+            $pdf->Cell($cellWidth - 5, 10, number_format($totalActiveViettel, 0, '.', ','), 1, 0, 'C', true);
             $pdf->SetTextColor(0, 0, 0); // Reset text color to black (optional, if you want to revert to black for subsequent cells)
             $pdf->Ln();
 
@@ -178,7 +188,7 @@ function convertExcelToPDF($excelFilePath, $pdfFileName, $userName, $ccuValues, 
             $pdf->Cell($cellWidth + 5, 10, '', 1, 0, 'C', true);
             $pdf->Cell($cellWidth - 15, 10, number_format($ccuTotals - $totalCCU, 0, '.', ','), 1, 0, 'C', true);
             $pdf->Cell($cellWidth, 10, '', 1, 0, 'C', true);
-            $pdf->Cell($cellWidth, 10, '', 1, 0, 'C', true);
+            $pdf->Cell($cellWidth - 5, 10, '', 1, 0, 'C', true);
             $pdf->SetTextColor(0, 0, 0); // Reset text color to black (optional, if you want to revert to black for subsequent cells)
             $pdf->Ln();
 
@@ -189,7 +199,7 @@ function convertExcelToPDF($excelFilePath, $pdfFileName, $userName, $ccuValues, 
             $pdf->Cell($cellWidth + 5, 10, '', 1, 0, 'C', true);
             $pdf->Cell($cellWidth - 15, 10, number_format($ccuTotals, 0, '.', ','), 1, 0, 'C', true);
             $pdf->Cell($cellWidth, 10, '', 1, 0, 'C', true);
-            $pdf->Cell($cellWidth, 10, '', 1, 0, 'C', true);
+            $pdf->Cell($cellWidth - 5, 10, '', 1, 0, 'C', true);
             $pdf->SetTextColor(0, 0, 0); // Reset text color to black (optional, if you want to revert to black for subsequent cells)
             $pdf->Ln();
         }

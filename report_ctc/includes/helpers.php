@@ -21,6 +21,7 @@ function modifyValue($column, $value)
     $unwantedWords = [
         'DỊCH VỤ VÀ GIẢI PHÁP XỬ LÝ DỮ LIỆU ',
         'THƯƠNG MẠI VÀ DỊCH VỤ VIỄN THÔNG ',
+        'XUẤT NHẬP KHẨU MÁY MÓC THIẾT BỊ ',
         'SẢN XUẤT - THƯƠNG MẠI - DỊCH VỤ ',
         'GIÁO DỤC TƯ DUY VÀ SÁNG TẠO ',
         'TƯ VẤN DỊCH VỤ VÀ GIẢI PHÁP ',
@@ -65,6 +66,7 @@ function modifyValue($column, $value)
         'DỊCH VỤ ',
         'MỸ PHẨM ',
         'TẠP HÓA ',
+        'VẬN TẢI ',
         'TƯ VẤN ',
         'ĐẦU TƯ ',
         'TM&DV ',
@@ -72,9 +74,11 @@ function modifyValue($column, $value)
         'LUẬT ',
         'MTV ',
         'TM ',
+        'DV ',
         'TB ',
         'DT ',
         'CP ',
+        'VÀ ',
         ' - ',
         '- ',
     ];
@@ -107,7 +111,7 @@ function translateHeader($text)
         'TotalCost' => 'Số Tiền',
         'TotalCurrentCall' => 'CCU',
         'BlockViettel' => 'Số Khóa VTL',
-        'ActiveViettel' => 'Số Khóa MBF',
+        'ActiveViettel' => 'Số Mở VTL',
     ];
 
     return $vietnameseMapping[$text] ?? $text;

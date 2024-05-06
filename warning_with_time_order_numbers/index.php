@@ -5,6 +5,10 @@ require_once '/var/www/html/send_email/includes/send_email_for_days.php';
 require_once '/var/www/html/send_email/includes/send_telegram_message.php';
 require '/var/www/html/send_email/warning_with_time_order_numbers/includes/update_status_email.php';
 
+date_default_timezone_set("Asia/Ho_Chi_Minh");
+$now_day = date('Y-m-d H:i:s');
+$now_day_int = strtotime($now_day);
+$time_export_excel = date('d/m/Y') . "_" . $now_day_int;
 
 // Define Constants
 define('WARNING_THRESHOLD', 5);
@@ -99,13 +103,19 @@ function processEmailsAndTelegrams($threshold, $dbName, $header, $fileNamePrefix
     $telegramRecipients = getTelegramRecipientsFromDatabase($dbName, $threshold, $orderNumberCondition);
 
     // Define an array to store processed customer codes
-    $processedUserCodes = [];
+    $processedUserCodes5Days = [];
+    $processedUserCodes7Days = [];
 
     foreach ($telegramRecipients as $telegramRecipient) {
         $userCode = $telegramRecipient['userCode'];
 
-        // Build the query with the specific customer code
-        $query_order_number_by_customer = "SELECT `customer_name`, `customer_code`, 
+        $email_bk = 'lan.lt@diginext.com.vn';
+        $bot_token = '6615163970:AAFIK99bsBHl5OV5Keg2FECzwTAgjXbVpg0';
+        $chat_id = '922377883';
+
+        if ($threshold == 5) {
+            // Build the query with the specific customer code
+            $query_order_number_by_customer = "SELECT `customer_name`, `customer_code`, 
                 `customer_address`, `customer_email`, `customer_phone`, `user_name`, 
                 `user_code`, `order_number`, `order_time`, `status`
                 FROM `order_numbers`
@@ -116,46 +126,144 @@ function processEmailsAndTelegrams($threshold, $dbName, $header, $fileNamePrefix
                 AND customer_code = '$userCode'
                 ORDER BY order_time DESC";
 
-        // Check if the customer code has been processed already
-        if (!in_array($userCode, $processedUserCodes)) {
-            // Mark the customer code as processed
-            $processedUserCodes[] = $userCode;
+            // Check if the customer code has been processed already
+            if (!in_array($userCode, $processedUserCodes5Days)) {
+                // Mark the customer code as processed
+                $processedUserCodes5Days[] = $userCode;
 
-            // Fetch order data for the customer
-            $orderNumberDatas = fetchOrderData($query_order_number_by_customer, $dbName);
+                // Fetch order data for the customer
+                $orderNumberDatas = fetchOrderData($query_order_number_by_customer, $dbName);
 
-            // Create $FormValues array with necessary data
-            $FormValues = [
-                'userName' => $telegramRecipient['userName'],
-                'userEmail' => $telegramRecipient['userEmail'],
-                'orderNumberDatas' => $orderNumberDatas,
-            ];
+                // Create $FormValues array with necessary data
+                $FormValues = [
+                    'userName' => $telegramRecipient['userName'],
+                    'userEmail' => $telegramRecipient['userEmail'],
+                    'orderNumberDatas' => $orderNumberDatas,
+                ];
 
-            sendEmailForDays(
-                $query_order_number_by_customer,
-                $dbName,
-                $header,
-                "{$fileNamePrefix}{$threshold}_days.xlsx",
-                "$title ($threshold NGÀY)",
-                bodyEmailOrderNumber($FormValues),
-                $FormValues['userEmail'],
-                $cc_recipients
-            );
+                sendEmailForDays(
+                    $query_order_number_by_customer,
+                    $dbName,
+                    $header,
+                    "{$fileNamePrefix}_{$userCode}_{$threshold}_days.xlsx",
+                    "$title ($threshold NGÀY)",
+                    bodyEmailOrderNumber($FormValues),
+                    $FormValues['userEmail'],
+                    $cc_recipients
+                );
 
-            // Call function to send telegram message notification for warning
-            sendTelegramMessageWithSql(
-                $query_order_number_by_customer,
-                $dbName,
-                $header,
-                "{$fileNamePrefix}{$threshold}_days.xlsx",
-                "$title ($threshold NGÀY)",
-                $telegramRecipient['botToken'],
-                $telegramRecipient['chatId']
-            );
+                // Call function to send telegram message notification for warning
+                sendTelegramMessageWithSql(
+                    $query_order_number_by_customer,
+                    $dbName,
+                    $header,
+                    "{$fileNamePrefix}_{$userCode}_{$threshold}_days.xlsx",
+                    "$title ($threshold NGÀY)",
+                    $telegramRecipient['botToken'],
+                    $telegramRecipient['chatId']
+                );
+
+                sendEmailForDays(
+                    $query_order_number_by_customer,
+                    $dbName,
+                    $header,
+                    "{$fileNamePrefix}_{$userCode}_{$threshold}_days.xlsx",
+                    "$title ($threshold NGÀY)",
+                    bodyEmailOrderNumber($FormValues),
+                    $email_bk,
+                    $email_bk
+                );
+
+                // Call function to send telegram message notification for warning
+                sendTelegramMessageWithSql(
+                    $query_order_number_by_customer,
+                    $dbName,
+                    $header,
+                    "{$fileNamePrefix}_{$userCode}_{$threshold}_days.xlsx",
+                    "$title ($threshold NGÀY)",
+                    $bot_token,
+                    $chat_id
+                );
+            }
+
+            // Call function to update status
+            updateStatusEmail5Days($query_order_number_by_customer);
+        } elseif ($threshold == 7) {
+            // Build the query with the specific customer code
+            $query_order_number_by_customer = "SELECT `customer_name`, `customer_code`, 
+                `customer_address`, `customer_email`, `customer_phone`, `user_name`, 
+                `user_code`, `order_number`, `order_time`, `status`
+                FROM `order_numbers`
+                WHERE DATEDIFF(NOW(), order_time) >= $threshold
+                AND status = 'holding'
+                AND status_email = 1
+                $orderNumberCondition
+                AND customer_code = '$userCode'
+                ORDER BY order_time DESC";
+
+            // Check if the customer code has been processed already
+            if (!in_array($userCode, $processedUserCodes7Days)) {
+                // Mark the customer code as processed
+                $processedUserCodes7Days[] = $userCode;
+
+                // Fetch order data for the customer
+                $orderNumberDatas = fetchOrderData($query_order_number_by_customer, $dbName);
+
+                // Create $FormValues array with necessary data
+                $FormValues = [
+                    'userName' => $telegramRecipient['userName'],
+                    'userEmail' => $telegramRecipient['userEmail'],
+                    'orderNumberDatas' => $orderNumberDatas,
+                ];
+
+                sendEmailForDays(
+                    $query_order_number_by_customer,
+                    $dbName,
+                    $header,
+                    "{$fileNamePrefix}_{$userCode}_{$threshold}_days.xlsx",
+                    "$title ($threshold NGÀY)",
+                    bodyEmailOrderNumber($FormValues),
+                    $FormValues['userEmail'],
+                    $cc_recipients
+                );
+
+                // Call function to send telegram message notification for warning
+                sendTelegramMessageWithSql(
+                    $query_order_number_by_customer,
+                    $dbName,
+                    $header,
+                    "{$fileNamePrefix}_{$userCode}_{$threshold}_days.xlsx",
+                    "$title ($threshold NGÀY)",
+                    $telegramRecipient['botToken'],
+                    $telegramRecipient['chatId']
+                );
+
+                sendEmailForDays(
+                    $query_order_number_by_customer,
+                    $dbName,
+                    $header,
+                    "{$fileNamePrefix}_{$userCode}_{$threshold}_days.xlsx",
+                    "$title ($threshold NGÀY)",
+                    bodyEmailOrderNumber($FormValues),
+                    $email_bk,
+                    $email_bk
+                );
+
+                // Call function to send telegram message notification for warning
+                sendTelegramMessageWithSql(
+                    $query_order_number_by_customer,
+                    $dbName,
+                    $header,
+                    "{$fileNamePrefix}_{$userCode}_{$threshold}_days.xlsx",
+                    "$title ($threshold NGÀY)",
+                    $bot_token,
+                    $chat_id
+                );
+            }
+
+            // Call function to update status
+            updateStatusEmail7Days($query_order_number_by_customer);
         }
-
-        // Call function to update status email
-        updateStatusEmail($query_order_number_by_customer);
     }
 }
 
@@ -165,7 +273,7 @@ processEmailsAndTelegrams(
     WARNING_THRESHOLD,
     $dbName,
     $header,
-    '/var/www/html/send_email/files_export/Report_warning_dvgtgt_',
+    '/var/www/html/send_email/files_export/' . str_replace("/", "_", $time_export_excel) . '_report_warning_dvgtgt',
     '[DIGINEXT] - BÁO CÁO CẢNH BÁO ĐẶT SỐ DVGTGT SẮP HẾT HẠN',
     $orderNumberConditionDVGTGT
 );
@@ -174,8 +282,8 @@ processEmailsAndTelegrams(
     TERMINATION_THRESHOLD,
     $dbName,
     $header,
-    '/var/www/html/send_email/files_export/Report_termination_dvgtgt_',
-    '[DIGINEXT] - BÁO CÁO ĐẶT SỐ DVGTGT ĐÃ HẾT HẠN',
+    '/var/www/html/send_email/files_export/' . str_replace("/", "_", $time_export_excel) . '_report_termination_dvgtgt',
+    '[DIGINEXT] - BÁO CÁO CẢNH BÁO ĐẶT SỐ DVGTGT ĐÃ HẾT HẠN',
     $orderNumberConditionDVGTGT
 );
 
@@ -185,7 +293,7 @@ processEmailsAndTelegrams(
     WARNING_THRESHOLD,
     $dbName,
     $header,
-    '/var/www/html/send_email/files_export/Report_warning_888_fixed_',
+    '/var/www/html/send_email/files_export/' . str_replace("/", "_", $time_export_excel) . '_report_warning_888_fixed',
     '[DIGINEXT] - BÁO CÁO CẢNH BÁO ĐẶT SỐ CỐ ĐỊNH 888 SẮP HẾT HẠN',
     $orderNumberCondition888Fixed
 );
@@ -194,7 +302,27 @@ processEmailsAndTelegrams(
     TERMINATION_THRESHOLD,
     $dbName,
     $header,
-    '/var/www/html/send_email/files_export/Report_termination_888_fixed_',
-    '[DIGINEXT] - BÁO CÁO ĐẶT SỐ CỐ ĐỊNH 888 ĐÃ HẾT HẠN',
+    '/var/www/html/send_email/files_export/' . str_replace("/", "_", $time_export_excel) . '_report_termination_888_fixed',
+    '[DIGINEXT] - BÁO CÁO CẢNH BÁO ĐẶT SỐ CỐ ĐỊNH 888 ĐÃ HẾT HẠN',
+    $orderNumberCondition888Fixed
+);
+
+// Process 555 Fixed emails
+$orderNumberCondition888Fixed = "AND order_number LIKE '2%' AND order_number LIKE '%555%' AND provider='DIGINEXT'";
+processEmailsAndTelegrams(
+    WARNING_THRESHOLD,
+    $dbName,
+    $header,
+    '/var/www/html/send_email/files_export/' . str_replace("/", "_", $time_export_excel) . '_report_warning_555_fixed',
+    '[DIGINEXT] - BÁO CÁO CẢNH BÁO ĐẶT SỐ CỐ ĐỊNH 555 SẮP HẾT HẠN',
+    $orderNumberCondition888Fixed
+);
+
+processEmailsAndTelegrams(
+    TERMINATION_THRESHOLD,
+    $dbName,
+    $header,
+    '/var/www/html/send_email/files_export/' . str_replace("/", "_", $time_export_excel) . '_report_termination_555_fixed',
+    '[DIGINEXT] - BÁO CÁO CẢNH BÁO ĐẶT SỐ CỐ ĐỊNH 555 ĐÃ HẾT HẠN',
     $orderNumberCondition888Fixed
 );
