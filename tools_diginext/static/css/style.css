@@ -78,9 +78,9 @@ input {
     margin-bottom: 10px;
 }
 
-@media (min-width: 500px) {
+@media (min-width: 470px) {
     .login-container {
-        width: 500px;
+        width: 470px;
     }
 }
 
