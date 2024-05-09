@@ -175,8 +175,8 @@ function convertExcelToPDF($excelFilePath, $pdfFileName, $userName, $ccuValues, 
             $pdf->Cell($cellWidth * (count($data[0]) - 4) + 30, 10, 'TỔNG KHÁCH HÀNG LỚN', 1, 0, 'C', true); // STT column
             $pdf->SetTextColor(255, 0, 0); // Set text color to red
             $pdf->Cell($cellWidth + 5, 10, number_format($totalCost, 0, '.', ','), 1, 0, 'C', true);
-            $pdf->Cell($cellWidth - 15, 10, $totalCCU, 1, 0, 'C', true);
-            $pdf->Cell($cellWidth, 10, $totalBlockViettel, 1, 0, 'C', true);
+            $pdf->Cell($cellWidth - 15, 10, number_format($totalCCU, 0, '.', ','), 1, 0, 'C', true);
+            $pdf->Cell($cellWidth, 10, number_format($totalBlockViettel, 0, '.', ','), 1, 0, 'C', true);
             $pdf->Cell($cellWidth - 5, 10, number_format($totalActiveViettel, 0, '.', ','), 1, 0, 'C', true);
             $pdf->SetTextColor(0, 0, 0); // Reset text color to black (optional, if you want to revert to black for subsequent cells)
             $pdf->Ln();

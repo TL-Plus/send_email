@@ -14,7 +14,7 @@ function sendEmailForDay($sql, $dbName, $header, $attachment, $subject, $bodyCon
             sendEmailNotification($attachment, $subject, $bodyContent, $recipients, $cc_recipients);
         }
     } catch (Exception $e) {
-        echo 'Error: ' . $e->getMessage();
+        echo 'Error send mail: ' . $e->getMessage();
     }
 }
 
@@ -29,7 +29,22 @@ function sendEmailForDays($sql, $dbName, $header, $attachment, $subject, $bodyCo
             sendEmailNotification($attachment, $subject, $bodyContent, $recipients, $cc_recipients);
         }
     } catch (Exception $e) {
-        echo 'Error: ' . $e->getMessage();
+        echo 'Error send mail: ' . $e->getMessage();
+    }
+}
+
+// Function to send email notification
+function sendEmailForDaysTest($sql, $dbName, $header, $attachment, $subject, $bodyContent, $recipients, $cc_recipients)
+{
+    try {
+        $exportSuccessful = exportToExcel($sql, $dbName, $header, $attachment);
+
+        // Check if export was successful before sending email
+        if ($exportSuccessful) {
+            sendEmailNotificationTest($attachment, $subject, $bodyContent, $recipients, $cc_recipients);
+        }
+    } catch (Exception $e) {
+        echo 'Error send mail: ' . $e->getMessage();
     }
 }
 
@@ -93,7 +108,7 @@ function bodyEmailOrderNumber($FormValues)
             </tr>
             <tr>
                 <td style="text-align:left;font-family:Times New Roman,arial,helvetica;" colspan="3">
-                    DIGINEXT thông báo về việc đặt số <font color="red"> sắp hết hạn</font>.
+                    DIGINEXT thông báo về việc đặt số <font color="red"> ' . $FormValues['note'] . ' hết hạn</font>.
                 </td>
             </tr>
         </table>

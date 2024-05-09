@@ -7,53 +7,53 @@ use TelegramBot\Api\BotApi;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 // Send telegram message with SQL and file
-function sendTelegramMessageWithSql($sql, $dbName, $header, $filename, $textMessage, $botToken, $chatId)
+function sendTelegramMessageWithSql($sql, $dbName, $header, $attachment, $textMessage, $botToken, $chatId)
 {
     try {
-        $exportSuccessful = exportToExcel($sql, $dbName, $header, $filename);
+        $exportSuccessful = exportToExcel($sql, $dbName, $header, $attachment);
 
         // Check if export was successful before sending telegram message
         if ($exportSuccessful) {
             // Read content from the Excel file
-            $spreadsheet = IOFactory::load($filename);
+            $spreadsheet = IOFactory::load($attachment);
             $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
 
             // Initialize the Telegram API object with your bot token
             $telegram = new BotApi($botToken);
 
             // Prepare the document for sending
-            $document = new \CURLFile($filename);
+            $document = new \CURLFile($attachment);
 
             // Send the text message along with the document
             $telegram->sendDocument($chatId, $document, $textMessage);
 
-            echo "Telegram message successfully sent file $filename \n";
+            echo "Telegram message successfully sent file $attachment \n";
         }
     } catch (Exception $e) {
-        echo 'Error: ' . $e->getMessage();
+        echo 'Error send telegram: ' . $e->getMessage();
     }
 }
 
 // Send telegram message with file excel
-function sendTelegramMessages($filename, $textMessage, $botToken, $chatId)
+function sendTelegramMessages($attachment, $textMessage, $botToken, $chatId)
 {
     try {
         // Read content from the Excel file
-        $spreadsheet = IOFactory::load($filename);
+        $spreadsheet = IOFactory::load($attachment);
         $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
 
         // Initialize the Telegram API object with your bot token
         $telegram = new BotApi($botToken);
 
         // Prepare the document for sending
-        $document = new \CURLFile($filename);
+        $document = new \CURLFile($attachment);
 
         // Send the text message along with the document
         $telegram->sendDocument($chatId, $document, $textMessage);
 
-        return "Telegram message successfully sent file $filename \n";
+        return "Telegram message successfully sent file $attachment \n";
     } catch (Exception $e) {
-        return 'Error: ' . $e->getMessage();
+        return 'Error send telegram: ' . $e->getMessage();
     }
 }
 
@@ -77,7 +77,7 @@ function sendTelegramMessagesWithSqlAndFileExcel($sql, $dbName, $header, $excelF
             echo "Telegram message successfully sent file $excelFilePath \n";
         }
     } catch (Exception $e) {
-        echo 'Error: ' . $e->getMessage();
+        echo 'Error send telegram: ' . $e->getMessage();
     }
 }
 
@@ -96,7 +96,7 @@ function sendTelegramMessagesWithFilePDF($pdfFilePath, $textMessage, $botToken, 
 
         echo "Telegram message successfully sent with file $pdfFilePath\n";
     } catch (Exception $e) {
-        echo 'Error: ' . $e->getMessage();
+        echo 'Error send telegram: ' . $e->getMessage();
     }
 }
 
@@ -115,7 +115,7 @@ function sendTelegramMessagesWithFileZip($zipFilePath, $textMessage, $botToken, 
 
         return "Telegram message successfully sent with file $zipFilePath\n";
     } catch (Exception $e) {
-        return 'Error: ' . $e->getMessage();
+        return 'Error send telegram: ' . $e->getMessage();
     }
 }
 
@@ -131,6 +131,6 @@ function sendTelegramMessage($textMessage, $botToken, $chatId)
 
         echo "The telegram message was sent.\n";
     } catch (Exception $e) {
-        echo 'Error: ' . $e->getMessage();
+        echo 'Error send telegram: ' . $e->getMessage();
     }
 }
