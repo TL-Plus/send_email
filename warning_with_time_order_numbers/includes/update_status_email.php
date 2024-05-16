@@ -23,6 +23,7 @@ function updateStatusEmail7Days($orderNumber, $threshold, $orderNumberCondition,
                 AND DATEDIFF(NOW(), order_time) >= $threshold 
                 AND status = 'holding'
                 AND status_email = 0 
+                AND note = ''
                 $orderNumberCondition
                 AND customer_code = '$userCode'
             ORDER BY order_time DESC";
@@ -124,6 +125,7 @@ function updateStatusEmail21Days($orderNumber, $threshold, $orderNumberCondition
                 AND DATEDIFF(NOW(), order_time) >= $threshold 
                 AND status = 'holding'
                 AND status_email = 1
+                AND note = ''
                 $orderNumberCondition
                 AND customer_code = '$userCode'
             ORDER BY order_time DESC";
@@ -141,7 +143,8 @@ function updateStatusEmail21Days($orderNumber, $threshold, $orderNumberCondition
             SET status = 'inStock',
                 log = CONCAT(log, NOW(), '__', 'admin-update-status-holding-inStock | ')
             WHERE number IN ('$orderNumber') 
-                AND status = 'holding'";
+                AND status = 'holding'
+                AND apikey = ''";
         $conn->query($updateQueryServiceNumber);
 
         // Check if any rows were affected for service_numbers table

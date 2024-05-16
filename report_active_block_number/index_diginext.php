@@ -4,23 +4,73 @@ require '/var/www/html/send_email/includes/database_connection.php';
 require '/var/www/html/send_email/includes/send_telegram_message.php';
 
 
+// // query_report_active_number
+// $query_report_active_number = "SELECT DISTINCT time_update, ext_number, contract_code, customer_name, user_name 
+// FROM report_number_active
+// WHERE time_update >= CURDATE() - INTERVAL 1 WEEK 
+// AND time_update < CURDATE()
+// ORDER BY time_update ASC;";
+
+// // query_report_block_number
+// $query_report_block_number = "SELECT DISTINCT time_update, ext_number, contract_code, customer_name, user_name 
+// FROM report_number_block
+// WHERE time_update >= CURDATE() - INTERVAL 1 WEEK 
+// AND time_update < CURDATE()
+// ORDER BY time_update ASC;";
+
+// // query_report_active_number_next
+// $query_report_active_number_next = "SELECT DISTINCT time_update, ext_number, contract_code, customer_name, user_name 
+// FROM report_number_active_next
+// WHERE time_update >= CURDATE() - INTERVAL 1 WEEK 
+// AND time_update < CURDATE()
+// ORDER BY time_update ASC;";
+
+// // query_report_block_number_next
+// $query_report_block_number_next = "SELECT DISTINCT time_update, ext_number, contract_code, customer_name, user_name 
+// FROM report_number_block_next
+// WHERE time_update >= CURDATE() - INTERVAL 1 WEEK 
+// AND time_update < CURDATE()
+// ORDER BY time_update ASC;";
+
 // query_report_active_number
-$query_report_active_number = "SELECT DISTINCT time_update, ext_number, contract_code, customer_name, user_name 
-FROM report_number_active
-WHERE time_update >= CURDATE() - INTERVAL 1 WEEK 
-AND time_update < CURDATE()
-ORDER BY time_update ASC;";
+$query_report_active_number = "SELECT DISTINCT time_update, ext_number, contract_code, customer_name, user_name, service
+FROM (
+    SELECT time_update, ext_number, contract_code, customer_name, user_name, service 
+    FROM report_number_active
+    WHERE time_update >= CURDATE() - INTERVAL 1 WEEK 
+    AND time_update < CURDATE()
+
+    UNION ALL
+
+    SELECT time_update, ext_number, contract_code, customer_name, user_name, service 
+    FROM report_number_active_next
+    WHERE time_update >= CURDATE() - INTERVAL 1 WEEK 
+    AND time_update < CURDATE()
+) AS combined_data
+ORDER BY time_update ASC;
+";
 
 // query_report_block_number
-$query_report_block_number = "SELECT DISTINCT time_update, ext_number, contract_code, customer_name, user_name 
-FROM report_number_block
-WHERE time_update >= CURDATE() - INTERVAL 1 WEEK 
-AND time_update < CURDATE()
-ORDER BY time_update ASC;";
+$query_report_block_number = "SELECT DISTINCT time_update, ext_number, contract_code, customer_name, user_name, service 
+FROM (
+    SELECT time_update, ext_number, contract_code, customer_name, user_name, service 
+    FROM report_number_block
+    WHERE time_update >= CURDATE() - INTERVAL 1 WEEK 
+    AND time_update < CURDATE()
+
+    UNION ALL
+
+    SELECT time_update, ext_number, contract_code, customer_name, user_name, service 
+    FROM report_number_block_next
+    WHERE time_update >= CURDATE() - INTERVAL 1 WEEK 
+    AND time_update < CURDATE()
+) AS combined_data
+ORDER BY time_update ASC;
+";
 
 // Define Excel header
 $header = [
-  'Time Update', 'Ext/Number', 'Contract Code', 'Customer Name', 'Saler Name'
+  'Time Update', 'Ext/Number', 'Contract Code', 'Customer Name', 'Saler Name', 'Service'
 ];
 
 // Define $dbName, $botToken, $chatId

@@ -30,8 +30,7 @@ if (!isset($_SESSION['user']) || isSessionExpired()) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DIGINEXT | TOOLS</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/tools_diginext/static/css/style.css">
     <!-- Favicon -->
@@ -63,40 +62,71 @@ if (!isset($_SESSION['user']) || isSessionExpired()) {
 
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <div class="text-center">
-                <a href="/tools_diginext/check_customer"
-                    class="btn btn-outline-primary btn-lg rounded-pill px-md-5 py-md-3 px-3 py-2 me-3 mb-4"><i
-                        class="fas fa-users me-2"></i>Kiểm tra thông tin Khách hàng</a>
-                <a href="/tools_diginext/release_number"
-                    class="btn btn-outline-primary btn-lg rounded-pill px-md-5 py-md-3 px-3 py-2 me-3 mb-4"><i
-                        class="fas fa-phone-square-alt me-2"></i>Kiểm tra và nhả số</a>
-            </div>
-
-            <div class="text-center">
-                <a href="/tools_diginext/check_totalcost"
-                    class="btn btn-outline-primary btn-lg rounded-pill px-md-5 py-md-3 px-3 py-2 me-3 mb-4"><i
-                        class="fas fa-file-contract me-2"></i>Kiểm tra tổng cước</a>
-                <a href="/tools_diginext/check_cdr_cdrdsip"
-                    class="btn btn-outline-primary btn-lg rounded-pill px-md-5 py-md-3 px-3 py-2 me-3 mb-4"><i
-                        class="fas fa-file-contract me-2"></i>Kiểm tra sản lượng CDR và CDRDSIP</a>
-            </div>
-
-            <div class="text-center">
-                <a href="/tools_diginext/check_cdr_log"
-                    class="btn btn-outline-primary btn-lg rounded-pill px-md-5 py-md-3 px-3 py-2 me-3 mb-4"><i
-                        class="fas fa-phone-square-alt me-2"></i>Kiểm tra thông tin cuộc gọi</a>
-                <a href="/tools_diginext/update_contract_details"
-                    class="btn btn-outline-primary btn-lg rounded-pill px-md-5 py-md-3 px-3 py-2 me-3 mb-4"><i
-                        class="fas fa-file-contract me-2"></i>Kiểm tra và Cập nhật chi tiết hợp đồng</a>
-            </div>
-
-            <div class="text-center mb-4">
-                <a href="/tools_diginext/export_ctc_by_contract"
-                    class="btn btn-outline-primary btn-lg rounded-pill px-md-5 py-md-3 px-3 py-2 me-3 mb-4"><i
-                        class="fas fa-file-export me-2"></i>Kiểm tra và xuất chi tiết cước theo hợp đồng</a>
-                <a href="/report_ctc"
-                    class="btn btn-outline-primary btn-lg rounded-pill px-md-5 py-md-3 px-3 py-2 me-3 mb-4"><i
-                        class="fas fa-file-alt me-2"></i>BÁO CÁO CUỘC GỌI HỆ THỐNG VOS</a>
+            <div class="row text-center">
+                <div class="col-md-4">
+                    <a href="/tools_diginext/check_customer" class="btn btn-outline-primary btn-lg px-md-5 py-md-3 px-3 py-2 me-3 mb-4">
+                        <div>
+                            <img src="/static/images/logo-diginext.png" alt="Check Customer" width="160" height="100" class="me-2">
+                        </div>
+                        <i class="fas fa-users me-2"></i>Kiểm tra thông tin Khách hàng
+                    </a>
+                </div>
+                <div class="col-md-4">
+                    <a href="/tools_diginext/release_number" class="btn btn-outline-primary btn-lg px-md-5 py-md-3 px-3 py-2 me-3 mb-4">
+                        <div>
+                            <img src="/static/images/logo-diginext.png" alt="Release Number" width="160" height="100" class="me-2">
+                        </div>
+                        <i class="fas fa-phone-square-alt me-2"></i>Kiểm tra và nhả số
+                    </a>
+                </div>
+                <div class="col-md-4">
+                    <a href="/tools_diginext/check_totalcost" class="btn btn-outline-primary btn-lg px-md-5 py-md-3 px-3 py-2 me-3 mb-4">
+                        <div>
+                            <img src="/static/images/logo-diginext.png" alt="Check Total Cost" width="160" height="100" class="me-2">
+                        </div>
+                        <i class="fas fa-file-contract me-2"></i>Kiểm tra tổng cước
+                    </a>
+                </div>
+                <div class="col-md-4">
+                    <a href="/tools_diginext/check_cdr_cdrdsip" class="btn btn-outline-primary btn-lg px-md-5 py-md-3 px-3 py-2 me-3 mb-4">
+                        <div>
+                            <img src="/static/images/logo-diginext.png" alt="Check CDR and CDRDSIP" width="160" height="100" class="me-2">
+                        </div>
+                        <i class="fas fa-file-contract me-2"></i>Kiểm tra sản lượng CDR và CDRDSIP
+                    </a>
+                </div>
+                <div class="col-md-4">
+                    <a href="/tools_diginext/check_cdr_log" class="btn btn-outline-primary btn-lg px-md-5 py-md-3 px-3 py-2 me-3 mb-4">
+                        <div>
+                            <img src="/static/images/logo-diginext.png" alt="Check CDR Log" width="160" height="100" class="me-2">
+                        </div>
+                        <i class="fas fa-phone-square-alt me-2"></i>Kiểm tra thông tin cuộc gọi
+                    </a>
+                </div>
+                <div class="col-md-4">
+                    <a href="/tools_diginext/update_contract_details" class="btn btn-outline-primary btn-lg px-md-5 py-md-3 px-3 py-2 me-3 mb-4">
+                        <div>
+                            <img src="/static/images/logo-diginext.png" alt="Update Contract Details" width="160" height="100" class="me-2">
+                        </div>
+                        <i class="fas fa-file-contract me-2"></i>Kiểm tra và Cập nhật chi tiết hợp đồng
+                    </a>
+                </div>
+                <div class="col-md-4">
+                    <a href="/tools_diginext/export_ctc_by_contract" class="btn btn-outline-primary btn-lg px-md-5 py-md-3 px-3 py-2 me-3 mb-4">
+                        <div>
+                            <img src="/static/images/logo-diginext.png" alt="Export CTC by Contract" width="160" height="100" class="me-2">
+                        </div>
+                        <i class="fas fa-file-export me-2"></i>Kiểm tra và xuất chi tiết cước theo hợp đồng
+                    </a>
+                </div>
+                <div class="col-md-4">
+                    <a href="/report_ctc" class="btn btn-outline-primary btn-lg px-md-5 py-md-3 px-3 py-2 me-3 mb-4">
+                        <div>
+                            <img src="/static/images/logo-diginext.png" alt="Report CTC" width="160" height="100" class="me-2">
+                        </div>
+                        <i class="fas fa-file-alt me-2"></i>BÁO CÁO CUỘC GỌI HỆ THỐNG VOS
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -105,9 +135,8 @@ if (!isset($_SESSION['user']) || isSessionExpired()) {
 
     <!-- Add Select2 JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
-        </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
     <script src="/static/js/report_ctc/index.js"></script>

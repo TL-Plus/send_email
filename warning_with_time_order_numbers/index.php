@@ -120,6 +120,7 @@ function processEmailsAndTelegrams($threshold, $dbName, $header, $fileNamePrefix
                 WHERE DATEDIFF(NOW(), order_time) >= $threshold
                 AND status = 'holding'
                 AND status_email = 0
+                AND note = ''
                 $orderNumberCondition
                 AND customer_code = '$userCode'
                 ORDER BY order_time DESC";
@@ -178,6 +179,7 @@ function processEmailsAndTelegrams($threshold, $dbName, $header, $fileNamePrefix
                 WHERE DATEDIFF(NOW(), order_time) >= $threshold 
                     AND status = 'holding'
                     AND status_email = 1
+                    AND note = ''
                     $orderNumberCondition
                     AND customer_code = '$userCode'
                 ORDER BY order_time DESC";

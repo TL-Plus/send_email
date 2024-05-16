@@ -49,9 +49,14 @@ function fetchDataFromDB($contract_code, $Caller, $caller_object, $call_type, $d
             AND DATE(`time`) = '$currentDate'";
 
         // Check and add conditions for caller
-        if (!empty($Caller)) {
+        if (!empty($Caller) && substr($Caller, 0, 2) !== "19" && substr($Caller, 0, 2) !== "18") {
             $resultCallers = convertNumberSequence84($Caller);
             $query .= " AND Caller IN $resultCallers";
+        }
+
+        // Check and add conditions for caller
+        if (!empty($Caller) && (substr($Caller, 0, 2) === "19" || substr($Caller, 0, 2) === "18")) {
+            $query .= " AND Caller = '$Caller'";
         }
 
         // Check and add conditions for caller_object
@@ -187,9 +192,14 @@ function handleExport()
             AND DATE(`time`) = '$currentDate'";
 
         // Check and add conditions for caller
-        if (!empty($Caller)) {
+        if (!empty($Caller) && substr($Caller, 0, 2) !== "19" && substr($Caller, 0, 2) !== "18") {
             $resultCallers = convertNumberSequence84($Caller);
             $query .= " AND Caller IN $resultCallers";
+        }
+
+        // Check and add conditions for caller
+        if (!empty($Caller) && (substr($Caller, 0, 2) === "19" || substr($Caller, 0, 2) === "18")) {
+            $query .= " AND Caller = '$Caller'";
         }
 
         // Check and add conditions for caller_object

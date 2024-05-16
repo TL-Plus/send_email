@@ -40,15 +40,24 @@ function fetchDataFromDB($Caller, $Callee, $start_at, $end_at)
             WHERE DATE(`time`) = '$currentDate'";
 
         // Check and add conditions for caller
-        if (!empty($Caller)) {
+        if (!empty($Caller) && substr($Caller, 0, 2) !== "19" && substr($Caller, 0, 2) !== "18") {
             $resultCallers = convertNumberSequence84($Caller);
             $query .= " AND Caller IN $resultCallers";
         }
 
+        // Check and add conditions for caller
+        if (!empty($Caller) && (substr($Caller, 0, 2) === "19" || substr($Caller, 0, 2) === "18")) {
+            $query .= " AND Caller = '$Caller'";
+        }
+
         // Check and add conditions for callee
-        if (!empty($Callee)) {
+        if (!empty($Callee) && substr($Callee, 0, 2) !== "19" && substr($Callee, 0, 2) !== "18") {
             $resultCallees = convertNumberSequence84($Callee);
             $query .= " AND Callee IN $resultCallees";
+        }
+
+        if (!empty($Callee) && (substr($Callee, 0, 2) === "19" || substr($Callee, 0, 2) === "18")) {
+            $query .= " AND Callee = '$Callee'";
         }
 
         $query .= " ORDER BY time ASC";
@@ -145,15 +154,24 @@ function handleExport()
             WHERE DATE(`time`) = '$currentDate'";
 
         // Check and add conditions for caller
-        if (!empty($Caller)) {
+        if (!empty($Caller) && substr($Caller, 0, 2) !== "19" && substr($Caller, 0, 2) !== "18") {
             $resultCallers = convertNumberSequence84($Caller);
             $query .= " AND Caller IN $resultCallers";
         }
 
+        // Check and add conditions for caller
+        if (!empty($Caller) && (substr($Caller, 0, 2) === "19" || substr($Caller, 0, 2) === "18")) {
+            $query .= " AND Caller = '$Caller'";
+        }
+
         // Check and add conditions for callee
-        if (!empty($Callee)) {
+        if (!empty($Callee) && substr($Callee, 0, 2) !== "19" && substr($Callee, 0, 2) !== "18") {
             $resultCallees = convertNumberSequence84($Callee);
             $query .= " AND Callee IN $resultCallees";
+        }
+
+        if (!empty($Callee) && (substr($Callee, 0, 2) === "19" || substr($Callee, 0, 2) === "18")) {
+            $query .= " AND Callee = '$Callee'";
         }
 
         $query .= " ORDER BY time ASC";
