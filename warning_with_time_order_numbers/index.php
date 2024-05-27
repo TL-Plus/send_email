@@ -36,6 +36,7 @@ function getTelegramRecipientsFromDatabase($dbName, $threshold, $orderNumberCond
                         LEFT JOIN api ON api.full_code = order_numbers.user_code
                         LEFT JOIN local_users ON local_users.user_code = order_numbers.user_code
                         WHERE order_numbers.status = 'holding'
+                        AND order_numbers.IsShow = 1
                         $orderNumberCondition
                         GROUP BY local_users.user_code";
 
@@ -53,8 +54,8 @@ function getTelegramRecipientsFromDatabase($dbName, $threshold, $orderNumberCond
     if ($result && $result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             $telegramRecipients[] = [
-                'botToken' => '6615163970:AAFIK99bsBHl5OV5Keg2FECzwTAgjXbVpg0',  //$row['BotToken'],
-                'chatId' => '-4187994533', //$row['UserId'],
+                'botToken' => '6585137930:AAEm1XLVeqtVgaZ6sZLSnXEaSVnnPeymgOk',  //$row['BotToken'],
+                'chatId' => '-4108286784', //$row['UserId'],
                 'userName' => $row['UserName'],
                 'userCode' => $row['UserCode'],
                 'userEmail' => $row['UserEmail'], //'lan.lt@diginext.com.vn',
@@ -121,6 +122,7 @@ function processEmailsAndTelegrams($threshold, $dbName, $header, $fileNamePrefix
                 AND status = 'holding'
                 AND status_email = 0
                 AND note = ''
+                AND IsShow = 1
                 $orderNumberCondition
                 AND customer_code = '$userCode'
                 ORDER BY order_time DESC";
@@ -180,6 +182,7 @@ function processEmailsAndTelegrams($threshold, $dbName, $header, $fileNamePrefix
                     AND status = 'holding'
                     AND status_email = 1
                     AND note = ''
+                    AND IsShow = 1
                     $orderNumberCondition
                     AND customer_code = '$userCode'
                 ORDER BY order_time DESC";

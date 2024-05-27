@@ -17,13 +17,14 @@ function updateStatusEmail7Days($orderNumber, $threshold, $orderNumberCondition,
 
         // Update status_email and add log entry
         $updateQueryOrderNumber = "UPDATE order_numbers
-            SET status_email = 1,
+            SET updated_at = NOW(), status_email = 1,
                 log = CONCAT(log, NOW(), '__', 'admin-update-status_email-0-1 | ')
             WHERE order_number IN ('$orderNumber') 
                 AND DATEDIFF(NOW(), order_time) >= $threshold 
                 AND status = 'holding'
                 AND status_email = 0 
                 AND note = ''
+                AND IsShow = 1
                 $orderNumberCondition
                 AND customer_code = '$userCode'
             ORDER BY order_time DESC";
@@ -59,11 +60,14 @@ function updateStatusEmail7DaysDIGITEL($orderNumber, $threshold)
             $_ENV['DB_DATABASE_DIGITEL']
         );
 
+        $next_three_digits_2 = substr($orderNumber, 2, 3);
+        $next_three_digits_3 = substr($orderNumber, 3, 3);
+
         // Determine which table to update based on orderNumber prefix
         $orderTableName = '';
         if (substr($orderNumber, 0, 4) == '1900' || substr($orderNumber, 0, 4) == '1800') {
             $orderTableName = 'OrderNumberDVGTGT';
-        } elseif (substr($orderNumber, 0, 1) == '2' || strpos($orderNumber, '888') !== false) {
+        } elseif (substr($orderNumber, 0, 1) == '2' && (strpos($next_three_digits_2, '888') !== false || strpos($next_three_digits_3, '888') !== false)) {
             $orderTableName = 'OrderNumber';
         }
 
@@ -73,7 +77,7 @@ function updateStatusEmail7DaysDIGITEL($orderNumber, $threshold)
         // Update status_email and add log entry
         if ($orderTableName !== '') {
             $updateQueryOrderNumber = "UPDATE $orderTableName
-                SET StatusEmail = 1,
+                SET UpdationTime = NOW(), StatusEmail = 1, 
                     HistoryLog = CONCAT(HistoryLog, NOW(), '__', 'Diginext-update-StatusEmail-0-1 | ')
                 WHERE OrderNumber IN ('$orderNumber') 
                     AND DATEDIFF(NOW(), OrderTime) >= $threshold 
@@ -119,13 +123,14 @@ function updateStatusEmail21Days($orderNumber, $threshold, $orderNumberCondition
 
         // Update status_email and add log entry for order_numbers table
         $updateQueryOrderNumber = "UPDATE order_numbers
-            SET status = 'expired',
+            SET updated_at = NOW(), status = 'expired',
                 log = CONCAT(log, NOW(), '__', 'admin-update-status-holding-expired | ')
             WHERE order_number IN ('$orderNumber') 
                 AND DATEDIFF(NOW(), order_time) >= $threshold 
                 AND status = 'holding'
                 AND status_email = 1
                 AND note = ''
+                AND IsShow = 1
                 $orderNumberCondition
                 AND customer_code = '$userCode'
             ORDER BY order_time DESC";
@@ -140,10 +145,11 @@ function updateStatusEmail21Days($orderNumber, $threshold, $orderNumberCondition
 
         // Update status and add log entry for service_numbers table
         $updateQueryServiceNumber = "UPDATE service_numbers
-            SET status = 'inStock',
+            SET updated_at = NOW(), status = 'inStock',
                 log = CONCAT(log, NOW(), '__', 'admin-update-status-holding-inStock | ')
             WHERE number IN ('$orderNumber') 
                 AND status = 'holding'
+                AND IsShow = 1
                 AND apikey = ''";
         $conn->query($updateQueryServiceNumber);
 
@@ -177,13 +183,16 @@ function updateStatusEmail21DaysDIGITEL($orderNumber, $threshold)
             $_ENV['DB_DATABASE_DIGITEL']
         );
 
+        $next_three_digits_2 = substr($orderNumber, 2, 3);
+        $next_three_digits_3 = substr($orderNumber, 3, 3);
+
         // Determine which table to update based on orderNumber prefix
         $orderTableName = '';
         $serviceTableName = '';
         if (substr($orderNumber, 0, 4) == '1900' || substr($orderNumber, 0, 4) == '1800') {
             $orderTableName = 'OrderNumberDVGTGT';
             $serviceTableName = 'ServiceNumbersDVGTGT';
-        } elseif (substr($orderNumber, 0, 1) == '2' || strpos($orderNumber, '888') !== false) {
+        } elseif (substr($orderNumber, 0, 1) == '2' && (strpos($next_three_digits_2, '888') !== false || strpos($next_three_digits_3, '888') !== false)) {
             $orderTableName = 'OrderNumber';
             $serviceTableName = 'ServiceNumbers';
         }
@@ -194,8 +203,7 @@ function updateStatusEmail21DaysDIGITEL($orderNumber, $threshold)
         // Update status_email and add log entry
         if ($orderTableName !== '' && $serviceTableName !== '') {
             $updateQueryOrderNumber = "UPDATE $orderTableName
-                SET 
-                    StatusNumber = 2,
+                SET UpdationTime = NOW(), StatusNumber = 2,
                     HistoryLog = CONCAT(HistoryLog, NOW(), '__', 'Diginext-update-StatusNumber-1-2 | ')
                 WHERE OrderNumber IN ('$orderNumber') 
                     AND DATEDIFF(NOW(), OrderTime) >= $threshold 
@@ -211,11 +219,11 @@ function updateStatusEmail21DaysDIGITEL($orderNumber, $threshold)
             }
 
             $updateQueryServiceNumber = "UPDATE $serviceTableName
-                SET 
-                    StatusNumber = 0,
+                SET UpdationTime = NOW(), StatusNumber = 0,
                     HistoryLog = CONCAT(HistoryLog, NOW(), '__', 'Diginext-update-StatusNumber-1-0 | ')
                 WHERE Number IN ('$orderNumber') 
-                    AND StatusNumber = 1";
+                    AND StatusNumber = 1
+                    AND APIKey = ''";
             $conn->query($updateQueryServiceNumber);
 
             // Check if any rows were affected for serviceTableName
