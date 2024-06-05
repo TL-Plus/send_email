@@ -20,7 +20,7 @@ function fetchDataFromDB($numberSequence, $statusNumberCheck)
 
     $validStatus = array("", "inStock", "holding", "pending", "actived", "liquidated", "expired");
     if (!in_array($statusNumberCheck, $validStatus)) {
-        echo '<div class="alert alert-danger my-3" role="alert"><strong>Lỗi:</strong>Trạng thái không hợp lệ!</div>';
+        echo '<div class="alert alert-danger my-3" role="alert"><strong>Lỗi:</strong>Trạng thái kiểm tra không hợp lệ!</div>';
         exit;
     }
 
@@ -94,12 +94,13 @@ function updateDataInDB($statusNumber, $orderNumberLog, $numberSequence, $status
     $resultListNumbers = convertNumberSequence($numberSequence);
 
     $validStatus = array("inStock", "holding", "pending", "actived", "liquidated", "expired");
-    if (!in_array($statusNumberCheck, $validStatus)) {
-        echo '<div class="alert alert-danger my-3" role="alert"><strong>Lỗi:</strong>Trạng thái không hợp lệ!</div>';
+    $validStatusCheck = array("", "inStock", "holding", "pending", "actived", "liquidated", "expired");
+    if (!in_array($statusNumberCheck, $validStatusCheck)) {
+        echo '<div class="alert alert-danger my-3" role="alert"><strong>Lỗi:</strong>Trạng thái kiểm tra không hợp lệ!</div>';
         exit;
     }
     if (!in_array($statusNumber, $validStatus)) {
-        echo '<div class="alert alert-danger my-3" role="alert"><strong>Lỗi:</strong>Trạng thái không hợp lệ!</div>';
+        echo '<div class="alert alert-danger my-3" role="alert"><strong>Lỗi:</strong>Trạng thái mới không hợp lệ!</div>';
         exit;
     }
 

@@ -38,8 +38,7 @@
             <div class="col-lg-3">
                 <div class="nk-block-content text-center text-lg-left">
                     <p class="text-soft">
-                        Tầng 3, Tòa W1-W2 Vinhomes West Point, Phường Mễ Trì,Quận Nam Từ
-                        Liêm, Hà Nội.
+                        Lô OF03-19, Tầng 3 - Office, Vinhomes West Point, Đường Phạm Hùng, Phường Mễ Trì, Quận Nam Từ Liêm, Hà Nội.
                     </p>
                 </div>
             </div>

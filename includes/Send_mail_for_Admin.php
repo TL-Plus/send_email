@@ -165,7 +165,7 @@ function prepare($aFormValues = array())
             <td style='text-align:top; padding-left:10px'>
                 <div style='color:#ffffff;font-size:1px'>CÔNG TY CỔ PHẦN TẬP ĐOÀN DIGINEXT</div></br>
                 <p style='font-weight:bold;'><a href = 'https://diginext.com.vn'>CÔNG TY CỔ PHẦN TẬP ĐOÀN DIGINEXT</a><br /><br /></p>
-                    Địa chỉ giao dịch: Tầng 3, Tòa W1-W2 Vinhomes West Point, Phường Mễ Trì, Quận Nam Từ Liêm, Hà Nội.<br />
+                    Địa chỉ giao dịch: Lô OF03-19, Tầng 3 - Office, Vinhomes West Point, Đường Phạm Hùng, Phường Mễ Trì, Quận Nam Từ Liêm, Hà Nội.<br />
                     Tel: (024-028) 5555 1111 | 19005055 | https://diginext.com.vn<br />
                     Email: cskh@diginext.com.vn
             </td>
@@ -256,7 +256,7 @@ function prepareRunOut($aFormValues = array())
             <td style='text-align:top; padding-left:10px'>
                 <div style='color:#ffffff;font-size:1px'>CÔNG TY CỔ PHẦN TẬP ĐOÀN DIGINEXT</div></br>
                 <p style='font-weight:bold;'><a href = 'https://diginext.com.vn'>CÔNG TY CỔ PHẦN TẬP ĐOÀN DIGINEXT</a><br /><br /></p>
-                    Địa chỉ giao dịch: Tầng 3, Tòa W1-W2 Vinhomes West Point, Phường Mễ Trì, Quận Nam Từ Liêm, Hà Nội.<br />
+                    Địa chỉ giao dịch: Lô OF03-19, Tầng 3 - Office, Vinhomes West Point, Đường Phạm Hùng, Phường Mễ Trì, Quận Nam Từ Liêm, Hà Nội.<br />
                     Tel: (024-028) 5555 1111 | 19005055 | https://diginext.com.vn<br />
                     Email: cskh@diginext.com.vn
             </td>
