@@ -7,7 +7,7 @@ require '/var/www/html/send_email/includes/send_telegram_message.php';
 
 // query_report_call_spam_by_number_contract_next
 $query_report_call_spam_by_number_contract_next = "SELECT 
-Day, CustomerName, ContractCode, Caller, Callee, SL 
+Day, CustomerName, CustomerCode, ContractCode, SalerCode, Caller, Callee, SL 
 FROM `ReportCallSpamByNumberContractNext`
 WHERE SL > 10
 AND Day = DATE_FORMAT(CURDATE(), '%d')
@@ -17,7 +17,7 @@ ORDER BY SL DESC";
 
 // Define Excel header
 $header = [
-    'Day', 'Customer Name', 'Contract Code', 'Caller', 'Callee', 'SL'
+    'Day', 'Customer Name', 'Customer Code', 'Contract Code', 'Saler Code', 'Caller', 'Callee', 'SL'
 ];
 
 // Define $dbName, $botToken, $chatId, $recipients
