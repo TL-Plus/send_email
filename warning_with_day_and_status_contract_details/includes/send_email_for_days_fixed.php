@@ -72,7 +72,7 @@ function bodyWarning($FormValues)
         <table style='color:#222;'>
             <tr>
                 <td style='width:160px; border-right:2px solid #cfcfcf;'>
-                    <img width='160' src='https://billing.diginext.com.vn/backend/images/logo-small.png' alt='Diginext'/>
+                    <img width='160' src='http://103.112.209.152//storage/media/small-logo-dark.png' alt='Diginext'/>
                 </td>
                 
                 <td style='text-align:top;padding-left:10px'>

@@ -160,7 +160,7 @@ function prepare($aFormValues = array())
     <table width='100%' cellpadding='0' cellspacing='0' >
         <tr>
             <td style='width:160px; border-right:2px solid #CFCFCF;'>
-                <img width='150px' src='https://billing.diginext.com.vn//storage/media/small-logo-dark.png'>
+                <img width='150px' src='http://103.112.209.152//storage/media/small-logo-dark.png'>
             </td>
             <td style='text-align:top; padding-left:10px'>
                 <div style='color:#ffffff;font-size:1px'>CÔNG TY CỔ PHẦN TẬP ĐOÀN DIGINEXT</div></br>
@@ -251,7 +251,7 @@ function prepareRunOut($aFormValues = array())
     <table width='100%' cellpadding='0' cellspacing='0' >
         <tr>
             <td style='width:160px; border-right:2px solid #CFCFCF;'>
-                <img width='150px' src='https://billing.diginext.com.vn//storage/media/small-logo-dark.png'>
+                <img width='150px' src='http://103.112.209.152//storage/media/small-logo-dark.png'>
             </td>
             <td style='text-align:top; padding-left:10px'>
                 <div style='color:#ffffff;font-size:1px'>CÔNG TY CỔ PHẦN TẬP ĐOÀN DIGINEXT</div></br>

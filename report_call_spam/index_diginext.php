@@ -29,15 +29,16 @@ date_default_timezone_set("Asia/Ho_Chi_Minh");
 
 // today
 $today = date('Y_m_d');
-$attachment = "/var/www/html/send_email/files_export/Report_Call_Spam_By_Number_Contract_DIGINEXT_$today.xlsx";
-$subject = "[DIGINEXT] - Report Call Spam By Number Contract ($today)";
+$today_2 = date('d-m-Y');
+$attachment = "/var/www/html/send_email/files_export/Diginext_Spamcall_Contract_$today.xlsx";
+$subject = "[DIGINEXT] - BÁO CÁO KHÁCH HÀNG SPAMCALL ($today_2)";
 
 // Call the function to send a message via Telegram
 sendTelegramMessageWithSql($query_report_call_spam_by_number_contract_next, $dbName, $header, $attachment, $subject, $botToken, $chatId);
 
 if (!file_exists($attachment)) {
     $day = date('d-m-Y');
-    $error_message = "[DIGINEXT] - Today $day No Report Call Spam By Number Contract.";
+    $error_message = "[DIGINEXT] - HÔM NAY $day KHÔNG CÓ BÁO CÁO KHÁCH HÀNG SPAMCALL.";
     sendTelegramMessage($error_message, $botToken, $chatId);
 }
 

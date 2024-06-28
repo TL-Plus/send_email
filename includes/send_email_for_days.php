@@ -76,7 +76,7 @@ function bodyWarningLiabilities($FormValues)
         <table style='color:#222;'>
             <tr>
                 <td style='width:160px; border-right:2px solid #cfcfcf;'>
-                    <img width='160' src='https://billing.diginext.com.vn/backend/images/logo-small.png' alt='Diginext'/>
+                    <img width='160' src='http://103.112.209.152//storage/media/small-logo-dark.png' alt='Diginext'/>
                 </td>
                 
                 <td style='text-align:top;padding-left:10px'>
@@ -103,7 +103,7 @@ function bodyEmailOrderNumber($FormValues)
     $body .= '<table style="border-collapse:collapse;width:100%;color:#222;" cellpadding="10" >';
     $body .= '<tr>
                 <th style="text-align:left;font-family:Times New Roman,arial,helvetica;" colspan="3">
-                    Kính gửi Sale ' . $FormValues['userName'] . '
+                    Kính gửi ' . $FormValues['userName'] . '
                 </th>
             </tr>
             <tr>
@@ -140,7 +140,7 @@ function bodyEmailOrderNumber($FormValues)
         <table style='color:#222;'>
             <tr>
                 <td style='width:160px; border-right:2px solid #cfcfcf;'>
-                    <img width='160' src='https://billing.diginext.com.vn/backend/images/logo-small.png' alt='Diginext'/>
+                    <img width='160' src='http://103.112.209.152//storage/media/small-logo-dark.png' alt='Diginext'/>
                 </td>
                 
                 <td style='text-align:top;padding-left:10px'>
@@ -218,7 +218,7 @@ function bodyEmailFeePaymentCycle($FormValues)
         <table style='color:#222;'>
             <tr>
                 <td style='width:160px; border-right:2px solid #cfcfcf;'>
-                    <img width='160' src='https://billing.diginext.com.vn/backend/images/logo-small.png' alt='Diginext'/>
+                    <img width='160' src='http://103.112.209.152//storage/media/small-logo-dark.png' alt='Diginext'/>
                 </td>
                 
                 <td style='text-align:top;padding-left:10px'>
@@ -282,7 +282,7 @@ function bodyEmailHolidaySchedule($FormValues)
         <table style='color:#222;'>
             <tr>
                 <td style='width:160px; border-right:2px solid #cfcfcf;'>
-                    <img width='160' src='https://billing.diginext.com.vn/backend/images/logo-small.png' alt='Diginext'/>
+                    <img width='160' src='http://103.112.209.152//storage/media/small-logo-dark.png' alt='Diginext'/>
                 </td>
                 
                 <td style='text-align:top;padding-left:10px'>
