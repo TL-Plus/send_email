@@ -123,9 +123,9 @@ function fetchDataBatch($sql, $dbName, $offset, $limit)
 
     return connectAndQueryDatabase(
         $sql,
-        $_ENV['DB_HOSTNAME_DIGINEXT'],
-        $_ENV['DB_USERNAME_DIGINEXT'],
-        $_ENV['DB_PASSWORD_DIGINEXT'],
+        $_ENV['DB_HOSTNAME_MAIN'],
+        $_ENV['DB_USERNAME_MAIN'],
+        $_ENV['DB_PASSWORD_MAIN'],
         $dbName
     );
 }

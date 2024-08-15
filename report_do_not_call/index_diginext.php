@@ -43,7 +43,7 @@ $attachment = "/var/www/html/send_email/files_export/Report_DNC_$yesterday.xlsx"
 $subject = "[DIGINEXT] - Report DNC ($yesterday)";
 
 // Call the function to send a message via Telegram
-sendTelegramMessageWithSql($query_report_do_not_call_blacklist, $dbName, $header, $attachment, $subject, $botToken, $chatId);
+sendTelegramMessageWithSqlMain($query_report_do_not_call_blacklist, $dbName, $header, $attachment, $subject, $botToken, $chatId);
 
 if (!file_exists($attachment)) {
   $day = date('d-m-Y', strtotime('-1 days'));

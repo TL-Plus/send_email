@@ -22,20 +22,15 @@ $query_report_customer = " SELECT
     FORMAT(SUM($table_name.TotalCost), 0) AS TotalCost,
     (
         SELECT COUNT(ext_number)
-        FROM Billing_Diginext.report_number_block rnb
+        FROM billing.report_number_block rnb
         WHERE rnb.customer_code = $table_name.customer_code
         AND DATE(rnb.time_update) = DATE_SUB(CURDATE(), INTERVAL 1 DAY)
-    ) +
-    (
-        SELECT COUNT(ext_number)
-        FROM Billing_Diginext.report_number_block_next rnbn
-        WHERE rnbn.customer_code = $table_name.customer_code
-        AND DATE(rnbn.time_update) = DATE_SUB(CURDATE(), INTERVAL 1 DAY)
     ) AS BlockViettel
 FROM
     $table_name
 WHERE            
-    DATE($table_name.TimeUpdate) = DATE_SUB(CURDATE(), INTERVAL 1 DAY)
+    DATE($table_name.TimeUpdate) = DATE_SUB(CURDATE(), INTERVAL 1 DAY) 
+    AND $table_name.company_code = 'DIGINEXT'
 GROUP BY
     $table_name.customer_name, $table_name.customer_code
 HAVING 
@@ -62,4 +57,4 @@ $yesterday_2 = date('d-m-Y', strtotime('-1 day'));
 $attachment = "/var/www/html/send_email/files_export/Diginext_Report_Customer_$yesterday.xlsx";
 $subject = "[DIGINEXT] - BÁO CÁO THỐNG KÊ DỊCH VỤ CỦA KHÁCH HÀNG ($yesterday_2)";
 
-sendTelegramMessageWithSql($query_report_customer, $dbName, $header, $attachment, $subject, $botToken, $chatId);
+sendTelegramMessageWithSqlMain($query_report_customer, $dbName, $header, $attachment, $subject, $botToken, $chatId);

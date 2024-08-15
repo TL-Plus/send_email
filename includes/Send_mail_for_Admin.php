@@ -148,11 +148,11 @@ function prepare($aFormValues = array())
 		<tr><td style=" text-align:left;font-family:Times New Roman,arial,helvetica;border-bottom:1px solid #CFCFCF;">- Tại Ngân hàng: NH TMCP Á Châu- Chi nhánh Kim Đồng - TP.Hà Nội (ACB).<br /></td></tr>	
 		</table></div>';
 
-	$body .= "</br><div style='font-weight:bold; margin-bottom:10px; margin-top:20px'>Thông tin tra cứu chi tiết cước quý khách vui lòng truy cập :</div>";
+	$body .= "</br><div style='font-weight:bold; margin-bottom:10px; margin-top:20px'>Thông tin tra cứu chi tiết cước quý khách vui lòng truy cập : <a href='https://billing.diginext.com.vn'>https://billing.diginext.com.vn</a></div>";
 
 	$body .= '<div style="margin-bottom:10px; margin-top:20px;"><span><i>Trân trọng cảm ơn Quý khách hàng đã sử dụng dịch vụ của Diginext</i></span></div>';
 
-	$body .= '<div style="margin-top: 20px;margin-right: 40px;margin-bottom: 10px;font-family:cursive;text-align: right;"><span><i><marquee>Trân trọng cảm ơn quý khách hàng đã sử dụng dịch vụ của Digiel</marquee></i></span></div>';
+	$body .= '<div style="margin-top: 20px;margin-right: 40px;margin-bottom: 10px;font-family:cursive;text-align: right;"><span><i><marquee>Trân trọng cảm ơn quý khách hàng đã sử dụng dịch vụ của Diginext</marquee></i></span></div>';
 
 
 	$body .= "<div style='margin-bottom:10px; margin-top:20px;'><span>Địa chỉ tra cứu thông tin dịch vụ: <a href='https://billing.diginext.com.vn'>https://billing.diginext.com.vn</a></span></div>		
@@ -239,11 +239,11 @@ function prepareRunOut($aFormValues = array())
 		<tr><td style=" text-align:left;font-family:Times New Roman,arial,helvetica;border-bottom:1px solid #CFCFCF;">- Tại Ngân hàng: NH TMCP Á Châu- Chi nhánh Kim Đồng - TP.Hà Nội (ACB).<br /></td></tr>	
 		</table></div>';
 
-	$body .= "</br><div style='font-weight:bold; margin-bottom:10px; margin-top:20px'>Thông tin tra cứu chi tiết cước quý khách vui lòng truy cập :</div>";
+	$body .= "</br><div style='font-weight:bold; margin-bottom:10px; margin-top:20px'>Thông tin tra cứu chi tiết cước quý khách vui lòng truy cập : <a href='https://billing.diginext.com.vn'>https://billing.diginext.com.vn</a></div>";
 
 	$body .= '<div style="margin-bottom:10px; margin-top:20px;"><span><i>Trân trọng cảm ơn Quý khách hàng đã sử dụng dịch vụ của Diginext</i></span></div>';
 
-	$body .= '<div style="margin-top: 20px;margin-right: 40px;margin-bottom: 10px;font-family:cursive;text-align: right;"><span><i><marquee>Trân trọng cảm ơn quý khách hàng đã sử dụng dịch vụ của Digiel</marquee></i></span></div>';
+	$body .= '<div style="margin-top: 20px;margin-right: 40px;margin-bottom: 10px;font-family:cursive;text-align: right;"><span><i><marquee>Trân trọng cảm ơn quý khách hàng đã sử dụng dịch vụ của Diginext</marquee></i></span></div>';
 
 
 	$body .= "<div style='margin-bottom:10px; margin-top:20px;'><span>Địa chỉ tra cứu thông tin dịch vụ: <a href='https://billing.diginext.com.vn'>https://billing.diginext.com.vn</a></span></div>		

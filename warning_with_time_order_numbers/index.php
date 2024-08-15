@@ -12,18 +12,24 @@ $time_export_excel = date('d/m/Y') . "_" . $now_day_int;
 
 // Define Constants
 define('WARNING_THRESHOLD', 7);
-define('TERMINATION_THRESHOLD', 21);
+define('TERMINATION_THRESHOLD', 14);
 
 // Define Excel header
 $header = [
-    'CustomerName', 'CustomerAddress', 'CustomerEmail', 'CustomerPhone',
-    'SalerName', 'OrderNumber', 'OrderTime', 'Status'
+    'CustomerName',
+    'CustomerAddress',
+    'CustomerEmail',
+    'CustomerPhone',
+    'SalerName',
+    'OrderNumber',
+    'OrderTime',
+    'Status'
 ];
 
 // Define $dbName
-$dbName = $_ENV['DB_DATABASE_BILLING_DIGINEXT'];
+$dbName = $_ENV['DB_DATABASE_BILLING_MAIN'];
 
-function getTelegramRecipientsFromDatabase($dbName, $threshold, $orderNumberCondition)
+function getTelegramRecipientsAndSalesEmails($dbName, $threshold, $orderNumberCondition)
 {
     $telegramRecipients = [];
 
@@ -41,39 +47,66 @@ function getTelegramRecipientsFromDatabase($dbName, $threshold, $orderNumberCond
                         GROUP BY local_users.user_code";
 
     $conn = connectDatabase(
-        $_ENV['DB_HOSTNAME_DIGINEXT'],
-        $_ENV['DB_USERNAME_DIGINEXT'],
-        $_ENV['DB_PASSWORD_DIGINEXT'],
+        $_ENV['DB_HOSTNAME_MAIN'],
+        $_ENV['DB_USERNAME_MAIN'],
+        $_ENV['DB_PASSWORD_MAIN'],
         $dbName
     );
 
     $result = $conn->query($query_api_full_code);
 
-    $conn->close();
-
     if ($result && $result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
+            $userCode = $row['UserCode'];
+            $primaryEmail = $row['UserEmail'];
+
+            $salesEmails = [];
+            $get_mail_sales = "SELECT email 
+                   FROM local_users 
+                   WHERE status = 1 AND parent_id IN (SELECT id 
+                                       FROM local_users 
+                                       WHERE user_code = '$userCode') 
+                   AND JSON_CONTAINS(role, '\"Sale\"')";
+
+            $salesResult = $conn->query($get_mail_sales);
+
+            if ($salesResult && $salesResult->num_rows > 0) {
+                while ($salesRow = $salesResult->fetch_assoc()) {
+                    if (!empty($salesRow['email'])) {
+                        $salesEmails[] = $salesRow['email'];
+                    }
+                }
+            }
+
+            $combinedEmails = $primaryEmail;
+            if (!empty($salesEmails)) {
+                $combinedEmails .= ',' . implode(',', $salesEmails);
+            }
+
             $telegramRecipients[] = [
                 'botToken' => '6585137930:AAEm1XLVeqtVgaZ6sZLSnXEaSVnnPeymgOk',  //$row['BotToken'],
                 'chatId' => '-4108286784', //$row['UserId'],
                 'userName' => $row['UserName'],
                 'userCode' => $row['UserCode'],
-                'userEmail' => $row['UserEmail'], //'lan.lt@diginext.com.vn',
+                'userEmail' => $combinedEmails,
             ];
         }
     }
 
+    $conn->close();
+
     return $telegramRecipients;
 }
+
 
 function fetchOrderData($query, $dbName)
 {
     $orderNumberDatas = [];
 
     $conn = connectDatabase(
-        $_ENV['DB_HOSTNAME_DIGINEXT'],
-        $_ENV['DB_USERNAME_DIGINEXT'],
-        $_ENV['DB_PASSWORD_DIGINEXT'],
+        $_ENV['DB_HOSTNAME_MAIN'],
+        $_ENV['DB_USERNAME_MAIN'],
+        $_ENV['DB_PASSWORD_MAIN'],
         $dbName
     );
 
@@ -97,12 +130,12 @@ function processEmailsAndTelegrams($threshold, $dbName, $header, $fileNamePrefix
 {
     $cc_recipients = $_ENV['CC_RECIPIENTS'];
 
-    $telegramRecipients = getTelegramRecipientsFromDatabase($dbName, $threshold, $orderNumberCondition);
+    $telegramRecipients = getTelegramRecipientsAndSalesEmails($dbName, $threshold, $orderNumberCondition);
 
     // Define an array to store processed customer codes
     $processedUserCodes = [];
     $processOrderNumbers7Days = [];
-    $processOrderNumbers21Days = [];
+    $processOrderNumbers14Days = [];
 
     foreach ($telegramRecipients as $telegramRecipient) {
         $userCode = $telegramRecipient['userCode'];
@@ -140,7 +173,7 @@ function processEmailsAndTelegrams($threshold, $dbName, $header, $fileNamePrefix
                     'note' => 'sắp',
                 ];
 
-                sendEmailForDays(
+                sendEmailForDaysMain(
                     $query_order_number_by_customer_7_days,
                     $dbName,
                     $header,
@@ -151,7 +184,7 @@ function processEmailsAndTelegrams($threshold, $dbName, $header, $fileNamePrefix
                     $cc_recipients
                 );
 
-                sendTelegramMessageWithSql(
+                sendTelegramMessageWithSqlMain(
                     $query_order_number_by_customer_7_days,
                     $dbName,
                     $header,
@@ -169,12 +202,12 @@ function processEmailsAndTelegrams($threshold, $dbName, $header, $fileNamePrefix
 
                         // Call function to update status
                         updateStatusEmail7Days($orderNumber, $threshold, $orderNumberCondition, $userCode);
-                        updateStatusEmail7DaysDIGITEL($orderNumber, $threshold);
+                        // updateStatusEmail7DaysDIGITEL($orderNumber, $threshold);
                     }
                 }
             } elseif ($threshold == TERMINATION_THRESHOLD) {
                 // Build the query with the specific customer code
-                $query_order_number_by_customer_21_days = "SELECT `customer_name`, 
+                $query_order_number_by_customer_14_days = "SELECT `customer_name`, 
                 `customer_address`, `customer_email`, `customer_phone`, 
                 `user_name`, `order_number`, `order_time`, `status`
                 FROM `order_numbers`
@@ -189,7 +222,7 @@ function processEmailsAndTelegrams($threshold, $dbName, $header, $fileNamePrefix
 
                 // Fetch order data for the customer
                 $orderNumberDatas = fetchOrderData(
-                    $query_order_number_by_customer_21_days,
+                    $query_order_number_by_customer_14_days,
                     $dbName
                 );
 
@@ -200,8 +233,8 @@ function processEmailsAndTelegrams($threshold, $dbName, $header, $fileNamePrefix
                     'note' => 'đã',
                 ];
 
-                sendEmailForDays(
-                    $query_order_number_by_customer_21_days,
+                sendEmailForDaysMain(
+                    $query_order_number_by_customer_14_days,
                     $dbName,
                     $header,
                     "{$fileNamePrefix}_{$userCode}_{$threshold}_days.xlsx",
@@ -211,8 +244,8 @@ function processEmailsAndTelegrams($threshold, $dbName, $header, $fileNamePrefix
                     $cc_recipients
                 );
 
-                sendTelegramMessageWithSql(
-                    $query_order_number_by_customer_21_days,
+                sendTelegramMessageWithSqlMain(
+                    $query_order_number_by_customer_14_days,
                     $dbName,
                     $header,
                     "{$fileNamePrefix}_{$userCode}_{$threshold}_days.xlsx",
@@ -224,12 +257,12 @@ function processEmailsAndTelegrams($threshold, $dbName, $header, $fileNamePrefix
                 foreach ($orderNumberDatas as $orderNumberData) {
                     $orderNumber = $orderNumberData['orderNumber'];
 
-                    if (!in_array($orderNumber, $processOrderNumbers21Days)) {
-                        $processOrderNumbers21Days[] = $orderNumber;
+                    if (!in_array($orderNumber, $processOrderNumbers14Days)) {
+                        $processOrderNumbers14Days[] = $orderNumber;
 
                         // Call function to update status
-                        updateStatusEmail21Days($orderNumber, $threshold, $orderNumberCondition, $userCode);
-                        updateStatusEmail21DaysDIGITEL($orderNumber, $threshold);
+                        updateStatusEmail14Days($orderNumber, $threshold, $orderNumberCondition, $userCode);
+                        // updateStatusEmail14DaysDIGITEL($orderNumber, $threshold);
                     }
                 }
             }
@@ -244,7 +277,7 @@ processEmailsAndTelegrams(
     $dbName,
     $header,
     '/var/www/html/send_email/files_export/' . str_replace("/", "_", $time_export_excel) . '_report_warning_dvgtgt',
-    '[DIGINEXT] - THÔNG BÁO ĐẶT SỐ DVGTGT SẮP HẾT HẠN',
+    '[DIGI] - THÔNG BÁO ĐẶT SỐ DVGTGT SẮP HẾT HẠN',
     $orderNumberConditionDVGTGT
 );
 
@@ -253,18 +286,23 @@ processEmailsAndTelegrams(
     $dbName,
     $header,
     '/var/www/html/send_email/files_export/' . str_replace("/", "_", $time_export_excel) . '_report_termination_dvgtgt',
-    '[DIGINEXT] - THÔNG BÁO ĐẶT SỐ DVGTGT ĐÃ HẾT HẠN',
+    '[DIGI] - THÔNG BÁO ĐẶT SỐ DVGTGT ĐÃ HẾT HẠN',
     $orderNumberConditionDVGTGT
 );
 
 // Process 888 Fixed emails
-$orderNumberCondition888Fixed = "AND order_number LIKE '2%' AND order_number LIKE '%888%' AND provider='DIGITEL'";
+$orderNumberCondition888Fixed = "AND order_number LIKE '2%' 
+    AND (
+        (SUBSTRING(order_number, 1, 2) IN ('24', '28') AND SUBSTRING(order_number, 3, 3) = '888') 
+        OR 
+        (SUBSTRING(order_number, 1, 2) NOT IN ('24', '28') AND SUBSTRING(order_number, 4, 3) = '888')
+    )";
 processEmailsAndTelegrams(
     WARNING_THRESHOLD,
     $dbName,
     $header,
     '/var/www/html/send_email/files_export/' . str_replace("/", "_", $time_export_excel) . '_report_warning_888_fixed',
-    '[DIGINEXT] - THÔNG BÁO ĐẶT SỐ CỐ ĐỊNH 888 SẮP HẾT HẠN',
+    '[DIGI] - THÔNG BÁO ĐẶT SỐ CỐ ĐỊNH 888 SẮP HẾT HẠN',
     $orderNumberCondition888Fixed
 );
 
@@ -273,19 +311,24 @@ processEmailsAndTelegrams(
     $dbName,
     $header,
     '/var/www/html/send_email/files_export/' . str_replace("/", "_", $time_export_excel) . '_report_termination_888_fixed',
-    '[DIGINEXT] - THÔNG BÁO ĐẶT SỐ CỐ ĐỊNH 888 ĐÃ HẾT HẠN',
+    '[DIGI] - THÔNG BÁO ĐẶT SỐ CỐ ĐỊNH 888 ĐÃ HẾT HẠN',
     $orderNumberCondition888Fixed
 );
 
 // Process 555 Fixed emails
-$orderNumberCondition888Fixed = "AND order_number LIKE '2%' AND order_number LIKE '%555%' AND provider='DIGINEXT'";
+$orderNumberCondition555Fixed = "AND order_number LIKE '2%' 
+    AND (
+        (SUBSTRING(order_number, 1, 2) IN ('24', '28') AND SUBSTRING(order_number, 3, 3) = '555') 
+        OR 
+        (SUBSTRING(order_number, 1, 2) NOT IN ('24', '28') AND SUBSTRING(order_number, 4, 3) = '555')
+    )";
 processEmailsAndTelegrams(
     WARNING_THRESHOLD,
     $dbName,
     $header,
     '/var/www/html/send_email/files_export/' . str_replace("/", "_", $time_export_excel) . '_report_warning_555_fixed',
-    '[DIGINEXT] - THÔNG BÁO ĐẶT SỐ CỐ ĐỊNH 555 SẮP HẾT HẠN',
-    $orderNumberCondition888Fixed
+    '[DIGI] - THÔNG BÁO ĐẶT SỐ CỐ ĐỊNH 555 SẮP HẾT HẠN',
+    $orderNumberCondition555Fixed
 );
 
 processEmailsAndTelegrams(
@@ -293,6 +336,31 @@ processEmailsAndTelegrams(
     $dbName,
     $header,
     '/var/www/html/send_email/files_export/' . str_replace("/", "_", $time_export_excel) . '_report_termination_555_fixed',
-    '[DIGINEXT] - THÔNG BÁO ĐẶT SỐ CỐ ĐỊNH 555 ĐÃ HẾT HẠN',
-    $orderNumberCondition888Fixed
+    '[DIGI] - THÔNG BÁO ĐẶT SỐ CỐ ĐỊNH 555 ĐÃ HẾT HẠN',
+    $orderNumberCondition555Fixed
 );
+
+// // Process 688 Fixed emails
+// $orderNumberCondition688Fixed = "AND order_number LIKE '2%' 
+//     AND (
+//         (SUBSTRING(order_number, 1, 2) IN ('24', '28') AND SUBSTRING(order_number, 3, 3) = '688') 
+//         OR 
+//         (SUBSTRING(order_number, 1, 2) NOT IN ('24', '28') AND SUBSTRING(order_number, 4, 3) = '688')
+//     )";
+// processEmailsAndTelegrams(
+//     WARNING_THRESHOLD,
+//     $dbName,
+//     $header,
+//     '/var/www/html/send_email/files_export/' . str_replace("/", "_", $time_export_excel) . '_report_warning_688_fixed',
+//     '[DIGI] - THÔNG BÁO ĐẶT SỐ CỐ ĐỊNH 688 SẮP HẾT HẠN',
+//     $orderNumberCondition688Fixed
+// );
+
+// processEmailsAndTelegrams(
+//     TERMINATION_THRESHOLD,
+//     $dbName,
+//     $header,
+//     '/var/www/html/send_email/files_export/' . str_replace("/", "_", $time_export_excel) . '_report_termination_688_fixed',
+//     '[DIGI] - THÔNG BÁO ĐẶT SỐ CỐ ĐỊNH 688 ĐÃ HẾT HẠN',
+//     $orderNumberCondition688Fixed
+// );

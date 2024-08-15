@@ -3,8 +3,7 @@
         <div class="row">
             <div class="col-lg-3">
                 <div class="logo-container justify-content-center">
-                    <img src="/static/images/logo-diginext.png" alt="Diginext Logo" class="img-fluid" width="130px"
-                        height="130px" />
+                    <img src="/static/images/logo-diginext.png" alt="Diginext Logo" class="img-fluid" width="130px" height="130px" />
                 </div>
                 <ul class="nav nav-sm justify-content-center justify-content-lg-end">
                     <li class="nav-item dropup active current-page">
@@ -46,7 +45,7 @@
                 <div class="nk-block-content text-center text-lg-left">
                     <p class="text-soft">
                         <a href="mailto: cskh@diginext.com.vn ">Email : cskh@diginext.com.vn </a><br />
-                        <a href="tel: cskh@diginext.com.vn ">Phone : 19005055 </a>
+                        <a href="tel: 02455551111 ">Phone : 02455551111 </a>
                     </p>
                 </div>
             </div>

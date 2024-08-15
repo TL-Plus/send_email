@@ -34,6 +34,33 @@ function sendTelegramMessageWithSql($sql, $dbName, $header, $attachment, $textMe
     }
 }
 
+function sendTelegramMessageWithSqlMain($sql, $dbName, $header, $attachment, $textMessage, $botToken, $chatId)
+{
+    try {
+        $exportSuccessful = exportToExcelMain($sql, $dbName, $header, $attachment);
+
+        // Check if export was successful before sending telegram message
+        if ($exportSuccessful) {
+            // Read content from the Excel file
+            $spreadsheet = IOFactory::load($attachment);
+            $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
+
+            // Initialize the Telegram API object with your bot token
+            $telegram = new BotApi($botToken);
+
+            // Prepare the document for sending
+            $document = new \CURLFile($attachment);
+
+            // Send the text message along with the document
+            $telegram->sendDocument($chatId, $document, $textMessage);
+
+            echo "Telegram message successfully sent file $attachment \n";
+        }
+    } catch (Exception $e) {
+        echo 'Error send telegram: ' . $e->getMessage();
+    }
+}
+
 // Send telegram message with file excel
 function sendTelegramMessages($attachment, $textMessage, $botToken, $chatId)
 {

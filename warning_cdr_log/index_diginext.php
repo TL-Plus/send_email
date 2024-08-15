@@ -9,16 +9,16 @@ function processCDRLogs($dbName, $botToken, $chatId)
 {
     $processedCDRLogs = [];
 
-    $query_report_warning_cdr_log = "SELECT *
-        FROM `CDRLog`
-        WHERE DATE(`TimeBegin`) = CURDATE()
-            AND TIMESTAMPDIFF(HOUR, `TimeBegin`, NOW()) >= 1
+    // DATE(`TimeBegin`) = CURDATE() AND
+
+    $query_report_warning_cdr_log = "SELECT * FROM `CDRLog`
+        WHERE  TIMESTAMPDIFF(HOUR, `TimeBegin`, NOW()) >= 1
             AND (
                 (`Conditon` = 1)
                 OR
                 (`Conditon` = 0 AND `Count` > 0)
             )
-        ORDER BY `CDRLog`.`TimeBegin` DESC";
+        ORDER BY `TimeBegin` DESC";
 
     $conn = connectDatabase(
         $_ENV['DB_HOSTNAME_DIGINEXT'],

@@ -16,9 +16,9 @@ function processCDRLogs($dbName, $botToken, $chatId)
         GROUP BY `cmd_code`";
 
     $conn = connectDatabase(
-        $_ENV['DB_HOSTNAME_DIGINEXT'],
-        $_ENV['DB_USERNAME_DIGINEXT'],
-        $_ENV['DB_PASSWORD_DIGINEXT'],
+        $_ENV['DB_HOSTNAME_MAIN'],
+        $_ENV['DB_USERNAME_MAIN'],
+        $_ENV['DB_PASSWORD_MAIN'],
         $dbName,
     );
 

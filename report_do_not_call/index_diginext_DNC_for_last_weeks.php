@@ -42,6 +42,6 @@ $attachment = "/var/www/html/send_email/files_export/Report_quantity_DNC_Week_$r
 $subject = "[DIGINEXT] - Báo cáo số lượng DNC trong tuần ($report_period)";
 
 // Call the function to send a message via Telegram
-sendTelegramMessageWithSql($query_report_do_not_call_blacklist_for_last_weeks, $dbName, $header, $attachment, $subject, $botToken, $chatId);
+sendTelegramMessageWithSqlMain($query_report_do_not_call_blacklist_for_last_weeks, $dbName, $header, $attachment, $subject, $botToken, $chatId);
 
 // if you want to use email instead of telegram. Call function sendEmailForDay()

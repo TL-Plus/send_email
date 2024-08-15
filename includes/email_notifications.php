@@ -62,6 +62,62 @@ function sendEmailNotification($attachmentPath, $subject, $body, $recipients, $c
     }
 }
 
+function sendEmailNotificationMain($attachmentPath, $subject, $body, $recipients, $cc_recipients)
+{
+    $mail = new PHPMailer();
+
+    try {
+        // Server settings
+        $mail->IsSMTP();
+        $mail->CharSet = 'UTF-8';
+        $mail->Host = $_ENV['SMTP_HOST'];
+        $mail->SMTPDebug = 0;
+        $mail->SMTPAuth = true;
+        $mail->SMTPSecure = "tls";
+        $mail->Port = $_ENV['SMTP_PORT'];
+        $mail->Username = $_ENV['SMTP_USERNAME'];
+        $mail->Password = $_ENV['SMTP_PASSWORD'];
+        $sender_email = $_ENV['SENDER_EMAIL'];
+
+        $mail->setFrom($sender_email);
+        $mail->From = $sender_email;
+        $mail->FromName = 'TẬP ĐOÀN DIGI';
+
+        // Add each recipient to the email
+        $recipients = explode(',', $recipients);
+        foreach ($recipients as $recipient) {
+            $mail->addAddress(trim($recipient));
+        }
+
+        $cc_recipients = explode(',', $cc_recipients);
+        foreach ($cc_recipients as $cc_recipient) {
+            $mail->AddCC(trim($cc_recipient));
+        }
+
+        $mail->AddReplyTo($sender_email, "TẬP ĐOÀN DIGI");
+        $mail->WordWrap = 50;
+
+        $mail->isHTML(true);
+        $mail->Subject = $subject;
+        $mail->Body = $body;
+        $mail->AltBody = $body;
+
+        if (file_exists($attachmentPath)) {
+            $mail->addAttachment($attachmentPath);
+        } else {
+            throw new Exception('File attachment not found.');
+        }
+
+        if (!$mail->send()) {
+            throw new Exception('Mailer Error: ' . $mail->ErrorInfo);
+        }
+
+        echo "The email message was sent.\n";
+    } catch (Exception $e) {
+        echo 'Error send mail message: ' . $e->getMessage();
+    }
+}
+
 function sendEmailNotificationTest($attachmentPath, $subject, $body, $recipients, $cc_recipients)
 {
     $mail = new PHPMailer();

@@ -39,7 +39,7 @@ if (date('d', strtotime($current_date)) === '01') {
 // cdr
 $query_cdr = "SELECT DATE(time) AS Time, COUNT(*) as TotalCallCDR, SUM(duration) as TotalDurationCDR 
         FROM $table_name_cdr
-        WHERE callee_gw LIKE 'RT_0%' AND duration > 0 AND DATE(time) = '$yesterday'";
+        WHERE callee_gw LIKE 'RT_%' AND duration > 0 AND DATE(time) = '$yesterday'";
 
 $result_cdr = connectAndQueryDatabase(
     $query_cdr,
@@ -97,10 +97,10 @@ if ($result_cdrdsip->num_rows > 0) {
     ];
 }
 
-$timeColumnIndex = 'L';
-$response = $service->spreadsheets_values->get($spreadsheetId, "Billing-Vos $current_month!L:L");
+$timeColumnIndex = 'N';
+$response = $service->spreadsheets_values->get($spreadsheetId, "Billing-Vos $current_month!N:N");
 $lastRow = count($response->getValues()) + 1;
-$range = "Billing-Vos $current_month!L{$lastRow}";
+$range = "Billing-Vos $current_month!N{$lastRow}";
 $requestBody = new Google_Service_Sheets_ValueRange([
     'values' => $values
 ]);
@@ -108,8 +108,7 @@ $service->spreadsheets_values->append($spreadsheetId, $range, $requestBody, ['va
 
 // send telegram
 $textMessage = "Dữ liệu Báo Cáo Billing-VOS DIGINEXT đã được cập nhật xong vào lúc: $currentTime!" . PHP_EOL
-    . "Bạn hãy vào link: https://docs.google.com/spreadsheets/d/1hZ5df7fQpKRnYOrK7OMpwmiv0sWD4dYRbcazk3I_ZJQ/edit#gid=559014398 để xem và cập nhật thêm dữ liệu!" . PHP_EOL
-    . "link cũ: https://docs.google.com/spreadsheets/d/1Z3O7Hy_uxpPXjjikFoJwsgqisYwXasD6mLd4g3AiIFM/edit#gid=1198928396";
+    . "Bạn hãy vào link: https://docs.google.com/spreadsheets/d/1hZ5df7fQpKRnYOrK7OMpwmiv0sWD4dYRbcazk3I_ZJQ/edit#gid=559014398 để xem và cập nhật thêm dữ liệu!";
 
 sendTelegramMessage(
     $textMessage,
