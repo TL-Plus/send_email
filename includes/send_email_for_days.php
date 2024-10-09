@@ -72,7 +72,7 @@ function bodyWarningLiabilities($FormValues)
     $body .= '<table style="border-collapse:collapse;width:100%;color:#222;" cellpadding="10" >';
     $body .= '<tr>
                 <td style="text-align:left;font-family:Times New Roman,arial,helvetica;border-bottom:1px solid #f2f2f2">
-                    DIGINEXT GỬI BÁO CÁO CẢNH BÁO CÔNG NỢ THÁNG  ' . $FormValues['twoMonthsAgoMonth'] . '/' . $FormValues['twoMonthsAgoYear'] . '.
+                    DIGINEXT BÁO CÁO CẢNH BÁO CÔNG NỢ THÁNG  ' . $FormValues['twoMonthsAgoMonth'] . '/' . $FormValues['twoMonthsAgoYear'] . '.
                     <br>
                 </td>
                 <td style="text-align:left;font-family:Times New Roman,arial,helvetica;border-bottom:1px solid #f2f2f2">

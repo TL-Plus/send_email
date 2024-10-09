@@ -88,7 +88,7 @@ function sendTelegramMessages($attachment, $textMessage, $botToken, $chatId)
 function sendTelegramMessagesWithSqlAndFileExcel($sql, $dbName, $header, $excelFilePath, $textMessage, $botToken, $chatId)
 {
     try {
-        $exportSuccessful = exportToExcel($sql, $dbName, $header, $excelFilePath);
+        $exportSuccessful = exportToExcelMain($sql, $dbName, $header, $excelFilePath);
 
         // Check if export was successful before sending telegram message
         if ($exportSuccessful) {

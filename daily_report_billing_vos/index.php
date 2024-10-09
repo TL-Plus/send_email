@@ -97,10 +97,10 @@ if ($result_cdrdsip->num_rows > 0) {
     ];
 }
 
-$timeColumnIndex = 'N';
-$response = $service->spreadsheets_values->get($spreadsheetId, "Billing-Vos $current_month!N:N");
+$timeColumnIndex = 'P';
+$response = $service->spreadsheets_values->get($spreadsheetId, "Billing-Vos $current_month!P:P");
 $lastRow = count($response->getValues()) + 1;
-$range = "Billing-Vos $current_month!N{$lastRow}";
+$range = "Billing-Vos $current_month!P{$lastRow}";
 $requestBody = new Google_Service_Sheets_ValueRange([
     'values' => $values
 ]);

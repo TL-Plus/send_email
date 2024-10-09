@@ -16,14 +16,14 @@ define('TERMINATION_THRESHOLD', 14);
 
 // Define Excel header
 $header = [
-    'CustomerName',
-    'CustomerAddress',
-    'CustomerEmail',
-    'CustomerPhone',
-    'SalerName',
-    'OrderNumber',
-    'OrderTime',
-    'Status'
+    'Tên',
+    'Địa chỉ',
+    'Email',
+    'Diện thoại',
+    'Kinh doanh',
+    'Số đặt',
+    'Thời gian',
+    'Trạng thái'
 ];
 
 // Define $dbName

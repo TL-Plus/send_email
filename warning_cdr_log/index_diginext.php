@@ -4,6 +4,7 @@ require_once '/var/www/html/send_email/config.php';
 require_once '/var/www/html/send_email/includes/database_connection.php';
 require_once '/var/www/html/send_email/includes/send_telegram_message.php';
 
+date_default_timezone_set("Asia/Ho_Chi_Minh");
 
 function processCDRLogs($dbName, $botToken, $chatId)
 {
@@ -47,17 +48,16 @@ function processCDRLogs($dbName, $botToken, $chatId)
                 $count = $row['Count'];
                 $condition = $row['Conditon'];
 
-                date_default_timezone_set("Asia/Ho_Chi_Minh");
                 $currentTime = date('Y-m-d H:i:s');
 
-                // Create $FormValues array with necessary data
-                $textMessage = "Time Check: $currentTime\n"
-                    . "SERVER: $server\n"
-                    . "TimeUpdate: $timeUpdate\n"
-                    . "TimeBegin: $timeBegin\n"
-                    . "TimeEnd: $timeEnd\n"
-                    . "Count: $count\n"
-                    . "Condition: $condition";
+                $textMessage = "Time Check : $currentTime\n";
+                $textMessage .= "SERVER : " . $server . " \n";
+                $textMessage .= "TimeUpdate : " . $timeUpdate . " \n";
+                $textMessage .= "TimeBegin : " . $timeBegin . " \n";
+                $textMessage .= "TimeEnd : " . $timeEnd . " \n";
+                $textMessage .= "Count : " . $count . " \n";
+                $textMessage .= "Condition : " . $condition . " \n";
+
 
                 // Send the text message
                 sendTelegramMessage($textMessage, $botToken, $chatId);
