@@ -5,7 +5,7 @@ define('DB_USER', 'Billing');
 define('DB_PWD', 'Billing@123');
 define('DB_NAME_Voice', 'VoiceReport');
 
-define('DB_HOST_Bill', '103.112.209.140');
+define('DB_HOST_Bill', '103.112.209.141');
 define('DB_USER_Bill', 'billing');
 define('DB_PWD_Bill', 'Admin@diginext2023');
 define('DB_NAME_Bill', 'billing');
@@ -60,7 +60,7 @@ define('EMAIL_HOST', 'smtp.gmail.com');
 // define('DB_NAME_Voice', 'VoiceReport');
 // define('DB_NAME_Voice_2', 'VoiceReport');
 
-// define('DB_HOST_Bill', '103.112.209.140');
+// define('DB_HOST_Bill', '103.112.209.141');
 // define('DB_USER_Bill', 'billing');
 // define('DB_PWD_Bill', 'Admin@diginext2023');
 // define('DB_NAME_Bill', 'billing');
@@ -99,10 +99,10 @@ define('EMAIL_HOST', 'smtp.gmail.com');
 // define('DB_NAME_111', 'vos3000db');
 
 
-// define('DB_HOST_37', '103.112.209.136');
-// define('DB_USER_37', 'diginext');
-// define('DB_PWD_37', 'Digitel@123');
-// define('DB_NAME_37', 'VoiceReport');
+// define('DB_HOST_136', '103.112.209.136');
+// define('DB_USER_136', 'diginext');
+// define('DB_PWD_136', 'Digitel@123');
+// define('DB_NAME_136', 'VoiceReport');
 
 
 // define('EMAIL_USER2', 'billing@diginext.com.vn');

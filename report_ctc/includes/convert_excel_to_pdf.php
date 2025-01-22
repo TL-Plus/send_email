@@ -123,7 +123,7 @@ function convertExcelToPDF($excelFilePath, $pdfFileName, $userName, $ccuValues, 
                         case 'CustomerName':
                             $value = $cellInfo['value'];
                             $valueLength = strlen($value);
-                            if ($valueLength > 30) {
+                            if ($valueLength > 25) {
                                 $pdf->MultiCell($cellWidth + 30, 10, $value, 1, '', 1, 0, '', '', true);
                             } else {
                                 $pdf->Cell($cellWidth + 30, 10, $value, 1, 0, '', getRowColor($rowCounter - 1));

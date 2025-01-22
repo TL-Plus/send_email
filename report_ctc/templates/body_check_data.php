@@ -93,21 +93,21 @@ $_SESSION['ccuTotals'] = isset($_POST['ccuTotals']) ? $_POST['ccuTotals'] : '';
 
                     $cellClass = ($rowCounter == 0) ? 'th' : 'td';
 
-                    echo "<$cellClass class='custom-td'>";
+                    echo "<$cellClass class='custom-td' style='vertical-align: middle;'>";
 
                     if ($rowCounter == 0) {
                         echo $translatedHeader;
                     } else {
                         if ($data[0][$key] == 'TotalCurrentCall') {
-                            echo '<p class="text-center"> ' . $ccuValue . '</p>';
+                            echo '<p class="text-center" style="vertical-align: middle; margin: 0 !important"> ' . $ccuValue . '</p>';
                         } elseif ($data[0][$key] == 'CustomerName') {
-                            echo '<p class="text-left"> ' . $modifiedCell['value'] . '</p>';
+                            echo '<p class="text-left" style="vertical-align: middle; margin: 0 !important"> ' . $modifiedCell['value'] . '</p>';
                         } elseif ($data[0][$key] == 'BlockViettel' || $data[0][$key] == 'ActiveViettel') {
                             $cellValue = ($cell === null) ? 0 : $modifiedCell['value'];
-                            echo '<p class="text-center"> ' . $cellValue . '</p>';
+                            echo '<p class="text-center" style="vertical-align: middle; margin: 0 !important"> ' . $cellValue . '</p>';
                         } elseif ($data[0][$key] == 'TotalCCU') {
                             // Display CCU value for each row
-                            echo '<p class="text-center">' . $ccuValue . '</p>';
+                            echo '<p class="text-center" style="vertical-align: middle; margin: 0 !important">' . $ccuValue . '</p>';
                         } else {
                             echo $modifiedCell['value'];
                         }
@@ -121,11 +121,11 @@ $_SESSION['ccuTotals'] = isset($_POST['ccuTotals']) ? $_POST['ccuTotals'] : '';
             ?>
 
 
-            <tr style="background-color: #35a4e5;">
+            <tr style="background-color: #007bff; color: #fff;">
                 <?php
                 $mergedColumnLabel = 'TỔNG KHÁCH HÀNG LỚN';
                 $colspan = 2; // Set the colspan for the merged columns
-                echo '<td class="custom-td" colspan="' . $colspan . '">' . $mergedColumnLabel . '</td>';
+                echo '<td class="custom-td" style="vertical-align: middle;" colspan="' . $colspan . '"><b>' . $mergedColumnLabel . '</td>';
 
                 // Initialize totals
                 $totalCost = 0;
@@ -169,16 +169,16 @@ $_SESSION['ccuTotals'] = isset($_POST['ccuTotals']) ? $_POST['ccuTotals'] : '';
 
                 foreach ($data[0] as $key => $header) {
                     if ($key >= 2) {
-                        echo '<td class="custom-td">';
+                        echo '<td class="custom-td" style="vertical-align: middle;">';
                         if ($key == 2) {
                             $totalCostFormatted = number_format($totalCost, 0, '.', ',');
-                            echo '<span style="color: red;">' . $totalCostFormatted . '</span>';
+                            echo '<span style="color: #fff;"><b>' . $totalCostFormatted . '</b></span>';
                         } elseif ($key == 3) {
-                            echo '<span style="color: red;">' . $totalCCU . '</span>';
+                            echo '<span style="color: #fff;"><b>' . $totalCCU . '</b></span>';
                         } elseif ($key == 4) {
-                            echo '<span style="color: red;">' . $totalBlockViettel . '</span>';
+                            echo '<span style="color: #fff;"><b>' . $totalBlockViettel . '</b></span>';
                         } elseif ($key == 5) {
-                            echo '<span style="color: red;">' . $totalActiveViettel . '</span>';
+                            echo '<span style="color: #fff;"><b>' . $totalActiveViettel . '</b></span>';
                         }
                         echo '</td>';
                     }
@@ -186,23 +186,23 @@ $_SESSION['ccuTotals'] = isset($_POST['ccuTotals']) ? $_POST['ccuTotals'] : '';
                 ?>
             </tr>
 
-            <tr style="background-color: #5fbff7;">
+            <tr style="background-color: #1da1f2;  color: #fff;">
                 <?php
                 $mergedColumnLabel = 'TỔNG KHÁCH HÀNG CÒN LẠI';
                 $colspan = 2; // Set the colspan for the merged columns
-                echo '<td class="custom-td" colspan="' . $colspan . '">' . $mergedColumnLabel . '</td>';
+                echo '<td class="custom-td" style="vertical-align: middle;" colspan="' . $colspan . '"><b>' . $mergedColumnLabel . '</b></td>';
 
                 foreach ($data[0] as $key => $header) {
                     if ($key >= 2) {
-                        echo '<td class="custom-td">';
+                        echo '<td class="custom-td" style="vertical-align: middle;">';
                         if ($key == 2) {
                             $totalCost = array_sum(array_column(array_slice($data, 1), $key));
                             $totalCost = number_format($totalCost, 0, '.', ',');
-                            echo '<span style="color: red;"></span>';
+                            echo '<span style="color: #fff;"><b></b></span>';
                         } elseif ($key == 3) {
-                            echo '<span style="color: red;">' . $ccuTotals - $totalCCU . '</span>';
+                            echo '<span style="color: #fff;"><b>' . $ccuTotals - $totalCCU . '</b></span>';
                         } elseif ($key == 4 || $key == 5) {
-                            echo '<span style="color: red;"></span>';
+                            echo '<span style="color: #fff;"><b></b></span>';
                         }
                         echo '</td>';
                     }
@@ -210,23 +210,23 @@ $_SESSION['ccuTotals'] = isset($_POST['ccuTotals']) ? $_POST['ccuTotals'] : '';
                 ?>
             </tr>
 
-            <tr style="background-color: #8bcdf3;">
+            <tr style="background-color: #17a2b8;  color: #fff;">
                 <?php
                 $mergedColumnLabel = 'TỔNG HỆ THỐNG';
                 $colspan = 2; // Set the colspan for the merged columns
-                echo '<td class="custom-td" colspan="' . $colspan . '">' . $mergedColumnLabel . '</td>';
+                echo '<td class="custom-td" style="vertical-align: middle;" colspan="' . $colspan . '"><b>' . $mergedColumnLabel . '</b></td>';
 
                 foreach ($data[0] as $key => $header) {
                     if ($key >= 2) {
-                        echo '<td class="custom-td">';
+                        echo '<td class="custom-td" style="vertical-align: middle;">';
                         if ($key == 2) {
                             $totalCost = array_sum(array_column(array_slice($data, 1), $key));
                             $totalCost = number_format($totalCost, 0, '.', ',');
-                            echo '<span style="color: red;"></span>';
+                            echo '<span style="color: #fff;"><b></b></span>';
                         } elseif ($key == 3) {
-                            echo '<span style="color: red;">' . $ccuTotals . '</span>';
+                            echo '<span style="color: #fff;"><b>' . $ccuTotals . '</b></span>';
                         } elseif ($key == 4 || $key == 5) {
-                            echo '<span style="color: red;"></span>';
+                            echo '<span style="color: #fff;"><b></b></span>';
                         }
                         echo '</td>';
                     }
@@ -244,8 +244,7 @@ $_SESSION['ccuTotals'] = isset($_POST['ccuTotals']) ? $_POST['ccuTotals'] : '';
             </a>
         </div>
         <div class="col-md-6 text-md-end center-on-mobile">
-            <button type="button" class="btn btn-primary btn-lg mt-3" data-toggle="modal"
-                data-target="#notificationModal" onclick="generatePDF()">Xuất PDF</button>
+            <button type="button" class="btn btn-primary btn-lg mt-3" data-toggle="modal" data-target="#notificationModal" onclick="generatePDF()">Xuất PDF</button>
         </div>
     </div>
 

@@ -40,39 +40,29 @@ $table_name = "dcn" . $year . $month;
 // TotalCost DESC 
 // LIMIT 30;";
 
-$query_report_ctc = " SELECT 
+$query_report_ctc = "SELECT 
     $table_name.customer_name AS CustomerName,
     $table_name.user_name AS SalerName,
     SUM($table_name.TotalCost) AS TotalCost,
     NULL AS TotalCurrentCall,
     (
         SELECT COUNT(ext_number)
-        FROM Billing_Diginext.report_number_block rnb
+        FROM billing.report_number_block rnb
         WHERE rnb.customer_name = $table_name.customer_name
         AND DATE(rnb.time_update) = CURDATE()
-    ) +
-    (
-        SELECT COUNT(ext_number)
-        FROM Billing_Diginext.report_number_block_next rnbn
-        WHERE rnbn.customer_name = $table_name.customer_name
-        AND DATE(rnbn.time_update) = CURDATE()
     ) AS BlockViettel,
     (
         SELECT COUNT(ext_number)
-        FROM Billing_Diginext.report_number_active rna
+        FROM billing.report_number_active rna
         WHERE rna.customer_name = $table_name.customer_name
         AND DATE(rna.time_update) = CURDATE()
-    ) +
-    (
-        SELECT COUNT(ext_number)
-        FROM Billing_Diginext.report_number_active_next rnan
-        WHERE rnan.customer_name = $table_name.customer_name
-        AND DATE(rnan.time_update) = CURDATE()
     ) AS ActiveViettel
 FROM
     $table_name
 WHERE            
-    DATE($table_name.TimeUpdate) = CURDATE()
+    DATE($table_name.TimeUpdate) = CURDATE() 
+    AND day = DAY(CURDATE())
+    AND $table_name.company_code = 'DIGINEXT'
 GROUP BY
     $table_name.customer_name
 ORDER BY 
@@ -103,7 +93,7 @@ $textMessage = "Dữ liệu Báo Cáo Cuộc Gọi Hệ Thống VOS DIGINEXT ng�
   . "Tài khoản: $userName" . PHP_EOL
   . "Mật khẩu: $password";
 
-$exportSuccessful = exportToExcel($query_report_ctc, $dbName, $header, $excelFilePath);
+$exportSuccessful = exportToExcelMain($query_report_ctc, $dbName, $header, $excelFilePath);
 
 if ($exportSuccessful) {
   sendTelegramMessage($textMessage, $botToken, $chatId);

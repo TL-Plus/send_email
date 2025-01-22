@@ -244,7 +244,6 @@ function bodyEmailHolidaySchedule($FormValues)
     $body .= '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> ';
     $body .= '<div style="margin-top: 15px; line-height: 1.6; font-size: 18px; font-family: Times New Roman, Arial, Helvetica; color: #222;">';
 
-    // Table 1
     $body .= '<table style="border-collapse: collapse; width: 100%; color: #222; margin-bottom: 15px;" cellpadding="10" >';
     $body .= '<tr>
                 <th style="text-align: left; font-family: Times New Roman, Arial, Helvetica;" colspan="3">
@@ -252,14 +251,12 @@ function bodyEmailHolidaySchedule($FormValues)
                 </th>
             </tr>';
 
-    // Image
     $body .= '<tr>
                 <td style="text-align: left;" colspan="3">
                     <img src="cid:holiday-schedule" alt="Holiday Schedule" style="width: 100%; max-width: 800px; height: auto; border-radius: 10px;">
                 </td>
             </tr>';
 
-    // Additional Information
     $body .= '<tr>
                 <td style="text-align: left; margin-top: 10px; font-style: italic; padding: 5px;" colspan="3">
                     <p style="width: 100%; max-width: 800px;">Trong thời gian nghỉ lễ, Công ty vẫn bố trí các chuyên viên, nhân viên trực và làm việc. Nếu quý khách hàng, Quý đối tác cần hỗ trợ bất kỳ dịch vụ nào xin vui lòng liên hệ hotline 19005055.</p>
@@ -269,7 +266,6 @@ function bodyEmailHolidaySchedule($FormValues)
     $body .= '</table>';
     $body .= '</div>';
 
-    // Footer
     $body .= "<div style='font-weight:bold; margin-bottom:10px; margin-top:20px;color:#222;'>Thông tin tra cứu chi tiết quý khách vui lòng truy cập :</div>
         <div style='margin-left:10px;color:#222;'><span>- Địa chỉ : https://billing.diginext.com.vn</span></div>
         <div style='margin-bottom:10px; margin-top:20px; color:#222;'><span><i>Trân trọng cảm ơn Quý khách hàng đã sử dụng dịch vụ của DigiNext</i></span></div>

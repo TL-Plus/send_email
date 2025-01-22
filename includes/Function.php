@@ -94,8 +94,8 @@ function getRowDataTables($table, $sort, $sorttype, $arr_field, $request_page, $
 
 function getRowDataTables_DIGITEL($table, $sort, $sorttype, $arr_field, $request_page, $query)
 {
-	$dbh = mysqli_connect(DB_HOST_37, DB_USER_37, DB_PWD_37) or die("Unable to connect to MySQL");
-	$select_db = mysqli_select_db($dbh, DB_NAME_37) or die("getRole() Could not select database");
+	$dbh = mysqli_connect(DB_HOST_136, DB_USER_136, DB_PWD_136) or die("Unable to connect to MySQL");
+	$select_db = mysqli_select_db($dbh, DB_NAME_136) or die("getRole() Could not select database");
 	mysqli_set_charset($dbh, 'utf8');
 
 	if ($arr_field == '') {

@@ -16,13 +16,13 @@ define('TERMINATION_THRESHOLD', 14);
 
 // Define Excel header
 $header = [
-    'Tên',
+    'Tên khách hàng',
     'Địa chỉ',
     'Email',
-    'Diện thoại',
+    'Điện thoại',
     'Kinh doanh',
     'Số đặt',
-    'Thời gian',
+    'Thời gian đặt',
     'Trạng thái'
 ];
 
@@ -340,27 +340,27 @@ processEmailsAndTelegrams(
     $orderNumberCondition555Fixed
 );
 
-// // Process 688 Fixed emails
-// $orderNumberCondition688Fixed = "AND order_number LIKE '2%' 
-//     AND (
-//         (SUBSTRING(order_number, 1, 2) IN ('24', '28') AND SUBSTRING(order_number, 3, 3) = '688') 
-//         OR 
-//         (SUBSTRING(order_number, 1, 2) NOT IN ('24', '28') AND SUBSTRING(order_number, 4, 3) = '688')
-//     )";
-// processEmailsAndTelegrams(
-//     WARNING_THRESHOLD,
-//     $dbName,
-//     $header,
-//     '/var/www/html/send_email/files_export/' . str_replace("/", "_", $time_export_excel) . '_report_warning_688_fixed',
-//     '[DIGI] - THÔNG BÁO ĐẶT SỐ CỐ ĐỊNH 688 SẮP HẾT HẠN',
-//     $orderNumberCondition688Fixed
-// );
+// Process 688 Fixed emails
+$orderNumberCondition688Fixed = "AND order_number LIKE '2%' 
+    AND (
+        (SUBSTRING(order_number, 1, 2) IN ('24', '28') AND SUBSTRING(order_number, 3, 3) = '688') 
+        OR 
+        (SUBSTRING(order_number, 1, 2) NOT IN ('24', '28') AND SUBSTRING(order_number, 4, 3) = '688')
+    )";
+processEmailsAndTelegrams(
+    WARNING_THRESHOLD,
+    $dbName,
+    $header,
+    '/var/www/html/send_email/files_export/' . str_replace("/", "_", $time_export_excel) . '_report_warning_688_fixed',
+    '[DIGI] - THÔNG BÁO ĐẶT SỐ CỐ ĐỊNH 688 SẮP HẾT HẠN',
+    $orderNumberCondition688Fixed
+);
 
-// processEmailsAndTelegrams(
-//     TERMINATION_THRESHOLD,
-//     $dbName,
-//     $header,
-//     '/var/www/html/send_email/files_export/' . str_replace("/", "_", $time_export_excel) . '_report_termination_688_fixed',
-//     '[DIGI] - THÔNG BÁO ĐẶT SỐ CỐ ĐỊNH 688 ĐÃ HẾT HẠN',
-//     $orderNumberCondition688Fixed
-// );
+processEmailsAndTelegrams(
+    TERMINATION_THRESHOLD,
+    $dbName,
+    $header,
+    '/var/www/html/send_email/files_export/' . str_replace("/", "_", $time_export_excel) . '_report_termination_688_fixed',
+    '[DIGI] - THÔNG BÁO ĐẶT SỐ CỐ ĐỊNH 688 ĐÃ HẾT HẠN',
+    $orderNumberCondition688Fixed
+);
